@@ -1140,7 +1140,13 @@ function ContactSection() {
         body: JSON.stringify(payload),
       });
 
-      const data = await response.json();
+     const contentType = response.headers.get("content-type");
+
+if (!contentType || !contentType.includes("application/json")) {
+  throw new Error("La ruta /api/contact no está respondiendo JSON. Puede que no exista en el hosting.");
+}
+
+const data = await response.json();
 
       if (!response.ok) {
         alert(data.message || "No se pudo enviar la solicitud.");
