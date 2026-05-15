@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+export const runtime = "nodejs";
+
 export async function POST(request: Request) {
   try {
+    console.log("API /api/contact ejecutándose");
+
     const body = await request.json();
 
     const {
@@ -14,25 +18,57 @@ export async function POST(request: Request) {
       message,
     } = body;
 
+
     if (!fullName || !email || !phone) {
       return NextResponse.json(
-        { ok: false, message: "Faltan campos obligatorios." },
+        {
+          ok: false,
+          message: "Faltan campos obligatorios.",
+        },
         { status: 400 }
       );
     }
 
+
+    if (
+      !process.env.SMTP_HOST ||
+      !process.env.SMTP_USER ||
+      !process.env.SMTP_PASS ||
+      !process.env.CONTACT_TO
+    ) {
+      console.error("Faltan variables de entorno SMTP");
+
+      return NextResponse.json(
+        {
+          ok: false,
+          message: "Error de configuración del servidor.",
+        },
+        { status: 500 }
+      );
+    }
+
+    console.log("Variables SMTP cargadas correctamente");
+
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT || 465),
+
+
       secure: true,
+
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
     });
-console.log(transporter)
-    console.log(process.env.SMTP_HOST)
-    await transporter.sendMail({
+
+
+    await transporter.verify();
+
+    console.log("Conexión SMTP exitosa");
+
+
+    const info = await transporter.sendMail({
       from: `"Sitio Web Plaza Car Service" <${process.env.SMTP_USER}>`,
       to: process.env.CONTACT_TO,
       replyTo: email,
@@ -55,15 +91,22 @@ console.log(transporter)
       `,
     });
 
+    console.log("Mail enviado:", info.messageId);
+
     return NextResponse.json({
       ok: true,
       message: "Solicitud enviada correctamente.",
     });
+
   } catch (error) {
-    console.error("Error al enviar formulario:", error);
+    console.error("ERROR COMPLETO AL ENVIAR MAIL:");
+    console.error(error);
 
     return NextResponse.json(
-      { ok: false, message: "No se pudo enviar la solicitud." },
+      {
+        ok: false,
+        message: "No se pudo enviar la solicitud.",
+      },
       { status: 500 }
     );
   }
