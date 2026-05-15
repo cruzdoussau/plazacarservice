@@ -30,7 +30,8 @@ export async function POST(request: Request) {
         pass: process.env.SMTP_PASS,
       },
     });
-
+console.log(transporter)
+    console.log(process.env.SMTP_HOST)
     await transporter.sendMail({
       from: `"Sitio Web Plaza Car Service" <${process.env.SMTP_USER}>`,
       to: process.env.CONTACT_TO,
