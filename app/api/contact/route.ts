@@ -38,6 +38,17 @@ export async function POST(request: Request) {
     ) {
       console.error("Faltan variables de entorno SMTP");
 
+      if (process.env.NODE_ENV === "development") {
+        console.log("--- MODO DESARROLLO ---");
+        console.log("Simulación de envío de correo exitosa.");
+        console.log("Datos del formulario:", body);
+        console.log("------------------------");
+        return NextResponse.json({
+          ok: true,
+          message: "Solicitud simulada correctamente en modo de desarrollo.",
+        });
+      }
+
       return NextResponse.json(
         {
           ok: false,
