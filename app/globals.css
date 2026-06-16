@@ -7,3 +7,23 @@ html {
 body {
   background: #0c0c0d;
 }
+
+@keyframes promo-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.promo-marquee-track {
+  animation: promo-marquee 24s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-marquee-track {
+    animation: none;
+  }
+}

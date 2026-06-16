@@ -462,6 +462,28 @@ function Header() {
   );
 }
 
+function PromoMarquee() {
+  const message =
+    "Durante todo el mes de junio aprovecha nuestros servicios entre 3 a 6 cuotas sin interes.";
+  const items = Array.from({ length: 8 }, (_, index) => index);
+
+  return (
+    <section className="overflow-hidden border-y border-red-500/30 bg-[#e30613] py-3 text-white shadow-lg shadow-black/20">
+      <div className="promo-marquee-track flex w-max items-center gap-8 whitespace-nowrap">
+        {[...items, ...items].map((item, index) => (
+          <div
+            key={`${item}-${index}`}
+            className="flex items-center gap-8 text-sm font-black uppercase tracking-[0.08em] md:text-base"
+          >
+            <span>{message}</span>
+            <span className="h-2 w-2 rounded-full bg-white" />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function MainSlider() {
   const [activeSlide, setActiveSlide] = useState(0);
   const slide = slides[activeSlide];
@@ -1386,6 +1408,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#0c0c0d] text-white">
       <Header />
+      <PromoMarquee />
       <MainSlider />
       <ServicesSection />
       <AboutBranchesSection />
