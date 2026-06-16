@@ -129,14 +129,14 @@ const services = [
     id: "limpieza",
     badge: "Cuidado interior y exterior",
     title: "Lavado y Limpieza",
-    subtitle: "Devuélvele el brillo a tu vehículo con atención al detalle.",
+    subtitle: "Lavado exterior y limpieza interior disponibles de forma individual.",
     price: "$9.000 c/u",
     priceLines: ["Lavado exterior $9.000", "Limpieza interior $9.000"],
     cta: "Agendar limpieza",
     more: "Ver más",
     image: "/Servicios/servicio-lavado-y-limpieza.png",
     detailIntro:
-      "Servicio pensado para mantener tu vehículo limpio, cuidado y con una mejor presentación interior y exterior.",
+      "Servicio pensado para mantener tu vehiculo limpio, cuidado y con una mejor presentacion interior y exterior. Puedes tomar lavado exterior o limpieza interior de forma individual, segun lo que necesites.",
     includes: [
       "Lavado exterior",
       "Limpieza interior",
@@ -144,7 +144,7 @@ const services = [
       "Procedimientos adecuados para el cuidado del vehículo",
     ],
     idealFor:
-      "Vehículos que necesitan una limpieza rápida, confiable y eficiente para uso diario.",
+      "Vehiculos que necesitan una limpieza rapida, confiable y eficiente para uso diario, ya sea exterior, interior o ambas.",
     note: "Lavado exterior y limpieza interior se pueden solicitar por separado.",
   },
   {
@@ -248,27 +248,27 @@ const branches = [
     description:
       "Atención completa para tu vehículo con profesionales calificados y equipamiento de última generación.",
     image: "/Sucursales/luz-divina.png",
-    mapsUrl: "https://maps.google.com/?q=Luz+Divina+1299+Algarrobo",
+    mapsUrl: "https://maps.app.goo.gl/mcuutuuJuUtsLCmN7",
   },
   {
     id: "alcazar-de-torres",
     name: "Alcázar de Torres",
-    address: "Alcázar de Torres N°20",
+    address: "Alcázar de Torres, Parcela N°20",
     location: "Ruta F-832 · Algarrobo",
     description:
       "Servicios de mantención y reparación con estándares de calidad y atención personalizada.",
     image: "/Sucursales/alcazar-de-torres.png",
-    mapsUrl: "https://maps.google.com/?q=Alcazar+de+Torres+20+Algarrobo",
+    mapsUrl: "https://maps.app.goo.gl/x9WVuDHYq22k18tw9",
   },
   {
     id: "sector-aquelarre",
-    name: "Sector Aquelarre",
+    name: "Sucursal El Tabo",
     address: "Sector Aquelarre",
     location: "Ruta G-98F · El Tabo",
     description:
       "Soluciones automotrices integrales con la confianza y cercanía que tu vehículo necesita.",
     image: "/Sucursales/sector-aquelarre.png",
-    mapsUrl: "https://maps.google.com/?q=Sector+Aquelarre+El+Tabo",
+    mapsUrl: "https://maps.app.goo.gl/uXNfdNYJbs4u2ZtK6",
   },
   {
     id: "el-quisco",
@@ -572,7 +572,6 @@ function MainSlider() {
 
 function ServicesSection() {
   const [activeId, setActiveId] = useState("ahorro-plus");
-  const [selectedService, setSelectedService] = useState(null);
   const servicesScrollRef = useRef(null);
   const serviceItemRefs = useRef({});
 
@@ -750,13 +749,12 @@ function ServicesSection() {
                         <WhatsAppIcon className="h-5 w-5" /> {active.cta}
                       </a>
 
-                      <button
-                        type="button"
-                        onClick={() => setSelectedService(active)}
+                      <a
+                        href={`/servicios/${active.id}`}
                         className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-white px-6 py-3.5 text-sm font-black text-black transition hover:bg-red-600 hover:text-white md:text-base"
                       >
                         {active.more}
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -839,13 +837,6 @@ function ServicesSection() {
           </div>
         </div>
       </div>
-
-      {selectedService && (
-        <ServiceDetailModal
-          service={selectedService}
-          onClose={() => setSelectedService(null)}
-        />
-      )}
     </section>
   );
 }
@@ -1380,6 +1371,18 @@ if (typeof console !== "undefined") {
 }
 
 export default function HomePage() {
+  useEffect(() => {
+    if (window.location.hash) return;
+
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#0c0c0d] text-white">
       <Header />
