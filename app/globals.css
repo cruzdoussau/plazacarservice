@@ -19,7 +19,7 @@ body {
 }
 
 .promo-marquee-track {
-  animation: promo-marquee 24s linear infinite;
+  animation: promo-marquee 52s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
