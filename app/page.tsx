@@ -385,12 +385,39 @@ function Header() {
           <a className="border-b-2 border-red-600 pb-2 text-white" href="#home">
             Home
           </a>
-          <a className="transition hover:text-white" href="#servicios">
-            Servicios
-          </a>
           <a className="transition hover:text-white" href="#nosotros">
             Nosotros
           </a>
+          <div className="group relative">
+            <a
+              className="inline-flex items-center gap-2 pb-2 transition hover:text-white"
+              href="#servicios"
+            >
+              Servicios
+              <span className="text-[10px] text-white/45 transition group-hover:text-white">
+                ▾
+              </span>
+            </a>
+            <div className="invisible absolute left-1/2 top-full z-50 mt-3 w-[320px] -translate-x-1/2 rounded-lg border border-white/10 bg-[#111318]/98 p-3 opacity-0 shadow-2xl shadow-black/45 backdrop-blur-xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+              <a
+                href="#servicios"
+                className="mb-2 block rounded-md bg-red-600 px-4 py-3 text-sm font-black text-white transition hover:bg-[#c83a42]"
+              >
+                Ver servicios destacados
+              </a>
+              <div className="grid gap-1">
+                {services.map((service) => (
+                  <a
+                    key={service.id}
+                    href={`/servicios/${service.id}`}
+                    className="rounded-md px-4 py-2.5 text-sm font-bold text-white/68 transition hover:bg-white/10 hover:text-white"
+                  >
+                    {service.title}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
           <a className="transition hover:text-white" href="#contacto">
             Contacto
           </a>
@@ -426,19 +453,36 @@ function Header() {
                 Home
               </a>
               <a
-                href="#servicios"
-                onClick={closeMobileMenu}
-                className="rounded-xl bg-white/5 px-4 py-3 transition hover:bg-red-600"
-              >
-                Servicios
-              </a>
-              <a
                 href="#nosotros"
                 onClick={closeMobileMenu}
                 className="rounded-xl bg-white/5 px-4 py-3 transition hover:bg-red-600"
               >
                 Nosotros
               </a>
+              <details className="overflow-hidden rounded-xl bg-white/5">
+                <summary className="cursor-pointer px-4 py-3 transition hover:bg-red-600">
+                  Servicios
+                </summary>
+                <div className="grid gap-1 border-t border-white/10 p-2">
+                  <a
+                    href="#servicios"
+                    onClick={closeMobileMenu}
+                    className="rounded-lg px-3 py-2.5 text-white/80 transition hover:bg-red-600 hover:text-white"
+                  >
+                    Ver servicios destacados
+                  </a>
+                  {services.map((service) => (
+                    <a
+                      key={service.id}
+                      href={`/servicios/${service.id}`}
+                      onClick={closeMobileMenu}
+                      className="rounded-lg px-3 py-2.5 text-white/70 transition hover:bg-red-600 hover:text-white"
+                    >
+                      {service.title}
+                    </a>
+                  ))}
+                </div>
+              </details>
               <a
                 href="#contacto"
                 onClick={closeMobileMenu}
