@@ -691,27 +691,65 @@ function ServicesSection() {
   return (
     <section
       id="servicios"
-      className="bg-[#0c0c0d] px-4 py-10 md:px-8 md:py-14"
+      className="bg-[#0c0c0d] px-4 py-16 md:px-8 md:py-24"
     >
       <div className="mx-auto max-w-[1920px]">
-        <div className="mb-8 grid gap-5 md:grid-cols-[0.8fr_1.2fr] md:items-end">
+        <div className="grid min-h-[420px] gap-10 md:min-h-[520px] md:grid-cols-[0.72fr_1.28fr] md:items-end">
           <div>
             <p className="text-sm font-black text-red-500">
               Nuestros servicios
             </p>
-            <h2 className="mt-3 text-3xl font-black leading-tight text-white md:text-5xl">
+            <h2 className="mt-6 max-w-2xl text-5xl font-black leading-[1.08] text-white md:text-7xl">
               Conoce nuestros Servicios Destacados
             </h2>
           </div>
 
-          <p className="max-w-3xl text-base leading-relaxed text-white/68 md:text-lg">
+          <p className="max-w-4xl text-xl leading-relaxed text-white/76 md:text-2xl">
             Encuentra servicios pensados para la mantención, seguridad y limpieza
             de tu vehículo, con atención cercana y profesional en nuestras
             sucursales del Litoral Central.
           </p>
         </div>
 
-        <div className="relative overflow-hidden rounded-[1.25rem] border border-white/15 bg-[#111318] p-4 shadow-2xl md:h-[550px] md:p-6">
+        <div className="mt-16 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {services.map((service) => (
+            <a
+              key={service.id}
+              href={`/servicios/${service.id}`}
+              className="group rounded-lg border border-white/10 bg-[#15171b] p-5 transition hover:-translate-y-1 hover:border-red-500/45 hover:bg-[#1c1f24]"
+            >
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-red-500">
+                {service.badge}
+              </p>
+              <h3 className="mt-3 text-2xl font-black leading-tight text-white">
+                {service.title}
+              </h3>
+              <p className="mt-3 min-h-[56px] text-sm leading-relaxed text-white/62">
+                {service.subtitle}
+              </p>
+              <div className="mt-5 border-t border-white/10 pt-4">
+                {service.priceLines ? (
+                  <div className="space-y-1">
+                    {service.priceLines.map((line) => (
+                      <p key={line} className="text-base font-black text-white">
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-2xl font-black text-white">
+                    {service.price}
+                  </p>
+                )}
+                <p className="mt-4 text-sm font-black text-white/55 transition group-hover:text-red-400">
+                  Ver más
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div className="hidden relative overflow-hidden rounded-[1.25rem] border border-white/15 bg-[#111318] p-4 shadow-2xl md:h-[550px] md:p-6">
           <button
             type="button"
             onClick={previousService}
