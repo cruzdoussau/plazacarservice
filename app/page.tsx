@@ -691,10 +691,10 @@ function ServicesSection() {
   return (
     <section
       id="servicios"
-      className="bg-[#0c0c0d] px-4 py-16 md:px-8 md:py-24"
+      className="bg-[#0c0c0d] px-4 py-2 md:px-8"
     >
       <div className="mx-auto max-w-[1920px]">
-        <div className="grid min-h-[420px] gap-10 md:min-h-[520px] md:grid-cols-[0.72fr_1.28fr] md:items-end">
+        <div className="hidden min-h-[420px] gap-10 md:min-h-[520px] md:grid-cols-[0.72fr_1.28fr] md:items-end">
           <div>
             <p className="text-sm font-black text-red-500">
               Nuestros servicios
@@ -711,7 +711,7 @@ function ServicesSection() {
           </p>
         </div>
 
-        <div className="mt-16 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="hidden mt-16 gap-4 md:grid-cols-2 xl:grid-cols-4">
           {services.map((service) => (
             <a
               key={service.id}
@@ -749,7 +749,7 @@ function ServicesSection() {
           ))}
         </div>
 
-        <div className="hidden relative overflow-hidden rounded-[1.25rem] border border-white/15 bg-[#111318] p-4 shadow-2xl md:h-[550px] md:p-6">
+        <div className="relative overflow-hidden rounded-[1.25rem] border border-white/15 bg-[#111318] p-4 shadow-2xl md:h-[550px] md:p-6">
           <button
             type="button"
             onClick={previousService}
@@ -1447,7 +1447,6 @@ export default function HomePage() {
   return (
     <div id="home" className="min-h-screen bg-[#0c0c0d] text-white">
       <Header />
-      <PromoMarquee />
       <ServicesSection />
       <MainSlider />
       <AboutBranchesSection />
