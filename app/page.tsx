@@ -381,16 +381,16 @@ function Header() {
           <LogoMockup />
         </a>
 
-        <nav className="hidden items-center gap-8 text-sm font-semibold text-white/70 md:flex">
-          <a className="border-b-2 border-red-600 pb-2 text-white" href="#home">
+        <nav className="hidden items-center gap-10 text-sm font-semibold text-white/70 md:flex">
+          <a className="border-b-2 border-red-600 py-2 text-white" href="#home">
             Home
           </a>
-          <a className="transition hover:text-white" href="#nosotros">
+          <a className="py-2 transition hover:text-white" href="#nosotros">
             Nosotros
           </a>
-          <div className="group relative">
+          <div className="group relative py-1">
             <a
-              className="inline-flex items-center gap-2 pb-2 transition hover:text-white"
+              className="inline-flex items-center gap-2 py-2 text-white transition hover:text-white"
               href="#servicios"
             >
               Servicios
@@ -398,27 +398,29 @@ function Header() {
                 ▾
               </span>
             </a>
-            <div className="invisible absolute left-1/2 top-full z-50 mt-3 w-[320px] -translate-x-1/2 rounded-lg border border-white/10 bg-[#111318]/98 p-3 opacity-0 shadow-2xl shadow-black/45 backdrop-blur-xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-              <a
-                href="#servicios"
-                className="mb-2 block rounded-md bg-red-600 px-4 py-3 text-sm font-black text-white transition hover:bg-[#c83a42]"
-              >
-                Ver servicios destacados
-              </a>
-              <div className="grid gap-1">
-                {services.map((service) => (
-                  <a
-                    key={service.id}
-                    href={`/servicios/${service.id}`}
-                    className="rounded-md px-4 py-2.5 text-sm font-bold text-white/68 transition hover:bg-white/10 hover:text-white"
-                  >
-                    {service.title}
-                  </a>
-                ))}
+            <div className="invisible absolute left-1/2 top-full z-50 w-[360px] -translate-x-1/2 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+              <div className="rounded-lg border border-white/10 bg-[#111318]/98 p-3 shadow-2xl shadow-black/45 backdrop-blur-xl">
+                <a
+                  href="/promociones"
+                  className="mb-2 block rounded-md bg-red-600 px-4 py-3 text-sm font-black text-white transition hover:bg-[#c83a42]"
+                >
+                  Ver promociones del mes
+                </a>
+                <div className="grid gap-1">
+                  {services.map((service) => (
+                    <a
+                      key={service.id}
+                      href={`/servicios/${service.id}`}
+                      className="rounded-md px-4 py-2.5 text-sm font-bold text-white/68 transition hover:bg-white/10 hover:text-white"
+                    >
+                      {service.title}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-          <a className="transition hover:text-white" href="#contacto">
+          <a className="py-2 transition hover:text-white" href="#contacto">
             Contacto
           </a>
         </nav>
@@ -465,11 +467,11 @@ function Header() {
                 </summary>
                 <div className="grid gap-1 border-t border-white/10 p-2">
                   <a
-                    href="#servicios"
+                    href="/promociones"
                     onClick={closeMobileMenu}
                     className="rounded-lg px-3 py-2.5 text-white/80 transition hover:bg-red-600 hover:text-white"
                   >
-                    Ver servicios destacados
+                    Ver promociones del mes
                   </a>
                   {services.map((service) => (
                     <a
