@@ -465,7 +465,7 @@ function Header() {
 
 function PromoMarquee() {
   const message =
-    "Campaña Julio: congelamos los precios. Seguimos con valores Cyber Junio: alineación + balanceo + rotación a $19.900, cambio de aceite desde $32.000, scanner automotriz $25.000 y hasta 6 cuotas sin interés.";
+    "En este invierno congelamos los precios. Conoce nuestras promociones de julio.";
   const items = Array.from({ length: 8 }, (_, index) => index);
 
   return (
@@ -502,7 +502,7 @@ function MainSlider() {
   };
 
   return (
-    <section id="home" className="bg-[#0c0c0d]">
+    <section id="hero" className="bg-[#0c0c0d]">
       <div className="relative min-h-[560px] overflow-hidden bg-[#111318] md:min-h-[640px]">
         <picture>
           <source
@@ -1407,11 +1407,11 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0c0c0d] text-white">
+    <div id="home" className="min-h-screen bg-[#0c0c0d] text-white">
       <Header />
       <PromoMarquee />
-      <MainSlider />
       <ServicesSection />
+      <MainSlider />
       <AboutBranchesSection />
       <ContactSection />
       <Footer />
