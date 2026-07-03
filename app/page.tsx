@@ -85,19 +85,18 @@ const services = [
     id: "frenos",
     badge: "Seguridad preventiva",
     title: "Mantención de Frenos",
-    subtitle: "Cuida tu seguridad y evita desgastes mayores.",
-    price: "$59.900 + IVA",
+    subtitle: "Cambio de pastillas delanteras, rectificación y limpieza del sistema.",
+    price: "Desde $59.900",
     cta: "Agendar evaluación",
     more: "Ver más",
     image: "/Servicios/servicio-frenos.png",
     detailIntro:
-      "Servicio orientado a revisar el estado del sistema de frenado y detectar señales de desgaste antes de que se transformen en una falla mayor.",
+      "Servicio orientado a cuidar la seguridad del vehículo y mantener el sistema de frenado en buen estado con una mantención completa.",
     includes: [
-      "Cambio de pastillas según evaluación",
-      "Rectificación de discos según condición",
-      "Revisión completa del sistema de frenado",
-      "Diagnóstico preventivo",
-      "Orientación sobre próximos pasos de mantención",
+      "Cambio de pastillas delanteras",
+      "Rectificación de discos",
+      "Limpieza del sistema",
+      "Regulación de frenos traseros",
     ],
     idealFor:
       "Vehículos con ruidos al frenar, vibración en el pedal, mayor distancia de frenado o sensación esponjosa al frenar.",
@@ -105,25 +104,26 @@ const services = [
   },
   {
     id: "neumaticos",
-    badge: "Estabilidad y rendimiento",
-    title: "Mantención de Neumáticos",
-    subtitle: "Alineación, balanceo y rotación para mejor rendimiento.",
-    price: "$29.000",
+    badge: "Oferta de invierno",
+    title: "Baterías y Neumáticos",
+    subtitle: "Baterías desde $33.500 y neumáticos desde $26.500.",
+    price: "Desde $26.500",
+    priceLines: ["Baterías desde $33.500", "Neumáticos desde $26.500"],
     cta: "Agendar servicio",
     more: "Ver más",
     image: "/Servicios/servicios-neumaticos.png",
     detailIntro:
-      "Mantención integral para mejorar la estabilidad, reducir vibraciones y prolongar la vida útil de tus neumáticos.",
+      "Oferta especial para renovar batería o neumáticos durante la campaña de invierno, con alternativas seleccionadas y hasta 6 cuotas sin interés.",
     includes: [
-      "Alineación de tren delantero",
-      "Balanceo plomo de golpe",
-      "Rotación de neumáticos",
-      "Revisión visual de desgaste",
-      "Orientación sobre estado de neumáticos",
+      "Batería Olimpo 55Ah desde $33.500",
+      "Batería Black Tiger 55Ah desde $33.500",
+      "Neumático 175/70R13 Goodride desde $26.500",
+      "Neumático 165/70R14 81T Roadwing desde $26.500",
+      "Neumático 165/70R14 81T RW-581 Risen desde $26.500",
     ],
     idealFor:
-      "Vehículos con desgaste irregular, vibración al conducir, menor agarre en curvas o conducción inestable.",
-    note: "Un buen estado de neumáticos es clave para tu seguridad.",
+      "Vehículos que necesitan mejorar seguridad, partida confiable, agarre y estabilidad durante el invierno.",
+    note: "Beneficio adicional: hasta 6 cuotas sin interés.",
   },
   {
     id: "limpieza",
@@ -149,42 +149,43 @@ const services = [
   },
   {
     id: "alineacion-balanceo",
-    badge: "Dirección y estabilidad",
-    title: "Alineación y Balanceo",
+    badge: "Promoción Junio y Julio",
+    title: "Alineación + Balanceo + Rotación",
     subtitle:
-      "Mejora la estabilidad, reduce vibraciones y evita el desgaste irregular de tus neumáticos.",
-    price: "Consultar",
+      "Congelamos el precio: antes $51.000, ahora $19.900 por los tres servicios.",
+    price: "$19.900",
     cta: "Agendar servicio",
     more: "Ver más",
     image: "/Servicios/servicio-alineacion-y-balanceo.png",
     detailIntro:
-      "Servicio enfocado en corregir la dirección y equilibrar las ruedas para mejorar la conducción y prevenir desgaste prematuro.",
+      "Oferta especial de alineación, balanceo y rotación pensada para mejorar seguridad, estabilidad y vida útil de tus neumáticos.",
     includes: [
-      "Revisión de alineación",
-      "Corrección de tren delantero según condición",
-      "Balanceo de ruedas",
-      "Revisión de vibraciones asociadas a neumáticos",
-      "Orientación sobre estado general del tren delantero",
+      "Alineación",
+      "Balanceo",
+      "Rotación",
+      "Mayor seguridad al conducir",
+      "Menor desgaste y mayor vida útil de los neumáticos",
+      "Mejor estabilidad y confort de manejo",
     ],
     idealFor:
       "Vehículos que se cargan hacia un lado, presentan vibración al conducir o tienen desgaste irregular en neumáticos.",
-    note: "Recomendado después de golpes fuertes, cambio de neumáticos o mantenciones de tren delantero.",
+    note: "Precio normal: alineación $25.000 + balanceo $26.000. Promoción junio y julio: $19.900 ambos más rotación.",
   },
   {
     id: "cambio-aceite",
     badge: "Lubricación del motor",
     title: "Cambio de Aceite",
     subtitle:
-      "Protege el motor de tu vehículo con un cambio de aceite oportuno y revisión de filtros.",
-    price: "Consultar",
+      "Aceite ESSO con filtro incluido para cuidar el motor de tu vehículo.",
+    price: "Desde $32.000",
     cta: "Agendar cambio",
     more: "Ver más",
     image: "/Servicios/servicio-cambio-aceite.png",
     detailIntro:
-      "Servicio esencial para proteger el motor, mantener una lubricación adecuada y evitar desgaste prematuro de componentes internos.",
+      "Servicio esencial para proteger el motor, mantener una lubricación adecuada y evitar desgaste prematuro de componentes internos. Disponible desde $32.000 con filtro incluido.",
     includes: [
-      "Cambio de aceite según requerimiento del vehículo",
-      "Revisión de filtro de aceite",
+      "Aceite ESSO",
+      "Filtro incluido",
       "Revisión de niveles",
       "Orientación sobre aceite recomendado",
       "Chequeo visual preventivo",
@@ -199,7 +200,7 @@ const services = [
     title: "Scanner Automotriz",
     subtitle:
       "Detecta fallas y códigos de alerta mediante diagnóstico electrónico especializado.",
-    price: "Consultar",
+    price: "$25.000",
     cta: "Agendar scanner",
     more: "Ver más",
     image: "/Servicios/servicio-scanner.png",
@@ -464,7 +465,7 @@ function Header() {
 
 function PromoMarquee() {
   const message =
-    "Durante todo el mes de junio aprovecha nuestros servicios entre 3 a 6 cuotas sin interes.";
+    "Campaña Julio: congelamos los precios. Seguimos con valores Cyber Junio: alineación + balanceo + rotación a $19.900, cambio de aceite desde $32.000, scanner automotriz $25.000 y hasta 6 cuotas sin interés.";
   const items = Array.from({ length: 8 }, (_, index) => index);
 
   return (
