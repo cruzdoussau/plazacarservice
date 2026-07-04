@@ -47,6 +47,14 @@ function cleanRut(value: string) {
   return value.replace(/[^0-9kK]/g, "").toUpperCase();
 }
 
+function formatRutInput(value: string) {
+  const cleaned = cleanRut(value).slice(0, 9);
+  if (cleaned.length <= 1) return cleaned;
+  const body = cleaned.slice(0, -1);
+  const verifier = cleaned.slice(-1);
+  return `${body}-${verifier}`;
+}
+
 function cleanPlate(value: string) {
   return value.replace(/[^0-9a-zA-Z]/g, "").toUpperCase();
 }
@@ -71,7 +79,6 @@ export default function AhorroPlusIntranetPage() {
   const [clients, setClients] = useState<ClientWithUsage[]>([]);
   const [logs, setLogs] = useState<BenefitLog[]>([]);
   const [clientRut, setClientRut] = useState("");
-  const [clientPlate, setClientPlate] = useState("");
   const [adminCode, setAdminCode] = useState("");
   const [adminSessionCode, setAdminSessionCode] = useState("");
   const [adminQuery, setAdminQuery] = useState("");
@@ -130,12 +137,9 @@ export default function AhorroPlusIntranetPage() {
 
   const clientProfile = useMemo(() => {
     const rut = cleanRut(clientRut);
-    const plate = cleanPlate(clientPlate);
-    if (!rut || !plate) return undefined;
-    return clients.find(
-      (client) => client.rutKey === rut && cleanPlate(client.plate) === plate
-    );
-  }, [clientPlate, clientRut, clients]);
+    if (!rut) return undefined;
+    return clients.find((client) => client.rutKey === rut);
+  }, [clientRut, clients]);
 
   const filteredClients = useMemo(() => {
     const query = adminQuery.trim().toLowerCase();
@@ -263,22 +267,18 @@ export default function AhorroPlusIntranetPage() {
             Revisa tus beneficios disponibles
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-white/62">
-            Ingresa tu RUT y patente. La informacion se consulta desde la base
-            de datos central, no desde este navegador.
+            Ingresa tu RUT. La informacion se consulta desde la base de datos
+            central, no desde este navegador.
           </p>
 
           <div className="mt-6 grid gap-3">
             <input
               value={clientRut}
-              onChange={(event) => setClientRut(event.target.value)}
+              onChange={(event) => setClientRut(formatRutInput(event.target.value))}
               placeholder="RUT"
+              inputMode="text"
+              maxLength={10}
               className="h-12 rounded-lg border border-white/10 bg-black/35 px-4 text-sm font-bold text-white outline-none focus:border-red-500"
-            />
-            <input
-              value={clientPlate}
-              onChange={(event) => setClientPlate(event.target.value)}
-              placeholder="Patente"
-              className="h-12 rounded-lg border border-white/10 bg-black/35 px-4 text-sm font-bold uppercase text-white outline-none focus:border-red-500"
             />
           </div>
 
@@ -288,10 +288,10 @@ export default function AhorroPlusIntranetPage() {
             </div>
           )}
 
-          {clientRut && clientPlate && !clientProfile && !isLoading && (
+          {clientRut && cleanRut(clientRut).length >= 7 && !clientProfile && !isLoading && (
             <div className="mt-5 rounded-lg border border-red-500/25 bg-red-600/10 p-4 text-sm font-bold text-white/75">
-              No encontramos un cliente con esos datos. Verifica RUT y patente
-              o solicita tu registro en sucursal.
+              No encontramos un cliente con ese RUT. Verifica el dato o
+              solicita tu registro en sucursal.
             </div>
           )}
 
@@ -398,10 +398,14 @@ export default function AhorroPlusIntranetPage() {
                         onChange={(event) =>
                           setDraft((current) => ({
                             ...current,
-                            [field]: event.target.value,
+                            [field]:
+                              field === "rut"
+                                ? formatRutInput(event.target.value)
+                                : event.target.value,
                           }))
                         }
                         placeholder={label}
+                        maxLength={field === "rut" ? 10 : undefined}
                         className="h-10 rounded-lg border border-white/10 bg-black/35 px-3 text-sm font-bold text-white outline-none focus:border-red-500"
                       />
                     ))}
