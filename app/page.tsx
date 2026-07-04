@@ -406,6 +406,18 @@ function Header() {
                 >
                   Ver promociones del mes
                 </a>
+                <a
+                  href="/ahorro-plus"
+                  className="mb-2 block rounded-md bg-white px-4 py-3 text-sm font-black text-black transition hover:bg-red-600 hover:text-white"
+                >
+                  Programa Ahorro Plus
+                </a>
+                <a
+                  href="/intranet-ahorro-plus"
+                  className="mb-2 block rounded-md border border-white/10 px-4 py-3 text-sm font-black text-white/78 transition hover:bg-white/10 hover:text-white"
+                >
+                  Acceso cliente preferente
+                </a>
                 <div className="grid gap-1">
                   {services.map((service) => (
                     <a
@@ -472,6 +484,20 @@ function Header() {
                     className="rounded-lg px-3 py-2.5 text-white/80 transition hover:bg-red-600 hover:text-white"
                   >
                     Ver promociones del mes
+                  </a>
+                  <a
+                    href="/ahorro-plus"
+                    onClick={closeMobileMenu}
+                    className="rounded-lg px-3 py-2.5 text-white/80 transition hover:bg-red-600 hover:text-white"
+                  >
+                    Programa Ahorro Plus
+                  </a>
+                  <a
+                    href="/intranet-ahorro-plus"
+                    onClick={closeMobileMenu}
+                    className="rounded-lg px-3 py-2.5 text-white/80 transition hover:bg-red-600 hover:text-white"
+                  >
+                    Acceso cliente preferente
                   </a>
                   {services.map((service) => (
                     <a
