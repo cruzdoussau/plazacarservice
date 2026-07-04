@@ -4,18 +4,19 @@ import { useEffect, useMemo, useState } from "react";
 import {
   benefitLabels,
   benefitLimits,
-  preferredClients,
   type BenefitKey,
   type PreferredClient,
 } from "./data";
 
 type BenefitUsage = Record<BenefitKey, number>;
 
+type ClientWithUsage = PreferredClient & BenefitUsage;
+
 type BenefitLog = {
   id: string;
   date: string;
   clientId: string;
-  benefit: BenefitKey;
+  benefit: BenefitKey | "reset";
   amount: number;
   note: string;
 };
@@ -28,11 +29,13 @@ type DraftClient = {
   brand: string;
 };
 
-const usageStorageKey = "plaza-preferente-benefit-usage-v1";
-const customClientsStorageKey = "plaza-preferente-custom-clients-v1";
-const logStorageKey = "plaza-preferente-benefit-log-v1";
-const adminPassword = "plazacar2026";
+type ApiState = {
+  clients: ClientWithUsage[];
+  logs: BenefitLog[];
+  error?: string;
+};
 
+const adminPasswordFallback = "plazacar2026";
 const benefitOrder: BenefitKey[] = [
   "washes",
   "technicalReview",
@@ -56,112 +59,72 @@ function formatCurrency(value: number) {
   }).format(value);
 }
 
-function today() {
-  return new Date().toISOString().slice(0, 10);
+function remainingFor(client: ClientWithUsage, benefit: BenefitKey) {
+  return Math.max(0, benefitLimits[benefit] - Number(client[benefit] ?? 0));
 }
 
-function emptyUsage(): BenefitUsage {
-  return {
-    washes: 0,
-    technicalReview: 0,
-    brakeReview: 0,
-    savings: 0,
-  };
-}
-
-function remainingFor(usage: BenefitUsage, benefit: BenefitKey) {
-  return Math.max(0, benefitLimits[benefit] - usage[benefit]);
-}
-
-function loadJson<T>(key: string, fallback: T): T {
-  if (typeof window === "undefined") return fallback;
-  try {
-    const saved = window.localStorage.getItem(key);
-    return saved ? (JSON.parse(saved) as T) : fallback;
-  } catch {
-    window.localStorage.removeItem(key);
-    return fallback;
-  }
-}
-
-function makeClient(draft: DraftClient): PreferredClient {
-  const rutKey = cleanRut(draft.rut);
-  const plate = cleanPlate(draft.plate);
-  return {
-    id: `${rutKey}-${plate || Date.now()}`.toLowerCase(),
-    registeredAt: today(),
-    name: draft.name.trim().toUpperCase(),
-    rut: draft.rut.trim().toUpperCase(),
-    rutKey,
-    phone: draft.phone.trim(),
-    plate,
-    brand: draft.brand.trim().toUpperCase(),
-    referrer: "",
-  };
+function emptyDraft(): DraftClient {
+  return { name: "", rut: "", phone: "", plate: "", brand: "" };
 }
 
 export default function AhorroPlusIntranetPage() {
-  const [usageByClient, setUsageByClient] = useState<Record<string, BenefitUsage>>(
-    {}
-  );
-  const [customClients, setCustomClients] = useState<PreferredClient[]>([]);
+  const [clients, setClients] = useState<ClientWithUsage[]>([]);
   const [logs, setLogs] = useState<BenefitLog[]>([]);
   const [clientRut, setClientRut] = useState("");
   const [clientPlate, setClientPlate] = useState("");
   const [adminCode, setAdminCode] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminSessionCode, setAdminSessionCode] = useState("");
   const [adminQuery, setAdminQuery] = useState("");
   const [selectedId, setSelectedId] = useState("");
   const [redeemNote, setRedeemNote] = useState("");
-  const [draft, setDraft] = useState<DraftClient>({
-    name: "",
-    rut: "",
-    phone: "",
-    plate: "",
-    brand: "",
-  });
+  const [draft, setDraft] = useState<DraftClient>(emptyDraft);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState("");
+
+  const isAdmin = Boolean(adminSessionCode);
+
+  async function loadState() {
+    setIsLoading(true);
+    setError("");
+    try {
+      const response = await fetch("/api/ahorro-plus", { cache: "no-store" });
+      const data = (await response.json()) as ApiState;
+      if (!response.ok) throw new Error(data.error ?? "No fue posible cargar datos.");
+      setClients(data.clients);
+      setLogs(data.logs);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Error al cargar datos.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function postAction(body: Record<string, unknown>) {
+    setIsSaving(true);
+    setError("");
+    try {
+      const response = await fetch("/api/ahorro-plus", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...body, adminCode: adminSessionCode }),
+      });
+      const data = (await response.json()) as ApiState;
+      if (!response.ok) throw new Error(data.error ?? "No fue posible guardar.");
+      setClients(data.clients);
+      setLogs(data.logs);
+    } catch (caught) {
+      const message = caught instanceof Error ? caught.message : "Error al guardar.";
+      setError(message);
+      window.alert(message);
+    } finally {
+      setIsSaving(false);
+    }
+  }
 
   useEffect(() => {
-    setUsageByClient(loadJson<Record<string, BenefitUsage>>(usageStorageKey, {}));
-    setCustomClients(
-      loadJson<PreferredClient[]>(customClientsStorageKey, [])
-    );
-    setLogs(loadJson<BenefitLog[]>(logStorageKey, []));
+    loadState();
   }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem(usageStorageKey, JSON.stringify(usageByClient));
-  }, [usageByClient]);
-
-  useEffect(() => {
-    window.localStorage.setItem(
-      customClientsStorageKey,
-      JSON.stringify(customClients)
-    );
-  }, [customClients]);
-
-  useEffect(() => {
-    window.localStorage.setItem(logStorageKey, JSON.stringify(logs));
-  }, [logs]);
-
-  useEffect(() => {
-    const onStorage = () => {
-      setUsageByClient(loadJson<Record<string, BenefitUsage>>(usageStorageKey, {}));
-      setCustomClients(loadJson<PreferredClient[]>(customClientsStorageKey, []));
-      setLogs(loadJson<BenefitLog[]>(logStorageKey, []));
-    };
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
-  }, []);
-
-  const clients = useMemo(() => {
-    const map = new Map<string, PreferredClient>();
-    preferredClients.forEach((client) => map.set(client.id, client));
-    customClients.forEach((client) => map.set(client.id, client));
-    return Array.from(map.values()).sort((first, second) =>
-      first.name.localeCompare(second.name, "es")
-    );
-  }, [customClients]);
 
   const selectedClient = clients.find((client) => client.id === selectedId);
 
@@ -195,61 +158,35 @@ export default function AhorroPlusIntranetPage() {
   const totals = useMemo(() => {
     return clients.reduce(
       (acc, client) => {
-        const usage = usageByClient[client.id] ?? emptyUsage();
-        acc.washes += remainingFor(usage, "washes");
-        acc.technicalReview += remainingFor(usage, "technicalReview");
-        acc.brakeReview += remainingFor(usage, "brakeReview");
-        acc.savings += remainingFor(usage, "savings");
+        acc.washes += remainingFor(client, "washes");
+        acc.technicalReview += remainingFor(client, "technicalReview");
+        acc.brakeReview += remainingFor(client, "brakeReview");
+        acc.savings += remainingFor(client, "savings");
         return acc;
       },
       { washes: 0, technicalReview: 0, brakeReview: 0, savings: 0 }
     );
-  }, [clients, usageByClient]);
-
-  function getUsage(clientId: string) {
-    return usageByClient[clientId] ?? emptyUsage();
-  }
+  }, [clients]);
 
   function unlockAdmin() {
-    if (adminCode.trim().toLowerCase() === adminPassword) {
-      setIsAdmin(true);
-      setAdminCode("");
-      return;
-    }
-    window.alert("Clave de administrador incorrecta.");
+    if (!adminCode.trim()) return;
+    setAdminSessionCode(adminCode.trim() || adminPasswordFallback);
+    setAdminCode("");
   }
 
-  function redeem(client: PreferredClient, benefit: BenefitKey, amount = 1) {
-    const usage = getUsage(client.id);
-    const available = remainingFor(usage, benefit);
-    const normalizedAmount =
-      benefit === "savings" ? Math.max(0, Math.round(amount)) : 1;
-
-    if (available <= 0 || normalizedAmount > available) {
-      window.alert("El cliente no tiene saldo disponible para ese beneficio.");
-      return;
-    }
-
-    const updatedUsage = {
-      ...usage,
-      [benefit]: usage[benefit] + normalizedAmount,
-    };
-    const log: BenefitLog = {
-      id: `${client.id}-${Date.now()}`,
-      date: today(),
+  function redeem(client: ClientWithUsage, benefit: BenefitKey, amount = 1) {
+    postAction({
+      action: "redeem",
       clientId: client.id,
       benefit,
-      amount: normalizedAmount,
-      note: redeemNote.trim(),
-    };
-
-    setUsageByClient((current) => ({ ...current, [client.id]: updatedUsage }));
-    setLogs((current) => [log, ...current].slice(0, 200));
+      amount,
+      note: redeemNote,
+    });
     setRedeemNote("");
   }
 
-  function redeemSavings(client: PreferredClient) {
-    const available = remainingFor(getUsage(client.id), "savings");
+  function redeemSavings(client: ClientWithUsage) {
+    const available = remainingFor(client, "savings");
     const answer = window.prompt(
       `Saldo disponible: ${formatCurrency(available)}\nMonto a descontar:`
     );
@@ -260,24 +197,14 @@ export default function AhorroPlusIntranetPage() {
   }
 
   function saveClient() {
-    const client = makeClient(draft);
-    if (!client.name || !client.rutKey || !client.plate) {
-      window.alert("Ingresa nombre, RUT y patente para registrar al cliente.");
-      return;
-    }
-    setCustomClients((current) => [client, ...current]);
-    setSelectedId(client.id);
-    setDraft({ name: "", rut: "", phone: "", plate: "", brand: "" });
+    postAction({ action: "createClient", client: draft });
+    setDraft(emptyDraft());
   }
 
-  function resetClient(client: PreferredClient) {
+  function resetClient(client: ClientWithUsage) {
     const ok = window.confirm(`Restaurar beneficios de ${client.name}?`);
     if (!ok) return;
-    setUsageByClient((current) => {
-      const next = { ...current };
-      delete next[client.id];
-      return next;
-    });
+    postAction({ action: "reset", clientId: client.id });
   }
 
   return (
@@ -298,6 +225,13 @@ export default function AhorroPlusIntranetPage() {
             </div>
           </a>
           <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={loadState}
+              className="rounded-lg border border-white/15 px-4 py-3 text-sm font-black transition hover:bg-white hover:text-black"
+            >
+              Actualizar
+            </button>
             <a
               href="/ahorro-plus"
               className="rounded-lg border border-white/15 px-4 py-3 text-sm font-black transition hover:bg-white hover:text-black"
@@ -314,6 +248,12 @@ export default function AhorroPlusIntranetPage() {
         </div>
       </header>
 
+      {error && (
+        <div className="border-b border-red-500/25 bg-red-600/15 px-5 py-3 text-sm font-bold text-white md:px-10">
+          {error}
+        </div>
+      )}
+
       <section className="mx-auto grid max-w-[1500px] gap-6 px-5 py-8 lg:grid-cols-[0.85fr_1.15fr] lg:px-10">
         <div className="rounded-lg border border-white/10 bg-[#15171b] p-6">
           <p className="text-sm font-black uppercase tracking-[0.18em] text-red-500">
@@ -323,8 +263,8 @@ export default function AhorroPlusIntranetPage() {
             Revisa tus beneficios disponibles
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-white/62">
-            Ingresa tu RUT y patente para ver lavados, pre-revision tecnica,
-            revision de frenos y pesos ahorro disponibles.
+            Ingresa tu RUT y patente. La informacion se consulta desde la base
+            de datos central, no desde este navegador.
           </p>
 
           <div className="mt-6 grid gap-3">
@@ -342,7 +282,13 @@ export default function AhorroPlusIntranetPage() {
             />
           </div>
 
-          {clientRut && clientPlate && !clientProfile && (
+          {isLoading && (
+            <div className="mt-5 rounded-lg border border-white/10 bg-white/5 p-4 text-sm font-bold text-white/60">
+              Cargando base de clientes...
+            </div>
+          )}
+
+          {clientRut && clientPlate && !clientProfile && !isLoading && (
             <div className="mt-5 rounded-lg border border-red-500/25 bg-red-600/10 p-4 text-sm font-bold text-white/75">
               No encontramos un cliente con esos datos. Verifica RUT y patente
               o solicita tu registro en sucursal.
@@ -352,7 +298,6 @@ export default function AhorroPlusIntranetPage() {
           {clientProfile && (
             <ClientBenefits
               client={clientProfile}
-              usage={getUsage(clientProfile.id)}
               logs={logs.filter((log) => log.clientId === clientProfile.id)}
             />
           )}
@@ -391,7 +336,8 @@ export default function AhorroPlusIntranetPage() {
           {!isAdmin ? (
             <div className="mt-6 rounded-lg bg-black/25 p-5 text-sm leading-relaxed text-white/65">
               El acceso administrador permite registrar clientes nuevos y
-              descontar beneficios usados en sucursal.
+              descontar beneficios usados en sucursal. La clave se valida en el
+              servidor.
             </div>
           ) : (
             <div className="mt-6 grid gap-5">
@@ -462,7 +408,8 @@ export default function AhorroPlusIntranetPage() {
                     <button
                       type="button"
                       onClick={saveClient}
-                      className="h-11 rounded-lg bg-red-600 text-sm font-black text-white transition hover:bg-[#c83a42]"
+                      disabled={isSaving}
+                      className="h-11 rounded-lg bg-red-600 text-sm font-black text-white transition hover:bg-[#c83a42] disabled:cursor-wait disabled:opacity-60"
                     >
                       Registrar cliente
                     </button>
@@ -488,7 +435,8 @@ export default function AhorroPlusIntranetPage() {
                     <button
                       type="button"
                       onClick={() => resetClient(selectedClient)}
-                      className="rounded-lg border border-white/15 px-4 py-3 text-sm font-black transition hover:bg-white hover:text-black"
+                      disabled={isSaving}
+                      className="rounded-lg border border-white/15 px-4 py-3 text-sm font-black transition hover:bg-white hover:text-black disabled:cursor-wait disabled:opacity-60"
                     >
                       Restaurar beneficios
                     </button>
@@ -503,8 +451,7 @@ export default function AhorroPlusIntranetPage() {
 
                   <div className="mt-4 grid gap-3 md:grid-cols-4">
                     {benefitOrder.map((benefit) => {
-                      const usage = getUsage(selectedClient.id);
-                      const available = remainingFor(usage, benefit);
+                      const available = remainingFor(selectedClient, benefit);
                       const isSavings = benefit === "savings";
                       return (
                         <div
@@ -524,7 +471,7 @@ export default function AhorroPlusIntranetPage() {
                                 ? redeemSavings(selectedClient)
                                 : redeem(selectedClient, benefit)
                             }
-                            disabled={available <= 0}
+                            disabled={available <= 0 || isSaving}
                             className="mt-4 h-10 w-full rounded-lg bg-red-600 text-xs font-black text-white transition hover:bg-[#c83a42] disabled:cursor-not-allowed disabled:opacity-40"
                           >
                             Descontar
@@ -554,11 +501,9 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 function ClientBenefits({
   client,
-  usage,
   logs,
 }: {
-  client: PreferredClient;
-  usage: BenefitUsage;
+  client: ClientWithUsage;
   logs: BenefitLog[];
 }) {
   return (
@@ -573,7 +518,8 @@ function ClientBenefits({
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
         {benefitOrder.map((benefit) => {
-          const available = remainingFor(usage, benefit);
+          const available = remainingFor(client, benefit);
+          const used = Number(client[benefit] ?? 0);
           const isSavings = benefit === "savings";
           return (
             <div key={benefit} className="rounded-lg bg-white/5 p-4">
@@ -584,7 +530,7 @@ function ClientBenefits({
                 {isSavings ? formatCurrency(available) : available}
               </p>
               <p className="mt-1 text-xs font-bold text-white/45">
-                Usado: {isSavings ? formatCurrency(usage[benefit]) : usage[benefit]}
+                Usado: {isSavings ? formatCurrency(used) : used}
               </p>
             </div>
           );
@@ -600,7 +546,11 @@ function ClientBenefits({
                 key={log.id}
                 className="rounded-lg border border-white/10 px-3 py-2 text-xs font-bold text-white/58"
               >
-                {log.date} | {benefitLabels[log.benefit]} |{" "}
+                {log.date} |{" "}
+                {log.benefit === "reset"
+                  ? "Beneficios restaurados"
+                  : benefitLabels[log.benefit]}{" "}
+                |{" "}
                 {log.benefit === "savings"
                   ? formatCurrency(log.amount)
                   : log.amount}
