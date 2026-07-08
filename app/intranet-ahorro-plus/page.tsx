@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   benefitLabels,
   benefitLimits,
@@ -87,6 +87,7 @@ export default function AhorroPlusIntranetPage() {
   const [draft, setDraft] = useState<DraftClient>(emptyDraft);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
   const [error, setError] = useState("");
 
   const isAdmin = Boolean(adminSessionCode);
@@ -172,10 +173,31 @@ export default function AhorroPlusIntranetPage() {
     );
   }, [clients]);
 
-  function unlockAdmin() {
-    if (!adminCode.trim()) return;
-    setAdminSessionCode(adminCode.trim() || adminPasswordFallback);
-    setAdminCode("");
+  async function unlockAdmin() {
+    const codeToVerify = adminCode.trim();
+    if (!codeToVerify) return;
+
+    setIsVerifying(true);
+    setError("");
+    try {
+      const response = await fetch("/api/ahorro-plus", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "verify", adminCode: codeToVerify }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error ?? "Clave de administrador incorrecta.");
+      }
+      setAdminSessionCode(codeToVerify);
+      setAdminCode("");
+    } catch (caught) {
+      const message = caught instanceof Error ? caught.message : "Error al validar la clave.";
+      setError(message);
+      window.alert(message);
+    } finally {
+      setIsVerifying(false);
+    }
   }
 
   function redeem(client: ClientWithUsage, benefit: BenefitKey, amount = 1) {
@@ -319,15 +341,17 @@ export default function AhorroPlusIntranetPage() {
                   value={adminCode}
                   onChange={(event) => setAdminCode(event.target.value)}
                   type="password"
-                  placeholder="Clave admin"
-                  className="h-11 rounded-lg border border-white/10 bg-black/35 px-4 text-sm font-bold text-white outline-none focus:border-red-500"
+                  placeholder={isVerifying ? "Validando..." : "Clave admin"}
+                  disabled={isVerifying}
+                  className="h-11 rounded-lg border border-white/10 bg-black/35 px-4 text-sm font-bold text-white outline-none focus:border-red-500 disabled:opacity-50"
                 />
                 <button
                   type="button"
                   onClick={unlockAdmin}
-                  className="h-11 rounded-lg bg-red-600 px-5 text-sm font-black text-white transition hover:bg-[#c83a42]"
+                  disabled={isVerifying}
+                  className="h-11 rounded-lg bg-red-600 px-5 text-sm font-black text-white transition hover:bg-[#c83a42] disabled:cursor-wait disabled:opacity-60"
                 >
-                  Entrar
+                  {isVerifying ? "Validando..." : "Entrar"}
                 </button>
               </div>
             )}
