@@ -95,6 +95,13 @@ async function ensureSchema() {
   `;
 
   await sql`
+    ALTER TABLE ahorro_plus_clients 
+    ADD COLUMN IF NOT EXISTS vehicle_model TEXT NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS vehicle_year INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS captured_by TEXT NOT NULL DEFAULT ''
+  `;
+
+  await sql`
     CREATE TABLE IF NOT EXISTS ahorro_plus_usage (
       client_id TEXT PRIMARY KEY REFERENCES ahorro_plus_clients(id) ON DELETE CASCADE,
       washes INTEGER NOT NULL DEFAULT 0,
@@ -113,6 +120,37 @@ async function ensureSchema() {
       benefit TEXT NOT NULL,
       amount INTEGER NOT NULL,
       note TEXT NOT NULL DEFAULT '',
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS ahorro_plus_sales (
+      id TEXT PRIMARY KEY,
+      client_id TEXT NOT NULL REFERENCES ahorro_plus_clients(id) ON DELETE CASCADE,
+      sale_date TEXT NOT NULL,
+      net_amount INTEGER NOT NULL DEFAULT 0,
+      tax_amount INTEGER NOT NULL DEFAULT 0,
+      total_amount INTEGER NOT NULL DEFAULT 0,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS ahorro_plus_agents (
+      id TEXT PRIMARY KEY,
+      name TEXT NOT NULL,
+      email TEXT NOT NULL UNIQUE,
+      base_salary INTEGER NOT NULL DEFAULT 500000,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS ahorro_plus_monthly_goals (
+      month_year TEXT PRIMARY KEY,
+      projected_goal INTEGER NOT NULL DEFAULT 0,
+      actual_sales INTEGER NOT NULL DEFAULT 0,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
