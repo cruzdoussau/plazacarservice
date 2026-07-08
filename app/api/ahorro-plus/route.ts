@@ -34,7 +34,12 @@ type ResetPayload = {
   clientId: string;
 };
 
-type Payload = CreateClientPayload | RedeemPayload | ResetPayload;
+type VerifyPayload = {
+  action: "verify";
+  adminCode: string;
+};
+
+type Payload = CreateClientPayload | RedeemPayload | ResetPayload | VerifyPayload;
 
 const adminPassword = process.env.AHORRO_PLUS_ADMIN_PASSWORD ?? "plazacar2026";
 
@@ -191,6 +196,10 @@ export async function POST(request: Request) {
     const payload = (await request.json()) as Payload;
     const adminError = assertAdmin(payload.adminCode);
     if (adminError) return adminError;
+
+    if (payload.action === "verify") {
+      return Response.json({ success: true });
+    }
 
     const sql = getSql();
 
