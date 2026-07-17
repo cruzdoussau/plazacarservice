@@ -1,6 +1,9 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
+import plazaCarLogo2026 from "./LOGO PLAZA CAR SERVICE 2026.png";
+import SiteHeader from "./components/SiteHeader";
+import { homeGalleryImages } from "./generated-galleries";
 
 const terminoPatenteMes = "1 o 2";
 const whatsappBase = "https://wa.me/56971257621";
@@ -8,12 +11,14 @@ const whatsappBase = "https://wa.me/56971257621";
 const slides = [
   {
     id: "red-integral",
-    title: "Conoce nuestra red integral de servicios automotriz",
-    text: "Estamos ubicados en Algarrobo y El Tabo, y próximamente en El Quisco y San Antonio, con una atención cercana, de calidad y adaptada a lo que tu vehículo necesita.",
-    primary: "Ver nuestros servicios",
-    secondary: "Conoce sucursales",
-    href: "#servicios",
-    secondaryHref: "#nosotros",
+    title: "Bienvenidos a Plaza Car Service",
+    text: "Somos la red integral de servicios automotriz multimarca del Litoral Central. Estamos más cerca de ti y de tu vehículo. Diseñamos este espacio web para que gestionar el mantenimiento de tu auto sea un proceso simple, rápido y transparente.",
+    primary: "Escríbenos",
+    secondary: "Nuestros servicios",
+    href: `${whatsappBase}?text=${encodeURIComponent(
+      "Hola, quiero recibir atención de un ejecutivo de Plaza Car Services"
+    )}`,
+    secondaryHref: "#servicios",
     image: "/slider/red-integral.png",
     mobileImage: "/slider-mobile/red-integral-mobile.png",
     imageClass: "object-contain object-center bg-black md:object-cover md:object-center",
@@ -24,7 +29,7 @@ const slides = [
     text: "En nuestras instalaciones encontrarás una atención cercana y profesional, además de un espacio cómodo para esperar mientras atendemos las necesidades de tu vehículo.",
     primary: "Conoce nuestras sucursales",
     secondary: "Contáctanos",
-    href: "#nosotros",
+    href: "/nosotros",
     secondaryHref: "#contacto",
     image: "/slider/comodidad.png",
     mobileImage: "/slider-mobile/comodidad-mobile.png",
@@ -49,7 +54,7 @@ const slides = [
     primary: "Agendar pre revisión",
     secondary: "Ver detalle",
     href: "https://wa.me/56971257621?text=Hola,%20quiero%20agendar%20una%20pre%20revisi%C3%B3n%20t%C3%A9cnica",
-    secondaryHref: "#contacto",
+    secondaryHref: "/servicios/pre-revision-tecnica",
     image: "/slider/pre-revision-tecnica.png",
     mobileImage: "/slider-mobile/pre-revision-tecnica-mobile.png",
     imageClass: "object-contain object-center bg-black md:object-cover md:object-center",
@@ -58,38 +63,33 @@ const slides = [
 
 const services = [
   {
-    id: "ahorro-plus",
-    badge: "Servicio de Mantención Preventiva",
-    title: "Mantención Ahorro Plus",
-    subtitle: "Mantén tu vehículo según pauta del fabricante.",
-    price: "$109.000",
-    cta: "Agendar mantención",
+    id: "mantencion-kilometraje",
+    badge: "Mantención preventiva",
+    title: "Mantención por Kilometraje",
+    subtitle: "Servicio programado según pauta y kilometraje de tu vehículo.",
+    cta: "Cotizar mantención",
     more: "Ver más",
-    image: "/Servicios/servicio-ahorro-plus.png",
+    image: "/site-photos/auto-rampa-servicio.webp",
     detailIntro:
-      "Plan preventivo pensado para mantener tu vehículo según pauta del fabricante, cuidando el rendimiento y ayudando a prevenir fallas por falta de mantención.",
+      "Mantención preventiva para cuidar el rendimiento, revisar puntos críticos y prolongar la vida útil del vehículo según su kilometraje.",
     includes: [
-      "4 litros de aceite 5W30",
-      "Filtro de aceite",
-      "Filtro de polen",
-      "Relleno de niveles",
-      "Lubricación de puertas y bisagras",
-      "Rotación y balanceo de 4 neumáticos",
-      "Revisión de frenos, batería, luces, filtros, plumillas, tren delantero y cañerías",
+      "Revisión según pauta",
+      "Cambio de insumos según necesidad",
+      "Chequeo de niveles",
+      "Revisión visual preventiva",
+      "Orientación sobre próximos servicios",
     ],
     idealFor:
-      "Vehículos que requieren una mantención completa y preventiva para seguir la pauta recomendada por el fabricante.",
-    note: "Además acumulas puntos para canjear en productos de vitrina.",
+      "Vehículos que ya cumplieron kilometraje o tiempo recomendado para mantención.",
+    note: "El valor depende de la marca, modelo, kilometraje e insumos requeridos.",
   },
   {
     id: "frenos",
     badge: "Seguridad preventiva",
     title: "Mantención de Frenos",
-    subtitle: "Cambio de pastillas delanteras, rectificación y limpieza del sistema.",
-    price: "Desde $59.900",
-    cta: "Agendar evaluación",
+    subtitle: "Cambio de pastillas delanteras, rectificación y limpieza del sistema.",    cta: "Agendar evaluación",
     more: "Ver más",
-    image: "/Servicios/servicio-frenos.png",
+    image: "/site-photos/mecanica-auto-elevado.webp",
     detailIntro:
       "Servicio orientado a cuidar la seguridad del vehículo y mantener el sistema de frenado en buen estado con una mantención completa.",
     includes: [
@@ -103,38 +103,32 @@ const services = [
     note: "Evita desgastes mayores, ruidos y fallas inesperadas.",
   },
   {
-    id: "neumaticos",
-    badge: "Oferta de invierno",
-    title: "Baterías y Neumáticos",
-    subtitle: "Baterías desde $33.500 y neumáticos desde $26.500.",
-    price: "Desde $26.500",
-    priceLines: ["Baterías desde $33.500", "Neumáticos desde $26.500"],
-    cta: "Agendar servicio",
+    id: "baterias",
+    badge: "Energía y partida",
+    title: "Venta de Baterías",
+    subtitle: "Baterías para una partida confiable y segura.",    cta: "Cotizar batería",
     more: "Ver más",
-    image: "/Servicios/servicios-neumaticos.png",
+    image: "/site-photos/sucursal-interior-auto.webp",
     detailIntro:
-      "Oferta especial para renovar batería o neumáticos durante la campaña de invierno, con alternativas seleccionadas y hasta 6 cuotas sin interés.",
+      "Venta de baterías para mantener una partida confiable y evitar fallas inesperadas.",
     includes: [
-      "Batería Olimpo 55Ah desde $33.500",
-      "Batería Black Tiger 55Ah desde $33.500",
-      "Neumático 175/70R13 Goodride desde $26.500",
-      "Neumático 165/70R14 81T Roadwing desde $26.500",
-      "Neumático 165/70R14 81T RW-581 Risen desde $26.500",
+      "Asesoría según vehículo",
+      "Alternativas disponibles",
+      "Revisión de compatibilidad",
+      "Orientación sobre garantía",
+      "Apoyo para elegir la batería adecuada",
     ],
     idealFor:
-      "Vehículos que necesitan mejorar seguridad, partida confiable, agarre y estabilidad durante el invierno.",
-    note: "Beneficio adicional: hasta 6 cuotas sin interés.",
+      "Vehículos con partida débil, batería antigua o fallas eléctricas asociadas a baja carga.",
+    note: "Disponibilidad y valores sujetos a stock.",
   },
   {
     id: "limpieza",
     badge: "Cuidado interior y exterior",
     title: "Lavado y Limpieza",
-    subtitle: "Lavado exterior y limpieza interior disponibles de forma individual.",
-    price: "$9.000 c/u",
-    priceLines: ["Lavado exterior $9.000", "Limpieza interior $9.000"],
-    cta: "Agendar limpieza",
+    subtitle: "Lavado exterior y limpieza interior disponibles de forma individual.",    cta: "Agendar limpieza",
     more: "Ver más",
-    image: "/Servicios/servicio-lavado-y-limpieza.png",
+    image: "/site-photos/lavado-auto-premium.webp",
     detailIntro:
       "Servicio pensado para mantener tu vehiculo limpio, cuidado y con una mejor presentacion interior y exterior. Puedes tomar lavado exterior o limpieza interior de forma individual, segun lo que necesites.",
     includes: [
@@ -152,11 +146,9 @@ const services = [
     badge: "Promoción Junio y Julio",
     title: "Alineación + Balanceo + Rotación",
     subtitle:
-      "Congelamos el precio: antes $51.000, ahora $19.900 por los tres servicios.",
-    price: "$19.900",
-    cta: "Agendar servicio",
+      "Servicio combinado para mejorar seguridad, estabilidad y vida útil de tus neumáticos.",    cta: "Agendar servicio",
     more: "Ver más",
-    image: "/Servicios/servicio-alineacion-y-balanceo.png",
+    image: "/site-photos/auto-rampa-servicio.webp",
     detailIntro:
       "Oferta especial de alineación, balanceo y rotación pensada para mejorar seguridad, estabilidad y vida útil de tus neumáticos.",
     includes: [
@@ -169,20 +161,18 @@ const services = [
     ],
     idealFor:
       "Vehículos que se cargan hacia un lado, presentan vibración al conducir o tienen desgaste irregular en neumáticos.",
-    note: "Precio normal: alineación $25.000 + balanceo $26.000. Promoción junio y julio: $19.900 ambos más rotación.",
+    note: "Servicio recomendado para cuidar la estabilidad, reducir desgaste irregular y mejorar el confort de manejo.",
   },
   {
     id: "cambio-aceite",
     badge: "Lubricación del motor",
     title: "Cambio de Aceite",
     subtitle:
-      "Aceite ESSO con filtro incluido para cuidar el motor de tu vehículo.",
-    price: "Desde $32.000",
-    cta: "Agendar cambio",
+      "Aceite ESSO con filtro incluido para cuidar el motor de tu vehículo.",    cta: "Agendar cambio",
     more: "Ver más",
-    image: "/Servicios/servicio-cambio-aceite.png",
+    image: "/site-photos/mecanica-auto-elevado.webp",
     detailIntro:
-      "Servicio esencial para proteger el motor, mantener una lubricación adecuada y evitar desgaste prematuro de componentes internos. Disponible desde $32.000 con filtro incluido.",
+      "Servicio esencial para proteger el motor, mantener una lubricación adecuada y evitar desgaste prematuro de componentes internos.",
     includes: [
       "Aceite ESSO",
       "Filtro incluido",
@@ -199,11 +189,9 @@ const services = [
     badge: "Diagnóstico electrónico",
     title: "Scanner Automotriz",
     subtitle:
-      "Detecta fallas y códigos de alerta mediante diagnóstico electrónico especializado.",
-    price: "$25.000",
-    cta: "Agendar scanner",
+      "Detecta fallas y códigos de alerta mediante diagnóstico electrónico especializado.",    cta: "Agendar scanner",
     more: "Ver más",
-    image: "/Servicios/servicio-scanner.png",
+    image: "/site-photos/scanner-alineacion-equipo.webp",
     detailIntro:
       "Diagnóstico electrónico para identificar códigos de falla y orientar una reparación más precisa.",
     includes: [
@@ -217,28 +205,145 @@ const services = [
       "Vehículos con luces de advertencia encendidas, fallas intermitentes o pérdida de rendimiento.",
     note: "El scanner ayuda a orientar el diagnóstico, pero algunas fallas pueden requerir revisión mecánica adicional.",
   },
-];
-
-const nosotrosImages = [
   {
-    id: "equipo-plaza-car",
-    src: "/Nosotros/nosotros-1.png",
-    alt: "Equipo Plaza Car Service",
-    imageClass: "object-contain object-center bg-black",
+    id: "pintura",
+    badge: "Estética automotriz",
+    title: "Pintura",
+    subtitle: "Soluciones de pintura para recuperar presentación y acabado.",    cta: "Cotizar pintura",
+    more: "Ver más",
+    image: "/site-photos/sucursal-fachada.webp",
+    detailIntro:
+      "Servicio orientado a recuperar la presentación del vehículo mediante evaluación, preparación y trabajos de pintura según necesidad.",
+    includes: [
+      "Evaluación del estado de la superficie",
+      "Orientación sobre alcance del trabajo",
+      "Preparación de zona a intervenir",
+      "Trabajo de pintura según diagnóstico",
+      "Revisión de terminación",
+    ],
+    idealFor:
+      "Vehículos con detalles estéticos, rayas, desgaste de pintura o necesidad de recuperación visual.",
+    note: "Requiere evaluación para confirmar tiempos, alcance y valor.",
   },
   {
-    id: "sucursal-plaza-car",
-    src: "/Nosotros/nosotros-2.png",
-    alt: "Sucursal Plaza Car Service",
+    id: "mecanica-compleja",
+    badge: "Reparación especializada",
+    title: "Mecánica Compleja",
+    subtitle:
+      "Diagnóstico y reparación para fallas mecánicas de mayor alcance.",    cta: "Solicitar evaluación",
+    more: "Ver más",
+    image: "/site-photos/mecanica-auto-elevado.webp",
+    detailIntro:
+      "Servicio para diagnosticar y resolver fallas mecánicas que requieren evaluación técnica, revisión profunda y reparación especializada.",
+    includes: [
+      "Evaluación inicial",
+      "Diagnóstico técnico",
+      "Revisión de componentes asociados",
+      "Presupuesto según reparación",
+      "Orientación sobre prioridades del vehículo",
+    ],
+    idealFor:
+      "Vehículos con fallas persistentes, ruidos, pérdida de potencia o problemas mecánicos de mayor complejidad.",
+    note: "El valor final depende del diagnóstico y repuestos requeridos.",
+  },
+  {
+    id: "neumaticos",
+    badge: "Seguridad en ruta",
+    title: "Venta de Neumáticos",
+    subtitle: "Neumáticos para mejorar agarre, estabilidad y seguridad.",    cta: "Cotizar neumáticos",
+    more: "Ver más",
+    image: "/site-photos/sucursal-exterior-autos.webp",
+    detailIntro:
+      "Venta de neumáticos con asesoría para elegir la medida y alternativa adecuada para tu vehículo.",
+    includes: [
+      "Asesoría por medida",
+      "Alternativas disponibles",
+      "Revisión visual de desgaste",
+      "Orientación para cambio oportuno",
+      "Consulta por instalación y balanceo",
+    ],
+    idealFor:
+      "Vehículos con neumáticos gastados, desgaste irregular o necesidad de mejorar seguridad en ruta.",
+    note: "Disponibilidad y valores sujetos a stock.",
+  },
+  {
+    id: "aire-acondicionado",
+    badge: "Confort interior",
+    title: "Aire Acondicionado",
+    subtitle:
+      "Revisión y servicio para mantener el climatizador funcionando bien.",    cta: "Agendar revisión",
+    more: "Ver más",
+    image: "/site-photos/taller-interior-autos.webp",
+    detailIntro:
+      "Servicio para revisar el funcionamiento del aire acondicionado y orientar la solución adecuada según el estado del sistema.",
+    includes: [
+      "Revisión de funcionamiento",
+      "Evaluación de rendimiento",
+      "Orientación sobre posibles causas",
+      "Presupuesto según diagnóstico",
+      "Recomendación de próximos pasos",
+    ],
+    idealFor:
+      "Vehículos con baja refrigeración, malos olores, ruidos o fallas en el sistema de climatización.",
+    note: "Puede requerir diagnóstico adicional según la falla detectada.",
+  },
+];
+
+const serviceDisplayOrder = [
+  "mantencion-kilometraje",
+  "frenos",
+  "alineacion-balanceo",
+  "cambio-aceite",
+  "scanner",
+  "limpieza",
+  "pintura",
+  "mecanica-compleja",
+  "baterias",
+  "neumaticos",
+  "aire-acondicionado",
+];
+
+const orderedServices = serviceDisplayOrder.flatMap((id) => {
+  const service = services.find((item) => item.id === id);
+  return service ? [service] : [];
+});
+
+const fallbackNosotrosImages = [
+  {
+    id: "auto-rampa-servicio",
+    src: "/site-photos/auto-rampa-servicio.webp",
+    alt: "Vehículo en atención en Plaza Car Service",
     imageClass: "object-cover object-center",
   },
   {
-    id: "atencion-plaza-car",
-    src: "/Nosotros/nosotros-3.png",
-    alt: "Atención Plaza Car Service",
-    imageClass: "object-cover object-[60%_center]",
+    id: "mecanica-auto-elevado",
+    src: "/site-photos/mecanica-auto-elevado.webp",
+    alt: "Revisión mecánica en elevador",
+    imageClass: "object-cover object-center",
+  },
+  {
+    id: "sucursal-exterior-autos",
+    src: "/site-photos/sucursal-exterior-autos.webp",
+    alt: "Sucursal Plaza Car Service con vehículos en atención",
+    imageClass: "object-cover object-center",
+  },
+  {
+    id: "sucursal-fachada",
+    src: "/site-photos/sucursal-fachada.webp",
+    alt: "Fachada de sucursal Plaza Car Service",
+    imageClass: "object-cover object-center",
+  },
+  {
+    id: "scanner-alineacion-equipo",
+    src: "/site-photos/scanner-alineacion-equipo.webp",
+    alt: "Equipamiento técnico Plaza Car Service",
+    imageClass: "object-cover object-center",
   },
 ];
+
+const nosotrosImages = homeGalleryImages.length
+  ? homeGalleryImages
+  : fallbackNosotrosImages;
 
 const branches = [
   {
@@ -352,186 +457,6 @@ function PinIcon({ className = "" }) {
       <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
       <circle cx="12" cy="10" r="3" />
     </svg>
-  );
-}
-
-function LogoMockup() {
-  return (
-    <div className="relative flex h-[58px] w-[190px] items-center overflow-visible md:h-[82px] md:w-[260px]">
-      <img
-        src="/logo-plaza-car-service-vfinal.png"
-        alt="Plaza Car Service"
-        className="absolute left-0 h-[82px] w-auto max-w-none object-contain md:h-[110px]"
-      />
-    </div>
-  );
-}
-
-function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-
-  return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#0b0c0f]/95 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-[1920px] items-center justify-between px-5 py-4 md:px-10">
-        <a href="#home" aria-label="Plaza Car Service">
-          <LogoMockup />
-        </a>
-
-        <nav className="hidden items-center gap-10 text-sm font-semibold text-white/70 md:flex">
-          <a className="border-b-2 border-red-600 py-2 text-white" href="#home">
-            Home
-          </a>
-          <a className="py-2 transition hover:text-white" href="#nosotros">
-            Nosotros
-          </a>
-          <div className="group relative py-1">
-            <a
-              className="inline-flex items-center gap-2 py-2 text-white transition hover:text-white"
-              href="#servicios"
-            >
-              Servicios
-              <span className="text-[10px] text-white/45 transition group-hover:text-white">
-                ▾
-              </span>
-            </a>
-            <div className="invisible absolute left-1/2 top-full z-50 w-[360px] -translate-x-1/2 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-              <div className="rounded-lg border border-white/10 bg-[#111318]/98 p-3 shadow-2xl shadow-black/45 backdrop-blur-xl">
-                <a
-                  href="/promociones"
-                  className="mb-2 block rounded-md bg-red-600 px-4 py-3 text-sm font-black text-white transition hover:bg-[#c83a42]"
-                >
-                  Ver promociones del mes
-                </a>
-                <a
-                  href="/ahorro-plus"
-                  className="mb-2 block rounded-md bg-white px-4 py-3 text-sm font-black text-black transition hover:bg-red-600 hover:text-white"
-                >
-                  Programa Ahorro Plus
-                </a>
-                <a
-                  href="/intranet-ahorro-plus"
-                  className="mb-2 block rounded-md border border-white/10 px-4 py-3 text-sm font-black text-white/78 transition hover:bg-white/10 hover:text-white"
-                >
-                  Acceso cliente preferente
-                </a>
-                <div className="grid gap-1">
-                  {services.map((service) => (
-                    <a
-                      key={service.id}
-                      href={`/servicios/${service.id}`}
-                      className="rounded-md px-4 py-2.5 text-sm font-bold text-white/68 transition hover:bg-white/10 hover:text-white"
-                    >
-                      {service.title}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          <a className="py-2 transition hover:text-white" href="#contacto">
-            Contacto
-          </a>
-        </nav>
-
-        <a
-          href={whatsappBase}
-          target="_blank"
-          rel="noreferrer"
-          className="hidden items-center gap-2 rounded-lg bg-[#c83a42] px-5 py-3 text-sm font-black text-white transition hover:bg-[#a92f36] md:inline-flex"
-        >
-          <WhatsAppIcon className="h-4 w-4" /> Agendar hora
-        </a>
-
-        <button
-          type="button"
-          onClick={() => setIsMobileMenuOpen((current) => !current)}
-          className="rounded-full border border-white/10 px-4 py-3 text-sm font-black text-white md:hidden"
-          aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
-          aria-expanded={isMobileMenuOpen}
-        >
-          {isMobileMenuOpen ? "Cerrar" : "Menú"}
-        </button>
-
-        {isMobileMenuOpen && (
-          <div className="absolute left-4 right-4 top-[calc(100%+10px)] z-50 overflow-hidden rounded-2xl border border-white/10 bg-[#111318]/98 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl md:hidden">
-            <nav className="grid gap-2 text-sm font-black text-white">
-              <a
-                href="#home"
-                onClick={closeMobileMenu}
-                className="rounded-xl bg-white/5 px-4 py-3 transition hover:bg-red-600"
-              >
-                Home
-              </a>
-              <a
-                href="#nosotros"
-                onClick={closeMobileMenu}
-                className="rounded-xl bg-white/5 px-4 py-3 transition hover:bg-red-600"
-              >
-                Nosotros
-              </a>
-              <details className="overflow-hidden rounded-xl bg-white/5">
-                <summary className="cursor-pointer px-4 py-3 transition hover:bg-red-600">
-                  Servicios
-                </summary>
-                <div className="grid gap-1 border-t border-white/10 p-2">
-                  <a
-                    href="/promociones"
-                    onClick={closeMobileMenu}
-                    className="rounded-lg px-3 py-2.5 text-white/80 transition hover:bg-red-600 hover:text-white"
-                  >
-                    Ver promociones del mes
-                  </a>
-                  <a
-                    href="/ahorro-plus"
-                    onClick={closeMobileMenu}
-                    className="rounded-lg px-3 py-2.5 text-white/80 transition hover:bg-red-600 hover:text-white"
-                  >
-                    Programa Ahorro Plus
-                  </a>
-                  <a
-                    href="/intranet-ahorro-plus"
-                    onClick={closeMobileMenu}
-                    className="rounded-lg px-3 py-2.5 text-white/80 transition hover:bg-red-600 hover:text-white"
-                  >
-                    Acceso cliente preferente
-                  </a>
-                  {services.map((service) => (
-                    <a
-                      key={service.id}
-                      href={`/servicios/${service.id}`}
-                      onClick={closeMobileMenu}
-                      className="rounded-lg px-3 py-2.5 text-white/70 transition hover:bg-red-600 hover:text-white"
-                    >
-                      {service.title}
-                    </a>
-                  ))}
-                </div>
-              </details>
-              <a
-                href="#contacto"
-                onClick={closeMobileMenu}
-                className="rounded-xl bg-white/5 px-4 py-3 transition hover:bg-red-600"
-              >
-                Contacto
-              </a>
-              <a
-                href={whatsappBase}
-                target="_blank"
-                rel="noreferrer"
-                onClick={closeMobileMenu}
-                className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-[#c83a42] px-4 py-3 text-white transition hover:bg-[#a92f36]"
-              >
-                <WhatsAppIcon className="h-5 w-5" /> Agendar hora
-              </a>
-            </nav>
-          </div>
-        )}
-      </div>
-    </header>
   );
 }
 
@@ -666,309 +591,117 @@ function MainSlider() {
 }
 
 function ServicesSection() {
-  const [activeId, setActiveId] = useState("ahorro-plus");
-  const servicesScrollRef = useRef(null);
-  const serviceItemRefs = useRef({});
-
-  const active = useMemo(
-    () => services.find((service) => service.id === activeId) || services[0],
-    [activeId]
-  );
-
-  const activeServiceIndex = services.findIndex(
-    (service) => service.id === activeId
-  );
-
-  const previousService = () => {
-    const previousIndex =
-      activeServiceIndex <= 0 ? services.length - 1 : activeServiceIndex - 1;
-    setActiveId(services[previousIndex].id);
-  };
-
-  const nextService = () => {
-    const nextIndex =
-      activeServiceIndex >= services.length - 1 ? 0 : activeServiceIndex + 1;
-    setActiveId(services[nextIndex].id);
-  };
-
-  const whatsappUrl = `${whatsappBase}?text=${encodeURIComponent(
-    `Hola, quiero agendar el servicio: ${active.title}`
-  )}`;
-
-  useEffect(() => {
-    const slider = servicesScrollRef.current;
-    if (!slider) return;
-
-    let isDown = false;
-    let startX = 0;
-    let scrollLeft = 0;
-    let dragged = false;
-
-    const handleMouseDown = (event) => {
-      isDown = true;
-      dragged = false;
-      slider.classList.add("cursor-grabbing");
-      startX = event.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    };
-
-    const stopDragging = () => {
-      isDown = false;
-      slider.classList.remove("cursor-grabbing");
-    };
-
-    const handleMouseMove = (event) => {
-      if (!isDown) return;
-      event.preventDefault();
-      const x = event.pageX - slider.offsetLeft;
-      const walk = (x - startX) * 1.35;
-
-      if (Math.abs(walk) > 6) dragged = true;
-      slider.scrollLeft = scrollLeft - walk;
-    };
-
-    const handleClick = (event) => {
-      if (!dragged) return;
-      event.preventDefault();
-      event.stopPropagation();
-      dragged = false;
-    };
-
-    slider.addEventListener("mousedown", handleMouseDown);
-    slider.addEventListener("mouseleave", stopDragging);
-    slider.addEventListener("mouseup", stopDragging);
-    slider.addEventListener("mousemove", handleMouseMove);
-    slider.addEventListener("click", handleClick, true);
-
-    return () => {
-      slider.removeEventListener("mousedown", handleMouseDown);
-      slider.removeEventListener("mouseleave", stopDragging);
-      slider.removeEventListener("mouseup", stopDragging);
-      slider.removeEventListener("mousemove", handleMouseMove);
-      slider.removeEventListener("click", handleClick, true);
-    };
-  }, []);
-
-  useEffect(() => {
-    const activeButton = serviceItemRefs.current[activeId];
-    if (!activeButton) return;
-
-    activeButton.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-  }, [activeId]);
-
   return (
-    <section
-      id="servicios"
-      className="bg-[#0c0c0d] px-4 py-2 md:px-8"
-    >
-      <div className="mx-auto max-w-[1920px]">
-        <div className="hidden min-h-[420px] gap-10 md:min-h-[520px] md:grid-cols-[0.72fr_1.28fr] md:items-end">
-          <div>
-            <p className="text-sm font-black text-red-500">
-              Nuestros servicios
-            </p>
-            <h2 className="mt-6 max-w-2xl text-5xl font-black leading-[1.08] text-white md:text-7xl">
-              Conoce nuestros Servicios Destacados
-            </h2>
-          </div>
-
-          <p className="max-w-4xl text-xl leading-relaxed text-white/76 md:text-2xl">
-            Encuentra servicios pensados para la mantención, seguridad y limpieza
-            de tu vehículo, con atención cercana y profesional en nuestras
-            sucursales del Litoral Central.
+    <section id="servicios" className="bg-[#f4f5f7] px-5 py-12 text-[#111318] md:px-10 md:py-16">
+      <div className="mx-auto max-w-[1320px]">
+        <div className="max-w-4xl">
+          <p className="text-sm font-black uppercase text-red-600">
+            Nuestros servicios
           </p>
+          <h2 className="mt-3 text-3xl font-black leading-tight md:text-5xl">
+            Todo lo que tu vehículo necesita, en un solo lugar
+          </h2>
         </div>
 
-        <div className="hidden mt-16 gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {services.map((service) => (
+        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {orderedServices.map((service) => (
             <a
               key={service.id}
               href={`/servicios/${service.id}`}
-              className="group rounded-lg border border-white/10 bg-[#15171b] p-5 transition hover:-translate-y-1 hover:border-red-500/45 hover:bg-[#1c1f24]"
+              className="group flex min-h-[92px] items-center justify-between gap-4 rounded-lg border border-[#d7dbe2] bg-white px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-red-500 hover:shadow-lg"
             >
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-red-500">
-                {service.badge}
-              </p>
-              <h3 className="mt-3 text-2xl font-black leading-tight text-white">
+              <span className="text-base font-black leading-tight text-[#111318] md:text-lg">
                 {service.title}
-              </h3>
-              <p className="mt-3 min-h-[56px] text-sm leading-relaxed text-white/62">
-                {service.subtitle}
-              </p>
-              <div className="mt-5 border-t border-white/10 pt-4">
-                {service.priceLines ? (
-                  <div className="space-y-1">
-                    {service.priceLines.map((line) => (
-                      <p key={line} className="text-base font-black text-white">
-                        {line}
-                      </p>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-2xl font-black text-white">
-                    {service.price}
-                  </p>
-                )}
-                <p className="mt-4 text-sm font-black text-white/55 transition group-hover:text-red-400">
-                  Ver más
-                </p>
-              </div>
+                <span className="mt-2 block text-sm font-black text-red-600">
+                  Ver detalle del servicio
+                </span>
+              </span>
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-600 text-white transition group-hover:bg-[#a92f36]">
+                <ArrowIcon className="h-5 w-5" />
+              </span>
             </a>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
 
-        <div className="relative overflow-hidden rounded-[1.25rem] border border-white/15 bg-[#111318] p-4 shadow-2xl md:h-[550px] md:p-6">
-          <button
-            type="button"
-            onClick={previousService}
-            className="absolute left-3 top-[42%] z-30 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/45 text-white backdrop-blur transition hover:bg-white hover:text-black md:left-5 md:h-11 md:w-11"
-            aria-label="Servicio anterior"
-          >
-            <ArrowIcon className="h-5 w-5 rotate-180" />
-          </button>
+function WebActionsSection() {
+  const actions = [
+    {
+      title: "Agendar tu hora",
+      text: "Reserva tu cita en línea en pocos pasos.",
+      label: "Agendar hora",
+      href: `${whatsappBase}?text=${encodeURIComponent(
+        "Hola, quiero agendar una hora en Plaza Car Service."
+      )}`,
+      external: true,
+    },
+    {
+      title: "Servicios multimarca",
+      text: "Encuentra soluciones específicas para cualquier modelo.",
+      label: "Ver servicios",
+      href: "#servicios",
+    },
+    {
+      title: "Presupuestos claros",
+      text: "Solicita cotizaciones detalladas y sin sorpresas.",
+      label: "Cotizar repuesto",
+      href: `${whatsappBase}?text=${encodeURIComponent(
+        "Hola, quiero cotizar un repuesto para mi vehículo."
+      )}`,
+      external: true,
+    },
+    {
+      title: "Atención directa",
+      text: "Resuelve tus dudas rápidamente a través de nuestros canales de contacto.",
+      label: "Contacto",
+      href: "#contacto",
+    },
+  ];
 
-          <button
-            type="button"
-            onClick={nextService}
-            className="absolute right-3 top-[42%] z-30 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/45 text-white backdrop-blur transition hover:bg-white hover:text-black md:right-5 md:h-11 md:w-11"
-            aria-label="Servicio siguiente"
-          >
-            <ArrowIcon className="h-5 w-5" />
-          </button>
-
-          <div className="absolute inset-0 opacity-40">
-            <div className="absolute inset-0 bg-[linear-gradient(135deg,#1b1d22_0%,#08090b_52%,#17191d_100%)]" />
-            <div className="absolute right-0 top-0 h-full w-[55%] bg-[radial-gradient(circle_at_65%_35%,rgba(227,6,19,0.2),transparent_35%)]" />
-          </div>
-
-          <div className="relative grid h-full gap-4 md:grid-rows-[1fr_96px]">
-            <div className="relative min-h-[440px] overflow-hidden rounded-[1rem] bg-black md:min-h-0">
-              <img
-                src={active.image}
-                alt={active.title}
-                className="absolute inset-0 h-full w-full object-cover opacity-90 transition duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/72 to-black/10" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/15" />
-
-              <div className="relative z-10 grid h-full gap-6 p-6 md:grid-cols-[minmax(0,1fr)_220px] md:p-8">
-                <div className="flex min-w-0 flex-col justify-between">
-                  <div>
-                    <span className="inline-flex rounded-full bg-red-600 px-6 py-3 text-xs font-black text-white shadow-xl shadow-red-600/30 md:text-sm">
-                      {active.badge}
-                    </span>
-                  </div>
-
-                  <div className="pb-2 pt-8 md:pt-10">
-                    <h2 className="max-w-4xl text-4xl font-black leading-[0.98] tracking-[-0.035em] text-white drop-shadow-2xl md:text-6xl">
-                      {active.title}
-                    </h2>
-
-                    <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/78 md:text-xl">
-                      {active.subtitle}
-                    </p>
-
-                    <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                      <a
-                        href={whatsappUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#c83a42] px-6 py-3.5 text-sm font-black text-white transition hover:bg-[#a92f36] md:text-base"
-                      >
-                        <WhatsAppIcon className="h-5 w-5" /> {active.cta}
-                      </a>
-
-                      <a
-                        href={`/servicios/${active.id}`}
-                        className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-white px-6 py-3.5 text-sm font-black text-black transition hover:bg-red-600 hover:text-white md:text-base"
-                      >
-                        {active.more}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <aside className="flex items-end justify-start md:items-center md:justify-end">
-                  <div className="w-fit min-w-[168px] rounded-[1.1rem] border border-white/15 bg-black/35 px-5 py-4 text-white shadow-xl backdrop-blur-md md:min-w-[188px] md:px-5 md:py-4">
-                    <p className="text-center text-[11px] font-black uppercase tracking-[0.22em] text-white/55">
-                      PRECIO
-                    </p>
-
-                    {active.priceLines ? (
-                      <div className="mt-2 space-y-1 text-center">
-                        {active.priceLines.map((line) => (
-                          <p
-                            key={line}
-                            className="text-base font-black leading-tight tracking-[-0.02em] md:text-lg"
-                          >
-                            {line}
-                          </p>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="mt-2 text-center text-2xl font-black leading-none tracking-[-0.03em] md:text-3xl">
-                        {active.price}
-                      </p>
-                    )}
-                  </div>
-                </aside>
-              </div>
-            </div>
-
-            <div
-              ref={servicesScrollRef}
-              className="flex cursor-grab select-none gap-3 overflow-x-auto scroll-smooth pb-3 pr-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            >
-              {services.map((service) => {
-                const isActive = active.id === service.id;
-
-                return (
-                  <button
-                    key={service.id}
-                    ref={(element) => {
-                      serviceItemRefs.current[service.id] = element;
-                    }}
-                    onClick={() => setActiveId(service.id)}
-                    className={`flex min-h-[96px] min-w-[230px] flex-shrink-0 flex-col justify-between rounded-lg p-3 text-left transition md:min-w-[260px] xl:min-w-[280px] ${
-                      isActive
-                        ? "bg-red-600 text-white shadow-xl shadow-red-600/25 ring-1 ring-red-300/25"
-                        : "bg-[#202226] text-white/70 ring-1 ring-white/10 hover:bg-[#2b2d32] hover:text-white"
-                    }`}
-                  >
-                    <div>
-                      <p className="text-[11px] font-black leading-tight md:text-xs xl:text-sm">
-                        {service.title}
-                      </p>
-
-                      {service.priceLines ? (
-                        <div className="mt-2 space-y-1">
-                          {service.priceLines.map((line) => (
-                            <p
-                              key={line}
-                              className="text-xs font-black leading-tight md:text-sm"
-                            >
-                              {line}
-                            </p>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="mt-2 text-sm font-black tracking-[-0.02em] md:text-base xl:text-lg">
-                          {service.price}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="mt-3 h-px bg-white/55" />
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+  return (
+    <section className="bg-white px-5 py-14 text-[#111318] md:px-10 md:py-20">
+      <div className="mx-auto max-w-[1320px]">
+        <div className="max-w-4xl">
+          <h2 className="text-3xl font-black leading-tight md:text-5xl">
+            ¿Qué puedes hacer desde nuestra web?
+          </h2>
+          <p className="mt-5 text-base leading-relaxed text-[#4c535d] md:text-xl">
+            Nos enfocamos en entregarte la tranquilidad y confianza que necesitas
+            en cada trayecto.
+          </p>
         </div>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {actions.map((action) => (
+            <article
+              key={action.title}
+              className="flex min-h-[220px] flex-col rounded-lg border border-[#d7dbe2] bg-[#f4f5f7] p-5"
+            >
+              <h3 className="text-xl font-black text-[#111318]">
+                {action.title}
+              </h3>
+              <p className="mt-3 text-sm font-semibold leading-relaxed text-[#5c6470]">
+                {action.text}
+              </p>
+              <a
+                href={action.href}
+                target={action.external ? "_blank" : undefined}
+                rel={action.external ? "noreferrer" : undefined}
+                className="mt-auto inline-flex items-center justify-center gap-2 rounded-lg bg-[#111318] px-4 py-3 text-sm font-black text-white transition hover:bg-red-600"
+              >
+                {action.label}
+                <ArrowIcon className="h-4 w-4" />
+              </a>
+            </article>
+          ))}
+        </div>
+
+        <p className="mt-8 max-w-3xl text-base font-black leading-relaxed text-[#111318] md:text-lg">
+          Explora nuestro sitio y conoce nuestros servicios.
+        </p>
       </div>
     </section>
   );
@@ -1011,19 +744,11 @@ function ServiceDetailModal({ service, onClose }) {
               <div className="mt-4 inline-flex rounded-xl border border-white/15 bg-black/45 px-5 py-3 backdrop-blur">
                 <div>
                   <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/55">
-                    Precio
+                    Atención personalizada
                   </p>
-                  {service.priceLines ? (
-                    <div className="mt-1 space-y-1">
-                      {service.priceLines.map((line) => (
-                        <p key={line} className="text-lg font-black leading-tight">
-                          {line}
-                        </p>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="mt-1 text-2xl font-black">{service.price}</p>
-                  )}
+                  <p className="mt-1 text-lg font-black leading-tight">
+                    Solicita orientación y cotización
+                  </p>
                 </div>
               </div>
             </div>
@@ -1110,25 +835,39 @@ function AboutBranchesSection() {
   return (
     <section
       id="nosotros"
-      className="bg-[#0c0c0d] px-4 py-16 md:px-8 md:py-20"
+      className="bg-white px-5 py-16 text-[#111318] md:px-10 md:py-20"
     >
-      <div className="mx-auto max-w-[1920px]">
-        <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+      <div className="mx-auto max-w-[1320px]">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
-            <p className="text-sm font-black text-red-500">Nosotros</p>
-            <h2 className="mt-3 text-3xl font-black leading-tight text-white md:text-5xl">
+            <p className="text-sm font-black uppercase text-red-600">
+              Nosotros
+            </p>
+            <h2 className="mt-3 text-3xl font-black leading-tight text-[#111318] md:text-5xl">
               Somos la red integral de servicios automotriz en el litoral central
             </h2>
+            <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#5c6470] md:text-lg">
+              Estamos más cerca de ti y tu vehículo. Conoce nuestras sucursales y
+              encuentra una atención confiable, profesional y pensada para
+              entregarte una experiencia simple y cercana.
+            </p>
+            <a
+              href="#sucursales"
+              className="mt-7 inline-flex items-center justify-center gap-2 rounded-lg bg-[#c83a42] px-6 py-3.5 text-sm font-black text-white transition hover:bg-[#a92f36]"
+            >
+              Ver sucursales
+              <ArrowIcon className="h-5 w-5" />
+            </a>
           </div>
 
           <div className="flex flex-col gap-7">
-            <div className="group relative w-full overflow-hidden rounded-lg border border-white/10 bg-[#15171b] shadow-2xl shadow-black/45">
+            <div className="group relative w-full overflow-hidden rounded-lg border border-[#d7dbe2] bg-[#f4f5f7] shadow-xl shadow-black/10">
               <img
                 src={currentImage.src}
                 alt={currentImage.alt}
                 className={`h-[230px] w-full opacity-95 transition duration-700 group-hover:scale-105 md:h-[280px] xl:h-[320px] ${currentImage.imageClass}`}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
 
               <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2">
                 {nosotrosImages.map((image, index) => (
@@ -1147,21 +886,33 @@ function AboutBranchesSection() {
               </div>
             </div>
 
-            <p className="max-w-3xl text-base leading-relaxed text-white/68 md:text-lg lg:text-left">
-              Estamos más cerca de ti y tu vehículo. Conoce nuestras sucursales y
-              encuentra una atención confiable, profesional y pensada para
-              entregarte una experiencia simple y cercana.
-            </p>
           </div>
         </div>
 
-        <div className="mt-14">
-          <p className="text-sm font-black text-red-500">Sucursales</p>
-          <h3 className="mt-3 text-3xl font-black leading-tight text-white md:text-5xl">
-            Nuestras Sucursales
-          </h3>
-          <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/68 md:text-lg">
-            Encuentra la sucursal más cercana y agenda la atención que tu vehículo necesita.
+      </div>
+    </section>
+  );
+}
+
+function BranchesSection() {
+  return (
+    <section
+      id="sucursales"
+      className="bg-[#f4f5f7] px-5 py-16 text-[#111318] md:px-10 md:py-20"
+    >
+      <div className="mx-auto max-w-[1320px]">
+        <div className="grid gap-5 md:grid-cols-[0.8fr_1.2fr] md:items-end">
+          <div>
+            <p className="text-sm font-black uppercase text-red-600">
+              Sucursales
+            </p>
+            <h2 className="mt-3 text-3xl font-black leading-tight md:text-5xl">
+              Nuestras sucursales
+            </h2>
+          </div>
+          <p className="max-w-3xl text-base leading-relaxed text-[#5c6470] md:text-lg">
+            Encuentra la sucursal más cercana y agenda la atención que tu
+            vehículo necesita con nuestro equipo.
           </p>
         </div>
 
@@ -1169,15 +920,15 @@ function AboutBranchesSection() {
           {branches.map((branch) => (
             <article
               key={branch.id}
-              className="group overflow-hidden rounded-lg border border-white/10 bg-[#15171b] shadow-xl transition hover:-translate-y-1 hover:border-red-500/45"
+              className="group overflow-hidden rounded-lg border border-[#d7dbe2] bg-white shadow-sm transition hover:-translate-y-1 hover:border-red-500/50 hover:shadow-xl"
             >
-              <div className="relative h-[230px] overflow-hidden bg-black">
+              <div className="relative h-[230px] overflow-hidden bg-[#111318]">
                 <img
                   src={branch.image}
                   alt={branch.name}
-                  className="h-full w-full object-cover opacity-90 transition duration-500 group-hover:scale-105"
+                  className="h-full w-full object-cover opacity-92 transition duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/18 to-transparent" />
                 <div className="absolute left-5 top-5 rounded bg-red-600 px-4 py-2 text-xs font-black text-white">
                   {branch.comingSoon ? "Próximamente" : "Sucursal"}
                 </div>
@@ -1190,20 +941,20 @@ function AboutBranchesSection() {
 
               <div className="p-6">
                 <div className="flex items-start gap-3">
-                  <div className="mt-1 rounded-full bg-red-600/15 p-2 text-red-500">
+                  <div className="mt-1 rounded-full bg-red-600/10 p-2 text-red-600">
                     <PinIcon className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-lg font-black text-white">
+                    <p className="text-lg font-black text-[#111318]">
                       {branch.address}
                     </p>
-                    <p className="mt-1 text-sm font-semibold text-white/55">
+                    <p className="mt-1 text-sm font-semibold text-[#6b7280]">
                       {branch.location}
                     </p>
                   </div>
                 </div>
 
-                <p className="mt-5 min-h-[72px] text-sm leading-relaxed text-white/68 md:text-base">
+                <p className="mt-5 min-h-[72px] text-sm leading-relaxed text-[#5c6470] md:text-base">
                   {branch.description}
                 </p>
 
@@ -1212,23 +963,69 @@ function AboutBranchesSection() {
                     href={branch.comingSoon ? "#" : branch.mapsUrl}
                     target={branch.comingSoon ? undefined : "_blank"}
                     rel={branch.comingSoon ? undefined : "noreferrer"}
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-white/25 px-5 py-3 text-sm font-black text-white transition hover:bg-white hover:text-black"
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#c9ced8] px-5 py-3 text-sm font-black text-[#111318] transition hover:border-[#111318] hover:bg-[#111318] hover:text-white"
                   >
-                    <PinIcon className="h-4 w-4" /> {branch.comingSoon ? "Próximamente" : "Ver local"}
+                    <PinIcon className="h-4 w-4" />
+                    {branch.comingSoon ? "Próximamente" : "Ver local"}
                   </a>
 
                   <a
                     href={getBranchWhatsAppUrl(branch.name)}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#c83a42] px-5 py-3 text-sm font-black text-white transition hover:bg-[#c83a42]"
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#c83a42] px-5 py-3 text-sm font-black text-white transition hover:bg-[#a92f36]"
                   >
-                    <WhatsAppIcon className="h-4 w-4" /> Contactar
+                    <WhatsAppIcon className="h-4 w-4" />
+                    Contactar
                   </a>
                 </div>
               </div>
             </article>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AhorroPlusCtaSection() {
+  const registerUrl = `${whatsappBase}?text=${encodeURIComponent(
+    "Hola, quiero registrarme como cliente preferente del Programa Ahorro Plus."
+  )}`;
+
+  return (
+    <section className="bg-[#f4f5f7] px-5 py-14 text-[#111318] md:px-10 md:py-20">
+      <div className="mx-auto grid max-w-[1320px] gap-8 rounded-lg border border-[#d7dbe2] bg-white p-6 shadow-sm md:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div>
+          <p className="text-sm font-black uppercase text-red-600">
+            Cliente preferencial
+          </p>
+          <h2 className="mt-3 text-3xl font-black leading-tight md:text-5xl">
+            Conoce nuestro programa Ahorro Plus
+          </h2>
+          <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#5c6470] md:text-lg">
+            Accede a grandes beneficios como cliente preferencial y mantén el
+            cuidado de tu vehículo de forma simple, clara y conveniente.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+          <a
+            href="/ahorro-plus"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#111318] px-6 py-3.5 text-sm font-black text-white transition hover:bg-red-600"
+          >
+            Ver programa Ahorro Plus
+            <ArrowIcon className="h-5 w-5" />
+          </a>
+          <a
+            href={registerUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#c83a42] px-6 py-3.5 text-sm font-black text-white transition hover:bg-[#a92f36]"
+          >
+            <WhatsAppIcon className="h-5 w-5" />
+            Solicitar registro
+          </a>
         </div>
       </div>
     </section>
@@ -1472,7 +1269,11 @@ function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#08090b] px-5 py-10 text-white md:px-10">
       <div className="mx-auto flex max-w-[1920px] flex-col justify-between gap-6 md:flex-row md:items-center">
-        <LogoMockup />
+        <img
+          src={plazaCarLogo2026.src}
+          alt="Plaza Car Service"
+          className="h-28 w-auto object-contain md:h-36"
+        />
         <div className="flex flex-col gap-2 text-sm text-white/60 md:items-end">
           <p>
             Plaza Car Service es la red integral de servicios automotriz del
@@ -1487,19 +1288,18 @@ function Footer() {
 
 const tests = [
   slides.length === 4,
-  services.length === 7,
+  services.length === 11,
   branches.length === 5,
-  nosotrosImages.length === 3,
-  services.every((service) => service.title && service.price && service.image),
+  nosotrosImages.length >= 5,
+  services.every((service) => service.title && service.image),
   services.every((service) => Array.isArray(service.includes)),
-  services.some((service) => service.id === "limpieza" && service.priceLines?.length === 2),
   whatsappBase === "https://wa.me/56971257621",
 ];
 
 if (typeof console !== "undefined") {
   console.assert(
     tests.every(Boolean),
-    "El prototipo debe mantener 4 slides, 7 servicios, 5 sucursales, modal de ficha técnica y WhatsApp correcto."
+    "El prototipo debe mantener 4 slides, 11 servicios, 5 sucursales, modal de ficha técnica y WhatsApp correcto."
   );
 }
 
@@ -1518,14 +1318,18 @@ export default function HomePage() {
 
   return (
     <div id="home" className="min-h-screen bg-[#0c0c0d] text-white">
-      <Header />
+      <SiteHeader />
       <PromoMarquee />
-      <ServicesSection />
       <MainSlider />
+      <WebActionsSection />
+      <ServicesSection />
       <AboutBranchesSection />
+      <BranchesSection />
+      <AhorroPlusCtaSection />
       <ContactSection />
       <Footer />
       <FloatingWhatsAppButton />
     </div>
   );
 }
+

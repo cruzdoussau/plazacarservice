@@ -1,3 +1,5 @@
+import SiteHeader from "../components/SiteHeader";
+
 export const metadata = {
   title: "Programa Ahorro Plus | Plaza Car Service",
   description:
@@ -41,36 +43,7 @@ export default function AhorroPlusPage() {
 
   return (
     <main className="min-h-screen bg-[#0c0c0d] text-white">
-      <header className="border-b border-white/10 bg-[#08090b]">
-        <div className="mx-auto flex max-w-[1500px] flex-col gap-5 px-5 py-5 md:flex-row md:items-center md:justify-between md:px-10">
-          <a href="/" className="inline-flex items-center gap-4">
-            <img
-              src="/logo-plaza-car-service-vfinal.png"
-              alt="Plaza Car Service"
-              className="h-16 w-36 object-contain"
-            />
-            <span className="text-sm font-black uppercase tracking-[0.18em] text-white/60">
-              Programa Ahorro Plus
-            </span>
-          </a>
-          <div className="flex flex-wrap gap-3">
-            <a
-              href="/intranet-ahorro-plus"
-              className="rounded-lg border border-white/15 px-4 py-3 text-sm font-black transition hover:bg-white hover:text-black"
-            >
-              Acceso cliente
-            </a>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-lg bg-red-600 px-4 py-3 text-sm font-black text-white transition hover:bg-[#c83a42]"
-            >
-              Registrarme
-            </a>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       <section className="mx-auto grid max-w-[1500px] gap-8 px-5 py-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:px-10">
         <div>

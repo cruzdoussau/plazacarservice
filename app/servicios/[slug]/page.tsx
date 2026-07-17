@@ -1,153 +1,242 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
+
+import { serviceGalleries } from "../../generated-galleries";
+import SiteHeader from "../../components/SiteHeader";
 
 const whatsappBase = "https://wa.me/56971257621";
 
 const services = [
   {
-    id: "ahorro-plus",
-    badge: "Servicio de Mantencion Preventiva",
-    title: "Mantencion Ahorro Plus",
-    subtitle: "Manten tu vehiculo segun pauta del fabricante.",
-    price: "$109.000",
-    image: "/Servicios/servicio-ahorro-plus.png",
+    id: "mantencion-kilometraje",
+    badge: "Mantención preventiva",
+    title: "Mantención por Kilometraje",
+    subtitle: "Servicio programado cada 10.000 km o una vez al año.",
+    image: "/site-photos/auto-rampa-servicio.webp",
     detailIntro:
-      "Plan preventivo pensado para mantener tu vehiculo segun pauta del fabricante, cuidando el rendimiento y ayudando a prevenir fallas por falta de mantencion.",
+      "Para garantizar el rendimiento óptimo y la vida útil de tu motor, es fundamental realizar la mantención de tu vehículo cada 10.000 km o una vez al año, según indique el manual del fabricante.",
     includes: [
-      "4 litros de aceite 5W30",
-      "Filtro de aceite",
-      "Filtro de polen",
-      "Relleno de niveles",
-      "Lubricacion de puertas y bisagras",
-      "Rotacion y balanceo de 4 neumaticos",
-      "Revision de frenos, bateria, luces, filtros, plumillas, tren delantero y canerias",
+      "Cambio de aceite y filtro de aceite",
+      "Cambio de filtro de polen y revisión de filtro de aire",
+      "Revisión de frenos, tren delantero y neumáticos",
+      "Escáner de diagnóstico",
+      "Revisión de niveles, correas, filtros, bujías y luces",
+      "Orientación personalizada sobre el estado general del vehículo",
     ],
     idealFor:
-      "Vehiculos que requieren una mantencion completa y preventiva para seguir la pauta recomendada por el fabricante.",
-    note: "Ademas acumulas puntos para canjear en productos de vitrina.",
+      "Vehículos que ya cumplieron kilometraje o tiempo recomendado para mantención y buscan prevenir fallas mayores a futuro.",
+    note: "Llevamos años atendiendo los vehículos de la zona con altos estándares de calidad y seguridad.",
   },
   {
     id: "frenos",
     badge: "Seguridad preventiva",
-    title: "Mantencion de Frenos",
-    subtitle: "Cambio de pastillas delanteras, rectificacion y limpieza del sistema.",
-    price: "Desde $59.900",
-    image: "/Servicios/servicio-frenos.png",
+    title: "Mantención de Frenos",
+    subtitle: "Diagnóstico, cambio de componentes y mantención del sistema.",
+    image: "/site-photos/mecanica-auto-elevado.webp",
     detailIntro:
-      "Servicio orientado a cuidar la seguridad del vehiculo y mantener el sistema de frenado en buen estado con una mantencion completa.",
+      "El sistema de frenos es el componente de seguridad más importante de tu vehículo. Nuestro equipo técnico te asesora y trabaja con repuestos de primera calidad para lograr un frenado preciso, seguro y de respuesta inmediata.",
     includes: [
-      "Cambio de pastillas delanteras",
-      "Rectificacion de discos",
-      "Limpieza del sistema",
-      "Regulacion de frenos traseros",
+      "Diagnóstico e inspección general de pastillas, discos, mangueras y líquido",
+      "Cambio de pastillas y balatas con repuestos certificados",
+      "Rectificación o cambio de discos",
+      "Renovación de líquido de frenos y purga del sistema",
+      "Revisión del sistema ABS",
     ],
     idealFor:
-      "Vehiculos con ruidos al frenar, vibracion en el pedal, mayor distancia de frenado o sensacion esponjosa al frenar.",
-    note: "Evita desgastes mayores, ruidos y fallas inesperadas.",
+      "Vehículos con ruidos al frenar, vibración en el pedal, mayor distancia de frenado o señales de desgaste en el sistema.",
+    note: "Una revisión oportuna ayuda a detectar desgaste antes de que se convierta en un problema mayor.",
   },
   {
-    id: "neumaticos",
-    badge: "Oferta de invierno",
-    title: "Baterias y Neumaticos",
-    subtitle: "Baterias desde $33.500 y neumaticos desde $26.500.",
-    price: "Desde $26.500",
-    priceLines: ["Baterias desde $33.500", "Neumaticos desde $26.500"],
-    image: "/Servicios/servicios-neumaticos.png",
+    id: "pre-revision-tecnica",
+    badge: "Chequeo preventivo",
+    title: "Servicio de Pre-Revisión Técnica",
+    subtitle: "Chequeo completo para preparar tu vehículo antes de la revisión técnica.",
+    image: "/site-photos/auto-rampa-servicio.webp",
     detailIntro:
-      "Oferta especial para renovar bateria o neumaticos durante la campana de invierno, con alternativas seleccionadas y hasta 6 cuotas sin interes.",
+      "Asegura la aprobación de tu vehículo con nuestro chequeo preventivo completo antes de presentarte a la revisión técnica.",
     includes: [
-      "Bateria Olimpo 55Ah desde $33.500",
-      "Bateria Black Tiger 55Ah desde $33.500",
-      "Neumatico 175/70R13 Goodride desde $26.500",
-      "Neumatico 165/70R14 81T Roadwing desde $26.500",
-      "Neumatico 165/70R14 81T RW-581 Risen desde $26.500",
+      "Revisión de luces, micas y cristales",
+      "Revisión del sistema de frenos",
+      "Revisión de cinturones de seguridad",
+      "Control y medición de gases",
+      "Inspección del tren delantero y estado de los neumáticos",
     ],
     idealFor:
-      "Vehiculos que necesitan mejorar seguridad, partida confiable, agarre y estabilidad durante el invierno.",
-    note: "Beneficio adicional: hasta 6 cuotas sin interes.",
+      "Vehículos próximos a rendir revisión técnica o conductores que quieren detectar observaciones antes de presentarse.",
+    note: "Este chequeo permite anticipar posibles rechazos y orientar las correcciones necesarias antes de la revisión oficial.",
+  },
+  {
+    id: "baterias",
+    badge: "Energía y partida",
+    title: "Venta de Baterías",
+    subtitle: "Baterías de alto rendimiento para asegurar el encendido.",
+    image: "/site-photos/sucursal-interior-auto.webp",
+    detailIntro:
+      "Asegura el encendido de tu motor al primer intento con baterías de alto rendimiento, diseñadas con tecnología de arranque en frío superior para resistir condiciones exigentes.",
+    includes: [
+      "Máxima potencia para vehículos de alta exigencia",
+      "Larga vida útil que protege tu inversión",
+      "Catálogo multimarca para encontrar el ajuste perfecto",
+      "Revisión de compatibilidad",
+      "Orientación sobre garantía",
+    ],
+    idealFor:
+      "Vehículos con partida débil, batería antigua o fallas eléctricas asociadas a baja carga.",
+    note: "Disponibilidad y valores sujetos a stock.",
   },
   {
     id: "limpieza",
     badge: "Cuidado interior y exterior",
-    title: "Lavado y Limpieza",
-    subtitle: "Lavado exterior y limpieza interior disponibles de forma individual.",
-    price: "$9.000 c/u",
-    priceLines: ["Lavado exterior $9.000", "Limpieza interior $9.000"],
-    image: "/Servicios/servicio-lavado-y-limpieza.png",
+    title: "Lavado y Estética Automotriz",
+    subtitle: "Limpieza interior, exterior y cuidado estético del vehículo.",    image: "/site-photos/lavado-auto-premium.webp",
     detailIntro:
-      "Servicio pensado para mantener tu vehiculo limpio, cuidado y con una mejor presentacion interior y exterior. Puedes tomar lavado exterior o limpieza interior de forma individual, segun lo que necesites.",
+      "No es solo apariencia, es protección. Removemos suciedad acumulada, salitre y contaminantes que dañan la pintura y el interior de tu vehículo a largo plazo.",
     includes: [
-      "Lavado exterior",
-      "Limpieza interior",
-      "Atencion al detalle segun condicion del vehiculo",
-      "Procedimientos adecuados para el cuidado del vehiculo",
+      "Lavado exterior premium",
+      "Aspirado profundo de alfombras",
+      "Acondicionamiento y limpieza de tapizados",
+      "Desinfección total del habitáculo",
     ],
     idealFor:
-      "Vehiculos que necesitan una limpieza rapida, confiable y eficiente para uso diario, ya sea exterior, interior o ambas.",
+      "Vehículos que necesitan una limpieza confiable, protección estética y una mejor presentación interior y exterior.",
     note: "Lavado exterior y limpieza interior se pueden solicitar por separado.",
   },
   {
     id: "alineacion-balanceo",
-    badge: "Promocion Junio y Julio",
-    title: "Alineacion + Balanceo + Rotacion",
+    badge: "Seguridad y confort",
+    title: "Alineación + Balanceo + Rotación",
     subtitle:
-      "Congelamos el precio: antes $51.000, ahora $19.900 por los tres servicios.",
-    price: "$19.900",
-    image: "/Servicios/servicio-alineacion-y-balanceo.png",
+      "Servicio combinado para mejorar seguridad, estabilidad y vida útil de tus neumáticos.",
+    image: "/site-photos/auto-rampa-servicio.webp",
     detailIntro:
-      "Oferta especial de alineacion, balanceo y rotacion pensada para mejorar seguridad, estabilidad y vida util de tus neumaticos.",
+      "Maximiza la vida útil de tus neumáticos, ahorra combustible y conduce con total seguridad y confort con nuestro servicio 3 en 1.",
     includes: [
-      "Alineacion",
-      "Balanceo",
-      "Rotacion",
+      "Alineación de precisión para corregir la dirección",
+      "Balanceo computarizado para eliminar vibraciones",
+      "Rotación estratégica para promover desgaste parejo",
       "Mayor seguridad al conducir",
-      "Menor desgaste y mayor vida util de los neumaticos",
+      "Menor desgaste y mayor vida útil de los neumáticos",
       "Mejor estabilidad y confort de manejo",
     ],
     idealFor:
-      "Vehiculos que se cargan hacia un lado, presentan vibracion al conducir o tienen desgaste irregular en neumaticos.",
-    note: "Precio normal: alineacion $25.000 + balanceo $26.000. Promocion junio y julio: $19.900 ambos mas rotacion.",
+      "Vehículos que se cargan hacia un lado, presentan vibración al conducir o tienen desgaste irregular en neumáticos.",
+    note: "Servicio recomendado para cuidar la estabilidad, reducir desgaste irregular y mejorar el confort de manejo.",
   },
   {
     id: "cambio-aceite",
-    badge: "Lubricacion del motor",
-    title: "Cambio de Aceite",
+    badge: "Lubricación del motor",
+    title: "Cambio de Aceite y Filtro",
     subtitle:
-      "Aceite ESSO con filtro incluido para cuidar el motor de tu vehiculo.",
-    price: "Desde $32.000",
-    image: "/Servicios/servicio-cambio-aceite.png",
+      "Lubricación adecuada para cuidar el rendimiento del motor.",
+    image: "/site-photos/mecanica-auto-elevado.webp",
     detailIntro:
-      "Servicio esencial para proteger el motor, mantener una lubricacion adecuada y evitar desgaste prematuro de componentes internos. Disponible desde $32.000 con filtro incluido.",
+      "El motor es el corazón de tu vehículo y necesita la mejor lubricación para rendir al máximo. Un aceite de calidad reduce la fricción, regula la temperatura y previene averías prematuras.",
     includes: [
-      "Aceite ESSO",
-      "Filtro incluido",
-      "Revision de niveles",
-      "Orientacion sobre aceite recomendado",
-      "Chequeo visual preventivo",
+      "Cambio de aceite con la viscosidad recomendada por el fabricante",
+      "Reemplazo del filtro de aceite",
+      "Ajuste electrónico o reseteo del indicador de mantenimiento",
+      "Revisión de niveles",
+      "Orientación sobre aceite recomendado",
     ],
     idealFor:
-      "Vehiculos que ya cumplieron kilometraje o tiempo recomendado para cambio de aceite.",
-    note: "El valor puede variar segun tipo de aceite, cantidad requerida y filtro.",
+      "Vehículos que ya cumplieron kilometraje o tiempo recomendado para cambio de aceite.",
+    note: "Trabajamos con aceites sintéticos y semi-sintéticos homologados para distintas marcas del parque automotriz.",
   },
   {
     id: "scanner",
-    badge: "Diagnostico electronico",
+    badge: "Diagnóstico electrónico",
     title: "Scanner Automotriz",
     subtitle:
-      "Detecta fallas y codigos de alerta mediante diagnostico electronico especializado.",
-    price: "$25.000",
-    image: "/Servicios/servicio-scanner.png",
+      "Diagnóstico computarizado avanzado para detectar fallas ocultas.",
+    image: "/site-photos/scanner-alineacion-equipo.webp",
     detailIntro:
-      "Diagnostico electronico para identificar codigos de falla y orientar una reparacion mas precisa.",
+      "Utilizamos tecnología de diagnóstico para comunicarnos directamente con la computadora de tu vehículo y detectar anomalías electrónicas en tiempo real.",
     includes: [
-      "Conexion de scanner automotriz",
-      "Lectura de codigos de falla",
-      "Orientacion sobre posibles causas",
-      "Recomendacion de proximos pasos",
-      "Apoyo para tomar decisiones de reparacion",
+      "Análisis de motor con lectura y borrado de códigos de falla",
+      "Revisión de seguridad de frenos ABS, control de tracción y Airbags SRS",
+      "Monitoreo de sensores en tiempo real",
+      "Optimización general mediante ajustes y calibraciones",
+      "Recomendación de próximos pasos",
     ],
     idealFor:
-      "Vehiculos con luces de advertencia encendidas, fallas intermitentes o perdida de rendimiento.",
-    note: "El scanner ayuda a orientar el diagnostico, pero algunas fallas pueden requerir revision mecanica adicional.",
+      "Vehículos con luces de advertencia encendidas, fallas intermitentes o pérdida de rendimiento.",
+    note: "El scanner ayuda a orientar el diagnóstico, pero algunas fallas pueden requerir revisión mecánica adicional.",
+  },
+  {
+    id: "pintura",
+    badge: "Estética automotriz",
+    title: "Pintura y Estética Automotriz",
+    subtitle: "Soluciones de pintura para recuperar presentación y acabado.",
+    image: "/site-photos/sucursal-fachada.webp",
+    detailIntro:
+      "¿Tu auto perdió su brillo o sufrió un percance? Nos encargamos de que vuelva a lucir impecable con trabajos de pintura, preparación y terminación profesional.",
+    includes: [
+      "Desabolladura express para detalles puntuales",
+      "Pintura por piezas o general",
+      "Pulido orbital profesional",
+      "Preparación de zona a intervenir",
+      "Revisión de terminación",
+    ],
+    idealFor:
+      "Vehículos con detalles estéticos, rayas, desgaste de pintura o necesidad de recuperación visual.",
+    note: "Requiere evaluación para confirmar tiempos, alcance y valor.",
+  },
+  {
+    id: "mecanica-compleja",
+    badge: "Reparación especializada",
+    title: "Mecánica Compleja y Reparaciones Mayores",
+    subtitle: "Diagnóstico y reparación para fallas mecánicas de mayor alcance.",
+    image: "/site-photos/mecanica-auto-elevado.webp",
+    detailIntro:
+      "Cuando tu vehículo necesita una intervención profunda, nuestro equipo especialista diagnostica, desarma y repara componentes críticos con respaldo técnico.",
+    includes: [
+      "Reparación y ajuste completo de motores",
+      "Diagnóstico y reparación de cajas manuales y automáticas",
+      "Revisión, ajuste y reemplazo de embragues",
+      "Solución de fallas complejas en suspensión y dirección",
+      "Presupuesto según reparación",
+    ],
+    idealFor:
+      "Vehículos con fallas persistentes, ruidos, pérdida de potencia o problemas mecánicos de mayor complejidad.",
+    note: "El valor final depende del diagnóstico y repuestos requeridos.",
+  },
+  {
+    id: "neumaticos",
+    badge: "Seguridad en ruta",
+    title: "Venta de Neumáticos",
+    subtitle: "Asesoría experta para elegir neumáticos según tu vehículo y ruta.",
+    image: "/site-photos/sucursal-exterior-autos.webp",
+    detailIntro:
+      "El único punto de contacto entre tu vehículo y el asfalto no puede quedar al azar. Te brindamos asesoría experta para elegir la opción adecuada según tu conducción, vehículo y rutas habituales.",
+    includes: [
+      "Stock multimarca premium",
+      "Neumáticos con buen agarre en mojado y mayor durabilidad",
+      "Asesoría personalizada por medida y estilo de conducción",
+      "Instalación rápida y profesional",
+      "Consulta por balanceo",
+    ],
+    idealFor:
+      "Vehículos con neumáticos gastados, desgaste irregular o necesidad de mejorar seguridad en ruta.",
+    note: "Disponibilidad y valores sujetos a stock.",
+  },
+  {
+    id: "aire-acondicionado",
+    badge: "Confort interior",
+    title: "Aire Acondicionado",
+    subtitle: "Revisión y servicio para mantener el climatizador funcionando bien.",
+    image: "/site-photos/taller-interior-autos.webp",
+    detailIntro:
+      "Servicio para revisar el funcionamiento del aire acondicionado y orientar la solución adecuada según el estado del sistema.",
+    includes: [
+      "Revisión de funcionamiento",
+      "Evaluación de rendimiento",
+      "Orientación sobre posibles causas",
+      "Presupuesto según diagnóstico",
+      "Recomendación de próximos pasos",
+    ],
+    idealFor:
+      "Vehículos con baja refrigeración, malos olores, ruidos o fallas en el sistema de climatización.",
+    note: "Puede requerir diagnóstico adicional según la falla detectada.",
   },
 ];
 
@@ -192,10 +281,13 @@ export default async function ServicePage({
   const whatsappUrl = `${whatsappBase}?text=${encodeURIComponent(
     `Hola, quiero recibir mas informacion sobre el servicio: ${service.title}`
   )}`;
-  const gallery = [service.image, service.image, service.image];
+  const serviceGallery =
+    (serviceGalleries as Record<string, readonly string[]>)[service.id] ?? [];
+  const gallery = serviceGallery.length ? serviceGallery : [service.image];
 
   return (
     <main className="min-h-screen bg-[#0c0c0d] text-white">
+      <SiteHeader />
       <section className="relative overflow-hidden bg-black">
         <img
           src={service.image}
@@ -205,12 +297,12 @@ export default async function ServicePage({
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/82 to-black/35" />
         <div className="relative mx-auto grid min-h-[560px] max-w-[1920px] gap-8 px-5 py-8 md:grid-cols-[1.05fr_0.95fr] md:px-10 md:py-12">
           <div className="flex flex-col justify-between">
-            <a
+            <Link
               href="/#servicios"
               className="w-fit rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm font-black text-white transition hover:bg-white hover:text-black"
             >
               Volver a servicios
-            </a>
+            </Link>
 
             <div className="py-14">
               <p className="text-sm font-black uppercase tracking-[0.22em] text-red-500">
@@ -244,19 +336,11 @@ export default async function ServicePage({
           <aside className="flex items-end md:items-center md:justify-end">
             <div className="w-full max-w-sm rounded-lg border border-white/15 bg-black/48 p-6 backdrop-blur">
               <p className="text-xs font-black uppercase tracking-[0.22em] text-white/55">
-                Valor del servicio
+                Atención personalizada
               </p>
-              {service.priceLines ? (
-                <div className="mt-4 space-y-2">
-                  {service.priceLines.map((line) => (
-                    <p key={line} className="text-2xl font-black">
-                      {line}
-                    </p>
-                  ))}
-                </div>
-              ) : (
-                <p className="mt-4 text-5xl font-black">{service.price}</p>
-              )}
+              <p className="mt-4 text-3xl font-black leading-tight">
+                Solicita orientación y cotización
+              </p>
               <p className="mt-5 text-sm leading-relaxed text-white/65">
                 Agenda una evaluacion y recibe orientacion segun el estado de tu vehiculo.
               </p>
@@ -270,7 +354,7 @@ export default async function ServicePage({
           <div>
             <p className="text-sm font-black text-red-500">Ficha del servicio</p>
             <h2 className="mt-3 text-4xl font-black leading-tight md:text-5xl">
-              Que incluye
+              Qué incluye
             </h2>
             <p className="mt-5 text-base leading-relaxed text-white/68 md:text-lg">
               {service.idealFor}
@@ -333,7 +417,7 @@ export default async function ServicePage({
                   Video promocional
                 </p>
                 <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/62">
-                  Aqui insertaremos el video de Instagram de este servicio.
+                  Aquí insertaremos el video de Instagram de este servicio.
                 </p>
               </div>
             </div>
@@ -361,3 +445,5 @@ export default async function ServicePage({
     </main>
   );
 }
+
+

@@ -1,3 +1,5 @@
+import SiteHeader from "../components/SiteHeader";
+
 const whatsappBase = "https://wa.me/56971257621";
 
 const offers = [
@@ -61,16 +63,10 @@ export default function PromotionsPage() {
 
   return (
     <main className="min-h-screen bg-[#0c0c0d] text-white">
+      <SiteHeader />
       <section className="px-5 py-10 md:px-10 md:py-16">
         <div className="mx-auto max-w-[1400px]">
-          <a
-            href="/#servicios"
-            className="inline-flex rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm font-black text-white transition hover:bg-white hover:text-black"
-          >
-            Volver al sitio
-          </a>
-
-          <div className="mt-10 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
               <p className="text-sm font-black uppercase tracking-[0.22em] text-red-500">
                 Promociones de julio
