@@ -106,21 +106,20 @@ const services = [
     id: "baterias",
     badge: "Energía y partida",
     title: "Venta de Baterías",
-    subtitle: "Baterías para una partida confiable y segura.",    cta: "Cotizar batería",
+    subtitle: "Baterías de alto rendimiento para asegurar el encendido.",    cta: "Cotizar batería",
     more: "Ver más",
     image: "/site-photos/sucursal-interior-auto.webp",
     detailIntro:
-      "Venta de baterías para mantener una partida confiable y evitar fallas inesperadas.",
+      "¿A tu auto le cuesta arrancar? No esperes a quedarte botado. Asegura el encendido de tu motor al primer intento con nuestras baterías de alto rendimiento.",
     includes: [
-      "Asesoría según vehículo",
-      "Alternativas disponibles",
-      "Revisión de compatibilidad",
-      "Orientación sobre garantía",
-      "Apoyo para elegir la batería adecuada",
+      "Máxima potencia para vehículos de alta exigencia.",
+      "Larga vida útil que protege tu inversión.",
+      "Catálogo multimarca para encontrar tu ajuste perfecto.",
+      "Garantía de Liderazgo: Llevamos años equipando los vehículos de la zona con los más altos estándares de calidad y seguridad.",
     ],
     idealFor:
       "Vehículos con partida débil, batería antigua o fallas eléctricas asociadas a baja carga.",
-    note: "Disponibilidad y valores sujetos a stock.",
+    note: "Garantía de Liderazgo: Llevamos años equipando los vehículos de la zona con los más altos estándares de calidad y seguridad.",
   },
   {
     id: "limpieza",
@@ -250,43 +249,22 @@ const services = [
     id: "neumaticos",
     badge: "Seguridad en ruta",
     title: "Venta de Neumáticos",
-    subtitle: "Neumáticos para mejorar agarre, estabilidad y seguridad.",    cta: "Cotizar neumáticos",
+    subtitle: "Tu Seguridad en Manos Expertas.",    cta: "Cotizar neumáticos",
     more: "Ver más",
     image: "/site-photos/sucursal-exterior-autos.webp",
     detailIntro:
-      "Venta de neumáticos con asesoría para elegir la medida y alternativa adecuada para tu vehículo.",
+      "El único punto de contacto entre tu vehículo y el asfalto no puede quedar al azar. Te brindamos asesoría experta para elegir la opción perfecta según tu estilo de conducción, el tipo de vehículo y las rutas que transitas todos los días.",
     includes: [
-      "Asesoría por medida",
-      "Alternativas disponibles",
-      "Revisión visual de desgaste",
-      "Orientación para cambio oportuno",
-      "Consulta por instalación y balanceo",
+      "Stock Multimarca Premium.",
+      "Máximo Rendimiento.",
+      "Asesoría 100% Personalizada.",
+      "Servicio Integral.",
     ],
     idealFor:
       "Vehículos con neumáticos gastados, desgaste irregular o necesidad de mejorar seguridad en ruta.",
-    note: "Disponibilidad y valores sujetos a stock.",
+    note: "Garantía de Liderazgo: Llevamos años equipando los vehículos de la zona con los más altos estándares de calidad y seguridad.",
   },
-  {
-    id: "aire-acondicionado",
-    badge: "Confort interior",
-    title: "Aire Acondicionado",
-    subtitle:
-      "Revisión y servicio para mantener el climatizador funcionando bien.",    cta: "Agendar revisión",
-    more: "Ver más",
-    image: "/site-photos/taller-interior-autos.webp",
-    detailIntro:
-      "Servicio para revisar el funcionamiento del aire acondicionado y orientar la solución adecuada según el estado del sistema.",
-    includes: [
-      "Revisión de funcionamiento",
-      "Evaluación de rendimiento",
-      "Orientación sobre posibles causas",
-      "Presupuesto según diagnóstico",
-      "Recomendación de próximos pasos",
-    ],
-    idealFor:
-      "Vehículos con baja refrigeración, malos olores, ruidos o fallas en el sistema de climatización.",
-    note: "Puede requerir diagnóstico adicional según la falla detectada.",
-  },
+
 ];
 
 const serviceDisplayOrder = [
@@ -300,7 +278,6 @@ const serviceDisplayOrder = [
   "mecanica-compleja",
   "baterias",
   "neumaticos",
-  "aire-acondicionado",
 ];
 
 const orderedServices = serviceDisplayOrder.flatMap((id) => {
@@ -1288,7 +1265,7 @@ function Footer() {
 
 const tests = [
   slides.length === 4,
-  services.length === 11,
+  services.length === 10,
   branches.length === 5,
   nosotrosImages.length >= 5,
   services.every((service) => service.title && service.image),
@@ -1299,7 +1276,7 @@ const tests = [
 if (typeof console !== "undefined") {
   console.assert(
     tests.every(Boolean),
-    "El prototipo debe mantener 4 slides, 11 servicios, 5 sucursales, modal de ficha técnica y WhatsApp correcto."
+    "El prototipo debe mantener 4 slides, 10 servicios, 5 sucursales, modal de ficha técnica y WhatsApp correcto."
   );
 }
 

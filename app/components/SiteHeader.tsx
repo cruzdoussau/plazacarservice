@@ -16,9 +16,11 @@ const serviceLinks = [
   ["limpieza", "Lavado y Estética Automotriz"],
   ["pintura", "Pintura y Estética Automotriz"],
   ["mecanica-compleja", "Mecánica Compleja"],
+] as const;
+
+const productLinks = [
   ["baterias", "Venta de Baterías"],
   ["neumaticos", "Venta de Neumáticos"],
-  ["aire-acondicionado", "Aire Acondicionado"],
 ] as const;
 
 function WhatsAppIcon({ className = "" }) {
@@ -38,11 +40,11 @@ function WhatsAppIcon({ className = "" }) {
 
 function Logo() {
   return (
-    <div className="relative flex h-[96px] w-[310px] items-center overflow-visible md:h-[132px] md:w-[430px]">
+    <div className="relative flex h-[82px] w-[245px] items-center overflow-visible md:h-[96px] md:w-[290px] xl:w-[330px]">
       <img
         src={plazaCarLogo2026.src}
         alt="Plaza Car Service"
-        className="absolute left-0 h-[140px] w-auto max-w-none object-contain md:h-[190px]"
+        className="absolute left-0 h-[122px] w-auto max-w-none object-contain md:h-[145px] xl:h-[160px]"
       />
     </div>
   );
@@ -57,12 +59,12 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#0b0c0f]/95 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-[1920px] items-center justify-between px-5 py-4 md:px-10">
+      <div className="mx-auto flex max-w-[1920px] items-center justify-between gap-4 px-4 py-3 md:px-6 xl:px-8">
         <Link href="/#home" aria-label="Plaza Car Service">
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-8 text-sm font-semibold text-white/70 lg:flex">
+        <nav className="hidden shrink-0 items-center gap-4 text-xs font-semibold text-white/70 xl:flex 2xl:gap-6 2xl:text-sm">
           <Link className="py-2 transition hover:text-white" href="/#home">
             Home
           </Link>
@@ -98,6 +100,32 @@ export default function SiteHeader() {
               </div>
             </div>
           </div>
+          <div className="group relative py-1">
+            <Link
+              className="inline-flex items-center gap-2 py-2 text-white transition hover:text-white"
+              href="/#servicios"
+            >
+              Productos
+              <span className="text-[10px] text-white/45 transition group-hover:text-white">
+                ▾
+              </span>
+            </Link>
+            <div className="invisible absolute left-1/2 top-full z-50 w-[260px] -translate-x-1/2 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+              <div className="rounded-lg border border-white/10 bg-[#111318]/98 p-3 shadow-2xl shadow-black/45 backdrop-blur-xl">
+                <div className="grid gap-1">
+                  {productLinks.map(([id, title]) => (
+                    <Link
+                      key={id}
+                      href={`/servicios/${id}`}
+                      className="rounded-md px-4 py-2.5 text-sm font-bold text-white/68 transition hover:bg-white/10 hover:text-white"
+                    >
+                      {title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
           <Link className="py-2 transition hover:text-white" href="/promociones">
             Promociones
           </Link>
@@ -106,10 +134,10 @@ export default function SiteHeader() {
           </Link>
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden shrink-0 items-center gap-2 xl:flex">
           <Link
             href="/ahorro-plus"
-            className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white px-4 py-3 text-sm font-black text-black transition hover:bg-red-600 hover:text-white"
+            className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white px-3 py-2.5 text-xs font-black text-black transition hover:bg-red-600 hover:text-white 2xl:px-4 2xl:py-3 2xl:text-sm"
           >
             Programa Ahorro Plus
           </Link>
@@ -117,7 +145,7 @@ export default function SiteHeader() {
             href={whatsappBase}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-[#c83a42] px-5 py-3 text-sm font-black text-white transition hover:bg-[#a92f36]"
+            className="inline-flex items-center gap-2 rounded-lg bg-[#c83a42] px-4 py-2.5 text-xs font-black text-white transition hover:bg-[#a92f36] 2xl:px-5 2xl:py-3 2xl:text-sm"
           >
             <WhatsAppIcon className="h-4 w-4" /> Agendar hora
           </a>
@@ -126,7 +154,7 @@ export default function SiteHeader() {
         <button
           type="button"
           onClick={() => setIsMobileMenuOpen((current) => !current)}
-          className="rounded-full border border-white/10 px-4 py-3 text-sm font-black text-white lg:hidden"
+          className="rounded-full border border-white/10 px-4 py-3 text-sm font-black text-white xl:hidden"
           aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={isMobileMenuOpen}
         >
@@ -134,7 +162,7 @@ export default function SiteHeader() {
         </button>
 
         {isMobileMenuOpen && (
-          <div className="absolute left-4 right-4 top-[calc(100%+10px)] z-50 overflow-hidden rounded-2xl border border-white/10 bg-[#111318]/98 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl lg:hidden">
+          <div className="absolute left-4 right-4 top-[calc(100%+10px)] z-50 overflow-hidden rounded-2xl border border-white/10 bg-[#111318]/98 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl xl:hidden">
             <nav className="grid gap-2 text-sm font-black text-white">
               <Link
                 href="/#home"
@@ -163,6 +191,23 @@ export default function SiteHeader() {
                 </summary>
                 <div className="grid gap-1 border-t border-white/10 p-2">
                   {serviceLinks.map(([id, title]) => (
+                    <Link
+                      key={id}
+                      href={`/servicios/${id}`}
+                      onClick={closeMobileMenu}
+                      className="rounded-lg px-3 py-2.5 text-white/70 transition hover:bg-red-600 hover:text-white"
+                    >
+                      {title}
+                    </Link>
+                  ))}
+                </div>
+              </details>
+              <details className="overflow-hidden rounded-xl bg-white/5">
+                <summary className="cursor-pointer px-4 py-3 transition hover:bg-red-600">
+                  Productos
+                </summary>
+                <div className="grid gap-1 border-t border-white/10 p-2">
+                  {productLinks.map(([id, title]) => (
                     <Link
                       key={id}
                       href={`/servicios/${id}`}
