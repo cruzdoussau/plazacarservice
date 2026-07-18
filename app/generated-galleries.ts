@@ -38,15 +38,26 @@ export const homeGalleryImages = [
 ] as const;
 
 export const serviceGalleries = {
-  "mantencion-kilometraje": [],
-  "frenos": [],
+  "mantencion-kilometraje": [
+    "/site-photos/service-galleries/mantencion-kilometraje/mantencion-kilometraje-01.webp",
+    "/site-photos/service-galleries/mantencion-kilometraje/mantencion-kilometraje-02.webp",
+    "/site-photos/service-galleries/mantencion-kilometraje/mantencion-kilometraje-03.webp"
+  ],
+  "frenos": [
+    "/site-photos/service-galleries/frenos/frenos-01.webp"
+  ],
   "alineacion-balanceo": [],
   "cambio-aceite": [],
   "scanner": [],
   "limpieza": [
     "/site-photos/service-galleries/limpieza/limpieza-01.webp",
     "/site-photos/service-galleries/limpieza/limpieza-02.webp",
-    "/site-photos/service-galleries/limpieza/limpieza-03.webp"
+    "/site-photos/service-galleries/limpieza/limpieza-03.webp",
+    "/site-photos/service-galleries/limpieza/limpieza-04.webp",
+    "/site-photos/service-galleries/limpieza/limpieza-05.webp",
+    "/site-photos/service-galleries/limpieza/limpieza-06.webp",
+    "/site-photos/service-galleries/limpieza/limpieza-07.webp",
+    "/site-photos/service-galleries/limpieza/limpieza-08.webp"
   ],
   "pintura": [],
   "mecanica-compleja": [],
