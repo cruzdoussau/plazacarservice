@@ -11,7 +11,9 @@ const whatsappBase = "https://wa.me/56971257621";
 const slides = [
   {
     id: "red-integral",
+    eyebrow: "Tu aliado automotriz del litoral central",
     title: "Bienvenidos a Plaza Car Service",
+    titleAccent: "",
     text: "Somos la red integral de servicios automotriz multimarca del Litoral Central. Estamos más cerca de ti y de tu vehículo. Diseñamos este espacio web para que gestionar el mantenimiento de tu auto sea un proceso simple, rápido y transparente.",
     primary: "Escríbenos",
     secondary: "Nuestros servicios",
@@ -25,7 +27,9 @@ const slides = [
   },
   {
     id: "comodidad",
+    eyebrow: "Atención cercana y profesional",
     title: "Atención, comodidad y cercanía",
+    titleAccent: "",
     text: "En nuestras instalaciones encontrarás una atención cercana y profesional, además de un espacio cómodo para esperar mientras atendemos las necesidades de tu vehículo.",
     primary: "Conoce nuestras sucursales",
     secondary: "Contáctanos",
@@ -37,7 +41,9 @@ const slides = [
   },
   {
     id: "ahorro-plus-slide",
+    eyebrow: "Tu aliado automotriz del litoral central",
     title: "Haz tu mantención según pauta del fabricante",
+    titleAccent: "fabricante",
     text: "Conoce nuestro servicio de ahorro plus y ayuda a prevenir desgastes mayores. ¡Agenda tu mantención hoy mismo!",
     primary: "Agendar mantención",
     secondary: "Ver servicio",
@@ -49,7 +55,9 @@ const slides = [
   },
   {
     id: "pre-revision-tecnica",
+    eyebrow: "Pre-revisión técnica",
     title: `Si tu patente termina en ${terminoPatenteMes} ven por tu pre-revisión!`,
+    titleAccent: "",
     text: "Entonces este mensaje es para ti. En Plaza Car Service te ayudamos a preparar tu vehículo para la revisión técnica con una pre revisión completa, enfocada en detectar observaciones a tiempo y ayudarte a evitar rechazos.",
     primary: "Agendar pre revisión",
     secondary: "Ver detalle",
@@ -462,6 +470,7 @@ function PromoMarquee() {
 function MainSlider() {
   const [activeSlide, setActiveSlide] = useState(0);
   const slide = slides[activeSlide];
+  const titleParts = slide.titleAccent ? slide.title.split(slide.titleAccent) : null;
 
   const previousSlide = () => {
     setActiveSlide((current) =>
@@ -476,59 +485,37 @@ function MainSlider() {
   };
 
   return (
-    <section id="hero" className="bg-[#0c0c0d]">
-      <div className="relative min-h-[560px] overflow-hidden bg-[#111318] md:min-h-[640px]">
-        <picture>
-          <source
-            media="(max-width: 767px)"
-            srcSet={slide.mobileImage || slide.image}
-          />
-          <img
-            src={slide.image}
-            alt={slide.title}
-            className={`absolute inset-0 h-full w-full opacity-85 transition duration-500 ${
-              slide.imageClass ??
-              "object-contain object-center bg-black md:object-cover md:object-center"
-            }`}
-          />
-        </picture>
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-black/10 md:bg-gradient-to-r md:from-black md:via-black/80 md:to-black/22" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/10" />
+    <section id="hero" className="bg-black text-white">
+      <div className="relative overflow-hidden bg-black">
+        <div className="mx-auto grid min-h-[620px] max-w-[1680px] items-center gap-8 px-5 pb-9 pt-24 sm:px-8 lg:grid-cols-[0.9fr_1.45fr] lg:gap-9 lg:px-14 lg:py-16 xl:px-20">
+          <div className="relative z-10 max-w-[560px]">
+            <p className="text-xs font-black uppercase leading-tight text-red-600 sm:text-sm">
+              {slide.eyebrow}
+            </p>
+            <span className="mt-4 block h-[2px] w-16 bg-red-600" />
 
-        <button
-          type="button"
-          onClick={previousSlide}
-          className="absolute left-5 top-1/2 z-20 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white backdrop-blur transition hover:bg-white hover:text-black md:flex"
-          aria-label="Slide anterior"
-        >
-          <ArrowIcon className="h-5 w-5 rotate-180" />
-        </button>
-
-        <button
-          type="button"
-          onClick={nextSlide}
-          className="absolute right-5 top-1/2 z-20 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white backdrop-blur transition hover:bg-white hover:text-black md:flex"
-          aria-label="Slide siguiente"
-        >
-          <ArrowIcon className="h-5 w-5" />
-        </button>
-
-        <div className="relative z-10 mx-auto flex min-h-[560px] max-w-[1920px] flex-col justify-end px-5 pb-8 pt-20 md:min-h-[640px] md:justify-between md:px-20 md:py-16">
-          <div className="max-w-4xl pt-8 md:pt-12">
-            <h1 className="max-w-4xl text-[2rem] font-black leading-[1.02] tracking-[-0.045em] text-white drop-shadow-2xl sm:text-4xl md:text-7xl">
-              {slide.title}
+            <h1 className="mt-4 max-w-[620px] text-[2.55rem] font-black leading-[0.98] text-white sm:text-5xl lg:text-[3.4rem] xl:text-6xl 2xl:text-[4.4rem]">
+              {titleParts ? (
+                <>
+                  {titleParts[0]}
+                  <span className="text-red-600">{slide.titleAccent}</span>
+                  {titleParts.slice(1).join(slide.titleAccent)}
+                </>
+              ) : (
+                slide.title
+              )}
             </h1>
 
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/76 md:mt-6 md:text-xl">
+            <p className="mt-5 max-w-[560px] text-base leading-relaxed text-white/76 lg:text-lg">
               {slide.text}
             </p>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row md:mt-8">
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a
                 href={slide.href}
                 target={slide.href.startsWith("http") ? "_blank" : undefined}
                 rel={slide.href.startsWith("http") ? "noreferrer" : undefined}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#c83a42] px-7 py-4 text-sm font-black text-white transition hover:bg-[#a92f36] md:text-base"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-red-600 px-6 py-3 text-sm font-black uppercase text-white transition hover:bg-[#a92f36]"
               >
                 {slide.href.includes("wa.me") && (
                   <WhatsAppIcon className="h-5 w-5" />
@@ -538,20 +525,69 @@ function MainSlider() {
 
               <a
                 href={slide.secondaryHref}
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-white px-7 py-4 text-sm font-black text-black transition hover:bg-red-600 hover:text-white md:text-base"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-white/25 bg-white px-6 py-3 text-sm font-black uppercase text-black transition hover:border-red-600 hover:bg-red-600 hover:text-white"
               >
                 {slide.secondary}
               </a>
             </div>
           </div>
 
-          <div className="mt-8 flex justify-end md:mt-0">
-            <div className="flex items-center gap-3">
+          <div className="relative z-10">
+            <div className="relative overflow-hidden rounded-lg border border-white/15 bg-[#101114] shadow-[0_24px_70px_rgba(0,0,0,0.5)]">
+              <picture>
+                <source
+                  media="(max-width: 767px)"
+                  srcSet={slide.mobileImage || slide.image}
+                />
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="aspect-[16/9] h-full w-full object-cover object-center transition duration-500"
+                />
+              </picture>
+
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/60 to-transparent" />
+
+              <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-3">
+                {slides.map((item, index) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveSlide(index)}
+                    className={`h-3 w-3 rounded-full transition ${
+                      activeSlide === index
+                        ? "bg-red-600"
+                        : "bg-white/85 hover:bg-white"
+                    }`}
+                    aria-label={`Ver slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={previousSlide}
+              className="absolute left-0 top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/70 text-white shadow-xl backdrop-blur transition hover:bg-white hover:text-black"
+              aria-label="Slide anterior"
+            >
+              <ArrowIcon className="h-5 w-5 rotate-180" />
+            </button>
+
+            <button
+              type="button"
+              onClick={nextSlide}
+              className="absolute right-0 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-white/15 bg-black/70 text-white shadow-xl backdrop-blur transition hover:bg-white hover:text-black"
+              aria-label="Slide siguiente"
+            >
+              <ArrowIcon className="h-5 w-5" />
+            </button>
+
+            <div className="mt-5 flex items-center justify-center gap-3 lg:hidden">
               {slides.map((item, index) => (
                 <button
                   key={item.id}
                   onClick={() => setActiveSlide(index)}
-                  className={`h-1 rounded-full transition ${
+                  className={`h-1.5 rounded-full transition ${
                     activeSlide === index
                       ? "w-10 bg-red-600"
                       : "w-9 bg-white/70 hover:bg-white"
