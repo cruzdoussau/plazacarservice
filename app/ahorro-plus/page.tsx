@@ -1,4 +1,5 @@
 import SiteHeader from "../components/SiteHeader";
+import AhorroPlusLookup from "./AhorroPlusLookup";
 
 export const metadata = {
   title: "Programa Ahorro Plus | Plaza Car Service",
@@ -67,10 +68,10 @@ export default function AhorroPlusPage() {
               Solicitar registro
             </a>
             <a
-              href="/intranet-ahorro-plus"
+              href="#consulta-puntos"
               className="rounded-lg bg-white px-6 py-4 text-sm font-black text-black transition hover:bg-red-600 hover:text-white"
             >
-              Revisar mi perfil
+              Revisar mis beneficios
             </a>
           </div>
         </div>
@@ -100,6 +101,8 @@ export default function AhorroPlusPage() {
           ))}
         </div>
       </section>
+
+      <AhorroPlusLookup />
 
       <section className="mx-auto grid max-w-[1500px] gap-8 px-5 py-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-10">
         <div className="overflow-hidden rounded-lg border border-white/10 bg-[#15171b]">

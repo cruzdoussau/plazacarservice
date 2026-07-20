@@ -12,15 +12,6 @@ type BenefitUsage = Record<BenefitKey, number>;
 
 type ClientWithUsage = PreferredClient & BenefitUsage;
 
-type BenefitLog = {
-  id: string;
-  date: string;
-  clientId: string;
-  benefit: BenefitKey | "reset";
-  amount: number;
-  note: string;
-};
-
 type DraftClient = {
   name: string;
   rut: string;
@@ -31,11 +22,9 @@ type DraftClient = {
 
 type ApiState = {
   clients: ClientWithUsage[];
-  logs: BenefitLog[];
   error?: string;
 };
 
-const adminPasswordFallback = "plazacar2026";
 const benefitOrder: BenefitKey[] = [
   "washes",
   "technicalReview",
@@ -77,8 +66,6 @@ function emptyDraft(): DraftClient {
 
 export default function AhorroPlusIntranetPage() {
   const [clients, setClients] = useState<ClientWithUsage[]>([]);
-  const [logs, setLogs] = useState<BenefitLog[]>([]);
-  const [clientRut, setClientRut] = useState("");
   const [adminCode, setAdminCode] = useState("");
   const [adminSessionCode, setAdminSessionCode] = useState("");
   const [adminQuery, setAdminQuery] = useState("");
@@ -92,15 +79,22 @@ export default function AhorroPlusIntranetPage() {
 
   const isAdmin = Boolean(adminSessionCode);
 
-  async function loadState() {
+  async function loadState(code = adminSessionCode) {
+    if (!code) {
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     setError("");
     try {
-      const response = await fetch("/api/ahorro-plus", { cache: "no-store" });
+      const response = await fetch(
+        `/api/ahorro-plus?adminCode=${encodeURIComponent(code)}`,
+        { cache: "no-store" }
+      );
       const data = (await response.json()) as ApiState;
       if (!response.ok) throw new Error(data.error ?? "No fue posible cargar datos.");
       setClients(data.clients);
-      setLogs(data.logs);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Error al cargar datos.");
     } finally {
@@ -120,7 +114,6 @@ export default function AhorroPlusIntranetPage() {
       const data = (await response.json()) as ApiState;
       if (!response.ok) throw new Error(data.error ?? "No fue posible guardar.");
       setClients(data.clients);
-      setLogs(data.logs);
     } catch (caught) {
       const message = caught instanceof Error ? caught.message : "Error al guardar.";
       setError(message);
@@ -131,16 +124,10 @@ export default function AhorroPlusIntranetPage() {
   }
 
   useEffect(() => {
-    loadState();
+    setIsLoading(false);
   }, []);
 
   const selectedClient = clients.find((client) => client.id === selectedId);
-
-  const clientProfile = useMemo(() => {
-    const rut = cleanRut(clientRut);
-    if (!rut) return undefined;
-    return clients.find((client) => client.rutKey === rut);
-  }, [clientRut, clients]);
 
   const filteredClients = useMemo(() => {
     const query = adminQuery.trim().toLowerCase();
@@ -191,6 +178,7 @@ export default function AhorroPlusIntranetPage() {
       }
       setAdminSessionCode(codeToVerify);
       setAdminCode("");
+      await loadState(codeToVerify);
     } catch (caught) {
       const message = caught instanceof Error ? caught.message : "Error al validar la clave.";
       setError(message);
@@ -245,19 +233,21 @@ export default function AhorroPlusIntranetPage() {
             />
             <div>
               <p className="text-xs font-black uppercase tracking-[0.18em] text-red-500">
-                Cliente preferente
+                Acceso administrador
               </p>
-              <h1 className="text-2xl font-black">Programa Ahorro Plus</h1>
+              <h1 className="text-2xl font-black">Intranet Ahorro Plus</h1>
             </div>
           </a>
           <div className="flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={loadState}
-              className="rounded-lg border border-white/15 px-4 py-3 text-sm font-black transition hover:bg-white hover:text-black"
-            >
-              Actualizar
-            </button>
+            {isAdmin && (
+              <button
+                type="button"
+                onClick={() => loadState()}
+                className="rounded-lg border border-white/15 px-4 py-3 text-sm font-black transition hover:bg-white hover:text-black"
+              >
+                Actualizar
+              </button>
+            )}
             <a
               href="/ahorro-plus"
               className="rounded-lg border border-white/15 px-4 py-3 text-sm font-black transition hover:bg-white hover:text-black"
@@ -280,51 +270,7 @@ export default function AhorroPlusIntranetPage() {
         </div>
       )}
 
-      <section className="mx-auto grid max-w-[1500px] gap-6 px-5 py-8 lg:grid-cols-[0.85fr_1.15fr] lg:px-10">
-        <div className="rounded-lg border border-white/10 bg-[#15171b] p-6">
-          <p className="text-sm font-black uppercase tracking-[0.18em] text-red-500">
-            Consulta cliente
-          </p>
-          <h2 className="mt-3 text-4xl font-black leading-tight">
-            Revisa tus beneficios disponibles
-          </h2>
-          <p className="mt-4 text-sm leading-relaxed text-white/62">
-            Ingresa tu RUT. La informacion se consulta desde la base de datos
-            central, no desde este navegador.
-          </p>
-
-          <div className="mt-6 grid gap-3">
-            <input
-              value={clientRut}
-              onChange={(event) => setClientRut(formatRutInput(event.target.value))}
-              placeholder="RUT"
-              inputMode="text"
-              maxLength={10}
-              className="h-12 rounded-lg border border-white/10 bg-black/35 px-4 text-sm font-bold text-white outline-none focus:border-red-500"
-            />
-          </div>
-
-          {isLoading && (
-            <div className="mt-5 rounded-lg border border-white/10 bg-white/5 p-4 text-sm font-bold text-white/60">
-              Cargando base de clientes...
-            </div>
-          )}
-
-          {clientRut && cleanRut(clientRut).length >= 7 && !clientProfile && !isLoading && (
-            <div className="mt-5 rounded-lg border border-red-500/25 bg-red-600/10 p-4 text-sm font-bold text-white/75">
-              No encontramos un cliente con ese RUT. Verifica el dato o
-              solicita tu registro en sucursal.
-            </div>
-          )}
-
-          {clientProfile && (
-            <ClientBenefits
-              client={clientProfile}
-              logs={logs.filter((log) => log.clientId === clientProfile.id)}
-            />
-          )}
-        </div>
-
+      <section className="mx-auto grid max-w-[1500px] gap-6 px-5 py-8 lg:px-10">
         <div className="rounded-lg border border-white/10 bg-[#111318] p-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
@@ -527,71 +473,3 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
-function ClientBenefits({
-  client,
-  logs,
-}: {
-  client: ClientWithUsage;
-  logs: BenefitLog[];
-}) {
-  return (
-    <div className="mt-6 rounded-lg border border-white/10 bg-black/25 p-5">
-      <p className="text-xs font-black uppercase tracking-[0.18em] text-red-500">
-        Perfil encontrado
-      </p>
-      <h3 className="mt-2 text-2xl font-black">{client.name}</h3>
-      <p className="mt-1 text-sm font-bold text-white/55">
-        {client.plate} | {client.brand || "Vehiculo registrado"}
-      </p>
-
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
-        {benefitOrder.map((benefit) => {
-          const available = remainingFor(client, benefit);
-          const used = Number(client[benefit] ?? 0);
-          const isSavings = benefit === "savings";
-          return (
-            <div key={benefit} className="rounded-lg bg-white/5 p-4">
-              <p className="text-xs font-black text-white/45">
-                {benefitLabels[benefit]}
-              </p>
-              <p className="mt-2 text-3xl font-black">
-                {isSavings ? formatCurrency(available) : available}
-              </p>
-              <p className="mt-1 text-xs font-bold text-white/45">
-                Usado: {isSavings ? formatCurrency(used) : used}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="mt-5">
-        <p className="text-sm font-black">Ultimos movimientos</p>
-        <div className="mt-2 grid gap-2">
-          {logs.length ? (
-            logs.slice(0, 5).map((log) => (
-              <div
-                key={log.id}
-                className="rounded-lg border border-white/10 px-3 py-2 text-xs font-bold text-white/58"
-              >
-                {log.date} |{" "}
-                {log.benefit === "reset"
-                  ? "Beneficios restaurados"
-                  : benefitLabels[log.benefit]}{" "}
-                |{" "}
-                {log.benefit === "savings"
-                  ? formatCurrency(log.amount)
-                  : log.amount}
-                {log.note ? ` | ${log.note}` : ""}
-              </div>
-            ))
-          ) : (
-            <p className="rounded-lg border border-white/10 px-3 py-2 text-xs font-bold text-white/45">
-              Sin canjes registrados.
-            </p>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}

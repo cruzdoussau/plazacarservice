@@ -207,6 +207,56 @@ async function getState() {
   return Response.json({ clients, logs });
 }
 
+async function getClientProfile(rut: string) {
+  await ensureSchema();
+  const rutKey = cleanRut(rut);
+
+  if (rutKey.length < 7) {
+    return Response.json({ error: "Ingresa un RUT valido." }, { status: 400 });
+  }
+
+  const sql = getSql();
+  const clients = await sql`
+    SELECT
+      c.id,
+      c.name,
+      c.plate,
+      c.brand,
+      COALESCE(u.washes, 0) AS washes,
+      COALESCE(u.technical_review, 0) AS "technicalReview",
+      COALESCE(u.brake_review, 0) AS "brakeReview",
+      COALESCE(u.savings, 0) AS savings
+    FROM ahorro_plus_clients c
+    LEFT JOIN ahorro_plus_usage u ON u.client_id = c.id
+    WHERE c.rut_key = ${rutKey}
+    LIMIT 1
+  `;
+
+  const client = clients[0];
+  if (!client) {
+    return Response.json(
+      { error: "No encontramos un cliente registrado con ese RUT." },
+      { status: 404 }
+    );
+  }
+
+  const logs = await sql`
+    SELECT
+      id,
+      date,
+      client_id AS "clientId",
+      benefit,
+      amount,
+      note
+    FROM ahorro_plus_logs
+    WHERE client_id = ${client.id}
+    ORDER BY created_at DESC
+    LIMIT 10
+  `;
+
+  return Response.json({ client, logs });
+}
+
 function assertAdmin(adminCode: string) {
   if (adminCode !== adminPassword) {
     return Response.json({ error: "Clave de administrador incorrecta." }, { status: 401 });
@@ -217,8 +267,17 @@ function remaining(current: number, benefit: BenefitKey) {
   return Math.max(0, benefitLimits[benefit] - current);
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const rut = searchParams.get("rut") ?? "";
+    if (rut) {
+      return await getClientProfile(rut);
+    }
+
+    const adminError = assertAdmin(searchParams.get("adminCode") ?? "");
+    if (adminError) return adminError;
+
     return await getState();
   } catch (error) {
     return Response.json(
