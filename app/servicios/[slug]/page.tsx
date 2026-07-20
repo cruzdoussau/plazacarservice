@@ -18,13 +18,14 @@ const services = [
     detailSectionLabel: "Nuestro plan de mantención",
     detailSectionTitle: "Incluye:",
     includes: [
-      "Inspección de seguridad: Revisión de frenos, tren delantero y neumáticos, escáner de diagnóstico.",
+      "Inspección de seguridad: cambio de aceite y filtro de aceite, cambio filtro de polen, revisión de filtro de aire, frenos, tren delantero y neumáticos, escáner de diagnóstico.",
       "Chequeo general: Revisión de todos los niveles, estado de correas, filtros, bujías y luces.",
       "Asesoría: Orientación personalizada sobre el estado general de tu vehículo.",
+      "Garantía de Liderazgo: Llevamos años atendiendo los vehículos de la zona con los más altos estándares de calidad y seguridad.",
     ],
     idealFor:
       "Al cumplir rigurosamente con estas pautas mediante revisiones oportunas, evitarás cualquier tipo de falla mayor a futuro.",
-    note: "Garantía de Liderazgo: Llevamos años atendiendo los vehículos de la zona con los más altos estándares de calidad y seguridad.",
+    note: "Agenda tu mantención preventiva y recibe una revisión clara del estado general de tu vehículo.",
   },
   {
     id: "frenos",
