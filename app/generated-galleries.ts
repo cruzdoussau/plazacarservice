@@ -47,7 +47,9 @@ export const serviceGalleries = {
     "/site-photos/service-galleries/frenos/frenos-01.webp"
   ],
   "alineacion-balanceo": [],
-  "cambio-aceite": [],
+  "cambio-aceite": [
+    "/site-photos/service-galleries/cambio-aceite/cambio-aceite-01.webp"
+  ],
   "scanner": [],
   "limpieza": [
     "/site-photos/service-galleries/limpieza/limpieza-01.webp",
