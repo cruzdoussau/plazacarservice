@@ -16,31 +16,31 @@ const productBrandGroups = {
     brands: [
       {
         name: "Goodride",
-        image: "/site-photos/product-gallery/aceites/goodride.png",
+        image: "/site-photos/product-gallery/neumaticos/goodride.png",
       },
       {
         name: "Nexen",
-        image: "/site-photos/product-gallery/aceites/nexen.png",
+        image: "/site-photos/product-gallery/neumaticos/nexen.png",
       },
       {
         name: "Onyx",
-        image: "/site-photos/product-gallery/aceites/onyx.png",
+        image: "/site-photos/product-gallery/neumaticos/onyx.png",
       },
       {
         name: "Risen",
-        image: "/site-photos/product-gallery/aceites/risen.jpeg",
+        image: "/site-photos/product-gallery/neumaticos/risen.jpeg",
       },
       {
         name: "Roadwing",
-        image: "/site-photos/product-gallery/aceites/roadwing.png",
+        image: "/site-photos/product-gallery/neumaticos/roadwing.png",
       },
       {
         name: "Trackmax",
-        image: "/site-photos/product-gallery/aceites/trackmax.png",
+        image: "/site-photos/product-gallery/neumaticos/trackmax.png",
       },
       {
         name: "Windforce",
-        image: "/site-photos/product-gallery/aceites/windforce.png",
+        image: "/site-photos/product-gallery/neumaticos/windforce.png",
       },
     ],
   },
@@ -52,23 +52,23 @@ const productBrandGroups = {
     brands: [
       {
         name: "Bosch",
-        image: "/site-photos/product-gallery/neumaticos/bosch.png",
+        image: "/site-photos/product-gallery/aceites/bosch.png",
       },
       {
         name: "Fierte",
-        image: "/site-photos/product-gallery/neumaticos/fierte.jpeg",
+        image: "/site-photos/product-gallery/aceites/fierte.jpeg",
       },
       {
         name: "Olimpo",
-        image: "/site-photos/product-gallery/neumaticos/olimpo.png",
+        image: "/site-photos/product-gallery/aceites/olimpo.png",
       },
       {
         name: "STP",
-        image: "/site-photos/product-gallery/neumaticos/stp.jpeg",
+        image: "/site-photos/product-gallery/aceites/stp.jpeg",
       },
       {
         name: "Voltex",
-        image: "/site-photos/product-gallery/neumaticos/voltex.png",
+        image: "/site-photos/product-gallery/aceites/voltex.png",
       },
     ],
   },
