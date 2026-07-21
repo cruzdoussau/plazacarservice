@@ -44,31 +44,31 @@ const productBrandGroups = {
       },
     ],
   },
-  "cambio-aceite": {
+  "baterias": {
     label: "Marcas disponibles",
-    title: "Aceites, filtros y lubricantes",
+    title: "Baterías y productos eléctricos",
     description:
-      "Seleccionamos productos adecuados para proteger el motor según la pauta y especificación de cada fabricante.",
+      "Trabajamos con marcas confiables para ayudarte a elegir la batería y los productos eléctricos adecuados para tu vehículo.",
     brands: [
       {
         name: "Bosch",
-        image: "/site-photos/product-gallery/aceites/bosch.png",
+        image: "/site-photos/product-gallery/baterias/bosch.png",
       },
       {
         name: "Fierte",
-        image: "/site-photos/product-gallery/aceites/fierte.jpeg",
+        image: "/site-photos/product-gallery/baterias/fierte.jpeg",
       },
       {
         name: "Olimpo",
-        image: "/site-photos/product-gallery/aceites/olimpo.png",
+        image: "/site-photos/product-gallery/baterias/olimpo.png",
       },
       {
         name: "STP",
-        image: "/site-photos/product-gallery/aceites/stp.jpeg",
+        image: "/site-photos/product-gallery/baterias/stp.jpeg",
       },
       {
         name: "Voltex",
-        image: "/site-photos/product-gallery/aceites/voltex.png",
+        image: "/site-photos/product-gallery/baterias/voltex.png",
       },
     ],
   },

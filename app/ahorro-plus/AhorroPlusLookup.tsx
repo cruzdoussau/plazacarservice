@@ -117,8 +117,7 @@ export default function AhorroPlusLookup() {
             Revisa tu saldo Ahorro Plus
           </h2>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-white/65">
-            Ingresa tu RUT para ver lavados, pre-revision tecnica, revision de
-            frenos y pesos ahorro disponibles.
+            Ingresa tu RUT para ver tus beneficios y ahorro pesos disponibles.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-6 grid gap-3 sm:grid-cols-[1fr_auto]">
