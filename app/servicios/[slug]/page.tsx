@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { serviceGalleries } from "../../generated-galleries";
 import SiteHeader from "../../components/SiteHeader";
+import ServiceGallerySlider from "./ServiceGallerySlider";
 
 const whatsappBase = "https://wa.me/56971257621";
 
@@ -299,6 +300,97 @@ export default async function ServicePage({
   const serviceGallery =
     (serviceGalleries as Record<string, readonly string[]>)[service.id] ?? [];
   const gallery = serviceGallery.length ? serviceGallery : [service.image];
+  const primaryCtaLabel = isProductPage(service.id)
+    ? "Cotizar producto"
+    : "Cotizar servicio";
+  const secondaryLabel = isProductPage(service.id)
+    ? "Producto disponible"
+    : "Servicio automotriz";
+
+  return (
+    <main className="min-h-screen overflow-x-hidden bg-[#0c0c0d] text-white">
+      <SiteHeader />
+      <section className="overflow-x-hidden bg-black px-4 py-4 md:px-6 lg:px-8 lg:py-5">
+        <div className="mx-auto grid max-w-[1760px] gap-5 lg:grid-cols-[1.38fr_0.62fr] lg:items-start">
+          <div className="flex flex-col rounded-lg border border-white/10 bg-[#111318] p-4 shadow-2xl md:p-5 lg:p-6">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <Link
+                href="/#servicios"
+                className="rounded-md border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-black uppercase text-white transition hover:bg-white hover:text-black"
+              >
+                Volver
+              </Link>
+              <span className="rounded-full bg-red-600/15 px-4 py-2 text-[11px] font-black uppercase text-red-500">
+                {secondaryLabel}
+              </span>
+            </div>
+
+            <div className="mt-4">
+              <p className="text-[11px] font-black uppercase tracking-[0.2em] text-red-500">
+                {service.badge}
+              </p>
+              <h1 className="mt-3 max-w-5xl text-4xl font-black leading-[0.96] text-white md:text-5xl">
+                {service.title}
+              </h1>
+              <p className="mt-4 max-w-4xl text-sm font-semibold leading-relaxed text-white/70">
+                {service.detailIntro}
+              </p>
+            </div>
+
+            <div className="mt-5">
+              <p className="text-[11px] font-black uppercase tracking-[0.2em] text-red-500">
+                {service.detailSectionLabel ?? "Que incluye"}
+              </p>
+              <h2 className="mt-2 text-2xl font-black leading-tight text-white">
+                {service.detailSectionTitle ?? "Incluye:"}
+              </h2>
+
+              <div className="mt-4 grid gap-3 xl:grid-cols-2">
+                {service.includes.map((item) => {
+                  const include = splitIncludeItem(item);
+
+                  return (
+                    <article
+                      key={item}
+                      className="rounded-md border border-white/10 bg-black/24 p-3"
+                    >
+                      <div className="flex items-start gap-3">
+                        <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-red-600" />
+                        <h3 className="text-sm font-black leading-snug text-white">
+                          {include.title}
+                        </h3>
+                      </div>
+                      {include.description ? (
+                        <p className="mt-2 text-xs font-semibold leading-relaxed text-white/68">
+                          {include.description}
+                        </p>
+                      ) : null}
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+              <p className="max-w-xl text-xs font-bold leading-relaxed text-white/55">
+                {service.note}
+              </p>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex shrink-0 items-center justify-center rounded-md bg-red-600 px-6 py-3 text-xs font-black uppercase text-white transition hover:bg-[#a92f36]"
+              >
+                {primaryCtaLabel}
+              </a>
+            </div>
+          </div>
+
+          <ServiceGallerySlider images={gallery} title={service.title} />
+        </div>
+      </section>
+    </main>
+  );
 
   if (isProductPage(service.id)) {
     return (
