@@ -659,10 +659,10 @@ function WebActionsSection() {
     },
     {
       title: "Presupuestos claros",
-      text: "Solicita cotizaciones detalladas y sin sorpresas.",
-      label: "Cotizar repuesto",
+      text: "Solicita cotizaciones detalladas para tu servicio automotriz.",
+      label: "Cotizar servicio",
       href: `${whatsappBase}?text=${encodeURIComponent(
-        "Hola, quiero cotizar un repuesto para mi vehículo."
+        "Hola quiero cotizar un servicio automotriz para mi vehiculo en Plaza Car Services."
       )}`,
       external: true,
     },
