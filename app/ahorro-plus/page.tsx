@@ -27,10 +27,8 @@ const programBenefits = [
 ];
 
 const reasons = [
-  "Retiramos tu vehículo o te acercamos a tu hogar y/o lugar de trabajo.",
-  "Mantención según pauta del fabricante para cuidar desempeño y vida útil.",
-  "Mayor calidad, confianza y precios convenientes en cada servicio.",
-  "Acumulas Ahorro Pesos por cada mantención y/o servicio que realices.",
+  "Retiramos y/o entregamos tu vehículo para servicios agendados, desde tu hogar, lugar de trabajo y/o actividades.",
+  "Ofrecemos servicio de acercamiento a tu hogar o lugar de trabajo.",
 ];
 
 export default function AhorroPlusPage() {
@@ -58,8 +56,8 @@ export default function AhorroPlusPage() {
               Conoce nuestro programa Ahorro Plus
             </h1>
             <p className="mt-4 max-w-4xl text-sm font-semibold leading-relaxed text-white/70">
-              Hazte cliente preferente y accede a nuestros grandes beneficios
-              para mantener tu vehículo cuidado, seguro y al día.
+              Hazte cliente preferente, únete y accede a nuestros grandes
+              beneficios para mantener tu vehículo cuidado, seguro y al día.
             </p>
 
             <div className="mt-5">
@@ -100,9 +98,10 @@ export default function AhorroPlusPage() {
                   Acumula Ahorro pesos
                 </p>
                 <p className="mt-2 text-xs font-semibold leading-relaxed text-white/72">
-                  Al realizar mantenciones anuales o por kilometraje, sumas{" "}
-                  <strong className="text-white">$15.000</strong> a tu cuenta de
-                  cliente preferencial para usar en productos y/o servicios.
+                  Al realizar tu mantención por kilometraje, acumula{" "}
+                  <strong className="text-white">$15.000 Ahorro Pesos</strong>,
+                  los que podrás utilizar en el pago de futuros servicios o
+                  compra de productos.
                 </p>
               </div>
 

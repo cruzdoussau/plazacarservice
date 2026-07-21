@@ -7,6 +7,73 @@ import ServiceGallerySlider from "./ServiceGallerySlider";
 
 const whatsappBase = "https://wa.me/56971257621";
 
+const productBrandGroups = {
+  "neumaticos": {
+    label: "Marcas disponibles",
+    title: "Neumáticos multimarca",
+    description:
+      "Trabajamos con marcas reconocidas para ayudarte a elegir la medida y rendimiento adecuados para tu vehículo.",
+    brands: [
+      {
+        name: "Goodride",
+        image: "/site-photos/product-gallery/aceites/goodride.png",
+      },
+      {
+        name: "Nexen",
+        image: "/site-photos/product-gallery/aceites/nexen.png",
+      },
+      {
+        name: "Onyx",
+        image: "/site-photos/product-gallery/aceites/onyx.png",
+      },
+      {
+        name: "Risen",
+        image: "/site-photos/product-gallery/aceites/risen.jpeg",
+      },
+      {
+        name: "Roadwing",
+        image: "/site-photos/product-gallery/aceites/roadwing.png",
+      },
+      {
+        name: "Trackmax",
+        image: "/site-photos/product-gallery/aceites/trackmax.png",
+      },
+      {
+        name: "Windforce",
+        image: "/site-photos/product-gallery/aceites/windforce.png",
+      },
+    ],
+  },
+  "cambio-aceite": {
+    label: "Marcas disponibles",
+    title: "Aceites, filtros y lubricantes",
+    description:
+      "Seleccionamos productos adecuados para proteger el motor según la pauta y especificación de cada fabricante.",
+    brands: [
+      {
+        name: "Bosch",
+        image: "/site-photos/product-gallery/neumaticos/bosch.png",
+      },
+      {
+        name: "Fierte",
+        image: "/site-photos/product-gallery/neumaticos/fierte.jpeg",
+      },
+      {
+        name: "Olimpo",
+        image: "/site-photos/product-gallery/neumaticos/olimpo.png",
+      },
+      {
+        name: "STP",
+        image: "/site-photos/product-gallery/neumaticos/stp.jpeg",
+      },
+      {
+        name: "Voltex",
+        image: "/site-photos/product-gallery/neumaticos/voltex.png",
+      },
+    ],
+  },
+} as const;
+
 const services = [
   {
     id: "mantencion-kilometraje",
@@ -16,17 +83,31 @@ const services = [
     image: "/site-photos/auto-rampa-servicio.webp",
     detailIntro:
       "Para garantizar el rendimiento óptimo y la vida útil de tu motor, es fundamental realizar la mantención de tu vehículo cada 10.000 km o una vez al año (según indique el manual del fabricante).",
-    detailSectionLabel: "Nuestro plan de mantención",
+    detailSectionLabel: "Nuestro plan de mantención base",
     detailSectionTitle: "Incluye:",
     includes: [
-      "Inspección de seguridad: cambio de aceite y filtro de aceite, cambio filtro de polen, revisión de filtro de aire, frenos, tren delantero y neumáticos, escáner de diagnóstico.",
-      "Chequeo general: Revisión de todos los niveles, estado de correas, filtros, bujías y luces.",
-      "Asesoría: Orientación personalizada sobre el estado general de tu vehículo.",
-      "Garantía de Liderazgo: Llevamos años atendiendo los vehículos de la zona con los más altos estándares de calidad y seguridad.",
+      "Cambio de aceite y filtro",
+      "Cambio de filtro de polen",
+      "Escáner de diagnóstico",
+      "Revisión de sistema frenos",
+      "Revisión de tren delantero",
+      "Rotación y balanceo de neumáticos",
+      "Inspección de neumáticos",
+      "Revisión de filtro de aire",
+      "Revisión de bujías",
+      "Revisión de correas",
+      "Revisión de estado de batería y luces",
+      "Revisión y relleno de todos los niveles",
+      "Lubricación de puertas y bisagras",
+      "Inspección de cañerías de fluidos y combustible",
+      "Inspección de plumillas",
+      "Inspección cristales y micas",
+      "Asesoría técnica personalizada",
+      "Ajuste electrónico y reseteo del indicador de tablero",
     ],
     idealFor:
       "Al cumplir rigurosamente con estas pautas mediante revisiones oportunas, evitarás cualquier tipo de falla mayor a futuro.",
-    note: "Agenda tu mantención preventiva y recibe una revisión clara del estado general de tu vehículo.",
+    note: "Garantía de Liderazgo: Llevamos años atendiendo los vehículos de la zona con los más altos estándares de calidad, seguridad y procesos.",
   },
   {
     id: "frenos",
@@ -306,6 +387,18 @@ export default async function ServicePage({
   const secondaryLabel = isProductPage(service.id)
     ? "Producto disponible"
     : "Servicio automotriz";
+  const productBrandGroup =
+    (productBrandGroups as Partial<
+      Record<
+        string,
+        {
+          label: string;
+          title: string;
+          description: string;
+          brands: readonly { name: string; image: string }[];
+        }
+      >
+    >)[service.id] ?? null;
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#0c0c0d] text-white">
@@ -345,7 +438,13 @@ export default async function ServicePage({
                 {service.detailSectionTitle ?? "Incluye:"}
               </h2>
 
-              <div className="mt-4 grid gap-3 xl:grid-cols-2">
+              <div
+                className={`mt-4 grid gap-3 ${
+                  service.id === "mantencion-kilometraje"
+                    ? "md:grid-cols-2 xl:grid-cols-3"
+                    : "xl:grid-cols-2"
+                }`}
+              >
                 {service.includes.map((item) => {
                   const include = splitIncludeItem(item);
 
@@ -370,6 +469,39 @@ export default async function ServicePage({
                 })}
               </div>
             </div>
+
+            {productBrandGroup ? (
+              <div className="mt-5 rounded-md border border-white/10 bg-black/24 p-4">
+                <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+                  <div>
+                    <p className="text-[11px] font-black uppercase tracking-[0.2em] text-red-500">
+                      {productBrandGroup.label}
+                    </p>
+                    <h2 className="mt-2 text-2xl font-black leading-tight text-white">
+                      {productBrandGroup.title}
+                    </h2>
+                  </div>
+                  <p className="max-w-xl text-xs font-semibold leading-relaxed text-white/60">
+                    {productBrandGroup.description}
+                  </p>
+                </div>
+
+                <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+                  {productBrandGroup.brands.map((brand) => (
+                    <div
+                      key={brand.name}
+                      className="flex h-20 items-center justify-center rounded-md border border-white/10 bg-white p-3"
+                    >
+                      <img
+                        src={brand.image}
+                        alt={`Marca ${brand.name}`}
+                        className="max-h-12 max-w-full object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
             <div className="mt-5 flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
               <p className="max-w-xl text-xs font-bold leading-relaxed text-white/55">
