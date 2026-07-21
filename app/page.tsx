@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import plazaCarLogo2026 from "./LOGO PLAZA CAR SERVICE 2026.png";
 import SiteHeader from "./components/SiteHeader";
 import { homeGalleryImages } from "./generated-galleries";
@@ -641,6 +641,8 @@ function ServicesSection() {
 }
 
 function WebActionsSection() {
+  const actionsCarouselRef = useRef<HTMLDivElement | null>(null);
+  const [activeAction, setActiveAction] = useState(0);
   const actions = [
     {
       title: "Agendar tu hora",
@@ -674,6 +676,42 @@ function WebActionsSection() {
     },
   ];
 
+  const scrollToAction = (index: number) => {
+    const carousel = actionsCarouselRef.current;
+    if (!carousel) return;
+
+    const nextIndex = Math.max(0, Math.min(index, actions.length - 1));
+    const slide = carousel.children[nextIndex] as HTMLElement | undefined;
+    if (!slide) return;
+
+    carousel.scrollTo({
+      left: slide.offsetLeft - carousel.offsetLeft,
+      behavior: "smooth",
+    });
+    setActiveAction(nextIndex);
+  };
+
+  const handleActionsScroll = () => {
+    const carousel = actionsCarouselRef.current;
+    if (!carousel) return;
+
+    const nearestIndex = Array.from(carousel.children).reduce(
+      (closestIndex, child, index) => {
+        const element = child as HTMLElement;
+        const closestElement = carousel.children[closestIndex] as HTMLElement;
+        const distance = Math.abs(element.offsetLeft - carousel.scrollLeft);
+        const closestDistance = Math.abs(
+          closestElement.offsetLeft - carousel.scrollLeft
+        );
+
+        return distance < closestDistance ? index : closestIndex;
+      },
+      0
+    );
+
+    setActiveAction(nearestIndex);
+  };
+
   return (
     <section className="bg-white px-5 py-14 text-[#111318] md:px-10 md:py-20">
       <div className="mx-auto max-w-[1320px]">
@@ -687,11 +725,52 @@ function WebActionsSection() {
           </p>
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-8 flex items-center justify-between gap-3">
+          <div className="flex gap-2">
+            {actions.map((action, index) => (
+              <button
+                key={action.title}
+                type="button"
+                onClick={() => scrollToAction(index)}
+                className={`h-2.5 rounded-full transition ${
+                  activeAction === index
+                    ? "w-8 bg-red-600"
+                    : "w-2.5 bg-[#b5bbc6] hover:bg-red-500"
+                }`}
+                aria-label={`Ver acción ${action.title}`}
+              />
+            ))}
+          </div>
+
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => scrollToAction(activeAction - 1)}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#c9ced8] bg-white text-[#111318] transition hover:border-red-600 hover:bg-red-600 hover:text-white"
+              aria-label="Acción anterior"
+            >
+              <span className="text-xl font-black leading-none">‹</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToAction(activeAction + 1)}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#c9ced8] bg-white text-[#111318] transition hover:border-red-600 hover:bg-red-600 hover:text-white"
+              aria-label="Acción siguiente"
+            >
+              <span className="text-xl font-black leading-none">›</span>
+            </button>
+          </div>
+        </div>
+
+        <div
+          ref={actionsCarouselRef}
+          onScroll={handleActionsScroll}
+          className="-mx-5 mt-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 md:-mx-10 md:px-10"
+        >
           {actions.map((action) => (
             <article
               key={action.title}
-              className="flex min-h-[220px] flex-col rounded-lg border border-[#d7dbe2] bg-[#f4f5f7] p-5"
+              className="flex min-h-[220px] w-[82vw] shrink-0 snap-start flex-col rounded-lg border border-[#d7dbe2] bg-[#f4f5f7] p-5 sm:w-[360px] lg:w-[400px]"
             >
               <h3 className="text-xl font-black text-[#111318]">
                 {action.title}
@@ -908,6 +987,45 @@ function AboutBranchesSection() {
 }
 
 function BranchesSection() {
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+  const [activeBranch, setActiveBranch] = useState(0);
+
+  const scrollToBranch = (index: number) => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const nextIndex = Math.max(0, Math.min(index, branches.length - 1));
+    const slide = carousel.children[nextIndex] as HTMLElement | undefined;
+    if (!slide) return;
+
+    carousel.scrollTo({
+      left: slide.offsetLeft - carousel.offsetLeft,
+      behavior: "smooth",
+    });
+    setActiveBranch(nextIndex);
+  };
+
+  const handleBranchScroll = () => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const nearestIndex = Array.from(carousel.children).reduce(
+      (closestIndex, child, index) => {
+        const element = child as HTMLElement;
+        const closestElement = carousel.children[closestIndex] as HTMLElement;
+        const distance = Math.abs(element.offsetLeft - carousel.scrollLeft);
+        const closestDistance = Math.abs(
+          closestElement.offsetLeft - carousel.scrollLeft
+        );
+
+        return distance < closestDistance ? index : closestIndex;
+      },
+      0
+    );
+
+    setActiveBranch(nearestIndex);
+  };
+
   return (
     <section
       id="sucursales"
@@ -929,11 +1047,52 @@ function BranchesSection() {
           </p>
         </div>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-8 flex items-center justify-between gap-3">
+          <div className="flex gap-2">
+            {branches.map((branch, index) => (
+              <button
+                key={branch.id}
+                type="button"
+                onClick={() => scrollToBranch(index)}
+                className={`h-2.5 rounded-full transition ${
+                  activeBranch === index
+                    ? "w-8 bg-red-600"
+                    : "w-2.5 bg-[#b5bbc6] hover:bg-red-500"
+                }`}
+                aria-label={`Ver sucursal ${branch.name}`}
+              />
+            ))}
+          </div>
+
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => scrollToBranch(activeBranch - 1)}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#c9ced8] bg-white text-[#111318] transition hover:border-red-600 hover:bg-red-600 hover:text-white"
+              aria-label="Sucursal anterior"
+            >
+              <span className="text-xl font-black leading-none">‹</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToBranch(activeBranch + 1)}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#c9ced8] bg-white text-[#111318] transition hover:border-red-600 hover:bg-red-600 hover:text-white"
+              aria-label="Sucursal siguiente"
+            >
+              <span className="text-xl font-black leading-none">›</span>
+            </button>
+          </div>
+        </div>
+
+        <div
+          ref={carouselRef}
+          onScroll={handleBranchScroll}
+          className="-mx-5 mt-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 md:-mx-10 md:gap-6 md:px-10"
+        >
           {branches.map((branch) => (
             <article
               key={branch.id}
-              className="group overflow-hidden rounded-lg border border-[#d7dbe2] bg-white shadow-sm transition hover:-translate-y-1 hover:border-red-500/50 hover:shadow-xl"
+              className="group w-[86vw] shrink-0 snap-start overflow-hidden rounded-lg border border-[#d7dbe2] bg-white shadow-sm transition hover:-translate-y-1 hover:border-red-500/50 hover:shadow-xl sm:w-[420px] lg:w-[460px]"
             >
               <div className="relative h-[230px] overflow-hidden bg-[#111318]">
                 <img

@@ -162,7 +162,7 @@ export default function SiteHeader() {
         </button>
 
         {isMobileMenuOpen && (
-          <div className="absolute left-4 right-4 top-[calc(100%+10px)] z-50 overflow-hidden rounded-2xl border border-white/10 bg-[#111318]/98 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl xl:hidden">
+          <div className="absolute left-4 right-4 top-[calc(100%+10px)] z-50 max-h-[calc(100svh-120px)] overflow-y-auto rounded-2xl border border-white/10 bg-[#111318]/98 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl xl:hidden">
             <nav className="grid gap-2 text-sm font-black text-white">
               <Link
                 href="/ahorro-plus"
@@ -196,7 +196,7 @@ export default function SiteHeader() {
                 <summary className="cursor-pointer px-4 py-3 transition hover:bg-red-600">
                   Servicios
                 </summary>
-                <div className="grid gap-1 border-t border-white/10 p-2">
+                <div className="grid max-h-[42svh] gap-1 overflow-y-auto border-t border-white/10 p-2">
                   {serviceLinks.map(([id, title]) => (
                     <Link
                       key={id}
@@ -213,7 +213,7 @@ export default function SiteHeader() {
                 <summary className="cursor-pointer px-4 py-3 transition hover:bg-red-600">
                   Productos
                 </summary>
-                <div className="grid gap-1 border-t border-white/10 p-2">
+                <div className="grid max-h-[30svh] gap-1 overflow-y-auto border-t border-white/10 p-2">
                   {productLinks.map(([id, title]) => (
                     <Link
                       key={id}
