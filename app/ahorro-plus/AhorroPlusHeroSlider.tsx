@@ -4,23 +4,23 @@ import { useEffect, useState } from "react";
 
 const slides = [
   {
-    src: "/ahorro-plus/ahorro-plus-lavado.webp",
+    src: "/ahorro-plus/ahorro-plus-lavado-vertical.webp",
     alt: "Lavado incluido en Programa Ahorro Plus",
   },
   {
-    src: "/ahorro-plus/ahorro-plus-pre-revision.webp",
+    src: "/ahorro-plus/ahorro-plus-pre-revision-vertical.webp",
     alt: "Pre-revisión técnica incluida en Programa Ahorro Plus",
   },
   {
-    src: "/ahorro-plus/ahorro-plus-frenos.webp",
+    src: "/ahorro-plus/ahorro-plus-frenos-vertical.webp",
     alt: "Revisión de frenos incluida en Programa Ahorro Plus",
   },
   {
-    src: "/ahorro-plus/ahorro-plus-retiro-domicilio.webp",
+    src: "/ahorro-plus/ahorro-plus-retiro-domicilio-vertical.webp",
     alt: "Retiro de vehículo a domicilio para Programa Ahorro Plus",
   },
   {
-    src: "/ahorro-plus/ahorro-plus-pesos-ahorro.webp",
+    src: "/ahorro-plus/ahorro-plus-pesos-ahorro-vertical.webp",
     alt: "Pesos ahorro disponibles para productos y servicios",
   },
 ];
@@ -40,7 +40,7 @@ export default function AhorroPlusHeroSlider() {
 
   return (
     <div className="relative overflow-hidden rounded-lg border border-white/15 bg-black shadow-2xl lg:sticky lg:top-32">
-      <div className="relative aspect-[4/5] min-h-[360px] md:aspect-[16/10] lg:h-[calc(100svh-230px)] lg:min-h-[520px] lg:max-h-[720px]">
+      <div className="relative aspect-[4/5] min-h-[360px] lg:h-[calc(100svh-230px)] lg:min-h-[520px] lg:max-h-[720px]">
         {slides.map((slide, index) => (
           <img
             key={slide.src}
