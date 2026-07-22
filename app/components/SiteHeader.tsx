@@ -40,13 +40,32 @@ function WhatsAppIcon({ className = "" }) {
 
 function Logo() {
   return (
-    <div className="relative flex h-[82px] w-[245px] items-center overflow-visible md:h-[96px] md:w-[290px] xl:w-[330px]">
+    <div className="relative flex h-[82px] w-[130px] items-center overflow-visible md:h-[96px] md:w-[155px] xl:w-[170px]">
       <img
         src={plazaCarLogo2026.src}
         alt="Plaza Car Service"
         className="absolute left-0 h-[122px] w-auto max-w-none object-contain md:h-[145px] xl:h-[160px]"
       />
     </div>
+  );
+}
+
+function FloatingWhatsAppButton() {
+  return (
+    <a
+      href={whatsappBase}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Contactar por WhatsApp"
+      className="fixed bottom-5 right-5 z-[70] inline-flex items-center gap-1.5 rounded-full bg-[#25D366] px-2.5 py-1.5 text-white shadow-lg shadow-black/30 ring-1 ring-white/10 transition hover:scale-105 hover:bg-[#1fb957] md:bottom-7 md:right-7"
+    >
+      <span className="hidden text-xs font-black leading-none md:block">
+        ¿Tienes dudas?
+      </span>
+      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/15">
+        <WhatsAppIcon className="h-4 w-4" />
+      </span>
+    </a>
   );
 }
 
@@ -58,19 +77,22 @@ export default function SiteHeader() {
   };
 
   return (
+    <>
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#0b0c0f]/95 backdrop-blur-xl">
       <div className="mx-auto flex max-w-[1920px] items-center justify-between gap-4 px-4 py-3 md:px-6 xl:px-8">
-        <Link href="/#home" aria-label="Plaza Car Service">
-          <Logo />
-        </Link>
-
-        <nav className="hidden shrink-0 items-center gap-4 text-xs font-semibold text-white/70 xl:flex 2xl:gap-6 2xl:text-sm">
+        <div className="flex shrink-0 items-center gap-1.5">
+          <Link href="/#home" aria-label="Plaza Car Service">
+            <Logo />
+          </Link>
           <Link
             href="/ahorro-plus"
-            className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white px-3 py-2.5 text-xs font-black text-black transition hover:bg-red-600 hover:text-white 2xl:px-4 2xl:py-3 2xl:text-sm"
+            className="hidden items-center justify-center rounded-lg border border-white/15 bg-white px-3 py-2.5 text-xs font-black text-black transition hover:bg-red-600 hover:text-white xl:inline-flex 2xl:px-4 2xl:py-3 2xl:text-sm"
           >
             Programa Ahorro Plus
           </Link>
+        </div>
+
+        <nav className="hidden shrink-0 items-center gap-4 text-xs font-semibold text-white/70 xl:flex 2xl:gap-6 2xl:text-sm">
           <Link className="py-2 transition hover:text-white" href="/#home">
             Home
           </Link>
@@ -254,5 +276,7 @@ export default function SiteHeader() {
         )}
       </div>
     </header>
+    <FloatingWhatsAppButton />
+    </>
   );
 }

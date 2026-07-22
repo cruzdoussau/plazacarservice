@@ -95,7 +95,26 @@ export const serviceGalleries = {
     "/site-photos/service-galleries/mecanica-compleja/mecanica-embragues.webp",
     "/site-photos/service-galleries/mecanica-compleja/mecanica-suspension-direccion.webp"
   ],
-  "baterias": [],
-  "neumaticos": [],
+  "baterias": [
+    "/site-photos/service-galleries/baterias/bateria-producto-01.webp",
+    "/site-photos/service-galleries/baterias/bateria-producto-02.webp",
+    "/site-photos/service-galleries/baterias/bateria-producto-03.webp",
+    "/site-photos/service-galleries/baterias/bateria-producto-04.webp",
+    "/site-photos/service-galleries/baterias/bateria-producto-05.webp",
+    "/site-photos/service-galleries/baterias/bateria-producto-06.webp",
+    "/site-photos/service-galleries/baterias/bateria-producto-07.webp",
+    "/site-photos/service-galleries/baterias/bateria-producto-08.webp",
+    "/site-photos/service-galleries/baterias/bateria-producto-09.webp",
+    "/site-photos/service-galleries/baterias/bateria-producto-10.webp"
+  ],
+  "neumaticos": [
+    "/site-photos/service-galleries/neumaticos/neumatico-goodride.webp",
+    "/site-photos/service-galleries/neumaticos/neumatico-nexen.webp",
+    "/site-photos/service-galleries/neumaticos/neumatico-onyx.webp",
+    "/site-photos/service-galleries/neumaticos/neumatico-risen.webp",
+    "/site-photos/service-galleries/neumaticos/neumatico-roadwing.webp",
+    "/site-photos/service-galleries/neumaticos/neumatico-trackmax.webp",
+    "/site-photos/service-galleries/neumaticos/neumatico-windforce.webp"
+  ],
   "aire-acondicionado": []
 } as const;

@@ -12,7 +12,7 @@ const programBenefits = [
   {
     value: "3",
     title: "Lavados sin costo",
-    text: "Tres lavados al año para mantener tu vehículo limpio y cuidado.",
+    text: "Tres lavados exteriores sin costo para mantener tu vehículo limpio y cuidado.",
   },
   {
     value: "1",

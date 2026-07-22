@@ -1500,7 +1500,6 @@ export default function HomePage() {
       <AhorroPlusCtaSection />
       <ContactSection />
       <Footer />
-      <FloatingWhatsAppButton />
     </div>
   );
 }
