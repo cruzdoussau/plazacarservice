@@ -1491,9 +1491,9 @@ export default function HomePage() {
   return (
     <div id="home" className="min-h-screen bg-[#0c0c0d] text-white">
       <SiteHeader />
-      <PromoMarquee />
       <MainSlider />
       <WebActionsSection />
+      <PromoMarquee />
       <ServicesSection />
       <AboutBranchesSection />
       <BranchesSection />
