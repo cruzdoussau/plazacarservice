@@ -116,7 +116,7 @@ const services = [
     subtitle: "Diagnóstico, cambio de componentes y mantención del sistema.",
     image: "/site-photos/mecanica-auto-elevado.webp",
     detailIntro:
-      "El sistema de frenos es el componente de seguridad más importante de tu vehículo. No dejes tu tranquilidad al azar; nuestro equipo de técnicos expertos te asesorarán y utiliza repuestos de primera calidad para garantizarte un frenado preciso, seguro y de respuesta inmediata en cualquier situación.",
+      "El sistema de frenos es el componente de seguridad más importante de tu vehículo. No dejes tu tranquilidad al azar; nuestro equipo de técnicos expertos te asesorarán y utilizaran repuestos de primera calidad para garantizarte un frenado preciso, seguro y de respuesta inmediata en cualquier situación.",
     detailSectionLabel: "Nuestros servicios de frenos",
     detailSectionTitle: "Incluyen:",
     includes: [

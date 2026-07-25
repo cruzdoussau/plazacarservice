@@ -48,6 +48,43 @@ const offers = [
       "Regulaci\u00f3n de frenos traseros.",
     ],
   },
+  {
+    id: "mantencion-ahorro-plus",
+    label: "Oferta N\u00b04",
+    title: "Mantenci\u00f3n Ahorro Plus",
+    price: "$109.000",
+    intro: "Mantenci\u00f3n seg\u00fan pauta del fabricante",
+    benefitsTitle: "Incluye",
+    benefits: [
+      "4 litros de aceite 5W-30.",
+      "1 filtro de aceite.",
+      "1 filtro de polen.",
+      "Relleno de niveles.",
+      "Lubricaci\u00f3n de puertas y bisagras.",
+      "Rotaci\u00f3n y balanceo de neum\u00e1ticos.",
+      "Revisi\u00f3n del sistema de frenos.",
+      "Revisi\u00f3n de bater\u00eda.",
+      "Revisi\u00f3n del filtro de aire.",
+      "Revisi\u00f3n de luces.",
+      "Revisi\u00f3n de correas exteriores.",
+      "Revisi\u00f3n de tren delantero y amortiguadores.",
+      "Inspecci\u00f3n de plumillas.",
+      "Inspecci\u00f3n de neum\u00e1ticos.",
+      "Inspecci\u00f3n de ca\u00f1er\u00edas de fluidos y combustible.",
+    ],
+  },
+  {
+    id: "aceites-esso",
+    label: "Oferta N\u00b05",
+    title: "Aceites ESSO",
+    price: "Desde $32.000",
+    intro: "Aceites para cambio de motor",
+    benefitsTitle: "Valores",
+    benefits: [
+      "ESSO 5W-30: $42.000.",
+      "ESSO 10W-40: $32.000.",
+    ],
+  },
 ];
 
 export const metadata = {
@@ -81,7 +118,7 @@ export default function PromotionsPage() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {offers.map((offer) => (
               <article
                 key={offer.id}
