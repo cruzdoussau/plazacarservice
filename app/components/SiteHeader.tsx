@@ -84,6 +84,22 @@ export default function SiteHeader() {
           <Link href="/#home" aria-label="Plaza Car Service">
             <Logo />
           </Link>
+          <div className="hidden items-center gap-2 xl:flex">
+            <Link
+              href="/ahorro-plus"
+              className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white px-3 py-2.5 text-xs font-black text-black transition hover:bg-red-600 hover:text-white 2xl:px-4 2xl:py-3 2xl:text-sm"
+            >
+              Programa Ahorro Plus
+            </Link>
+            <a
+              href={whatsappBase}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#c83a42] px-4 py-2.5 text-xs font-black text-white transition hover:bg-[#a92f36] 2xl:px-5 2xl:py-3 2xl:text-sm"
+            >
+              <WhatsAppIcon className="h-4 w-4" /> Agendar hora
+            </a>
+          </div>
         </div>
 
         <nav className="hidden shrink-0 items-center gap-4 text-xs font-semibold text-white/70 xl:flex 2xl:gap-6 2xl:text-sm">
@@ -155,23 +171,6 @@ export default function SiteHeader() {
             Contacto
           </Link>
         </nav>
-
-        <div className="hidden shrink-0 items-center gap-2 xl:flex">
-          <Link
-            href="/ahorro-plus"
-            className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white px-3 py-2.5 text-xs font-black text-black transition hover:bg-red-600 hover:text-white 2xl:px-4 2xl:py-3 2xl:text-sm"
-          >
-            Programa Ahorro Plus
-          </Link>
-          <a
-            href={whatsappBase}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-[#c83a42] px-4 py-2.5 text-xs font-black text-white transition hover:bg-[#a92f36] 2xl:px-5 2xl:py-3 2xl:text-sm"
-          >
-            <WhatsAppIcon className="h-4 w-4" /> Agendar hora
-          </a>
-        </div>
 
         <button
           type="button"
