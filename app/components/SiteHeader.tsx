@@ -40,11 +40,11 @@ function WhatsAppIcon({ className = "" }) {
 
 function Logo() {
   return (
-    <div className="relative flex h-[82px] w-[130px] items-center overflow-visible md:h-[96px] md:w-[155px] xl:w-[170px]">
+    <div className="relative flex h-[102px] w-[165px] items-center overflow-visible md:h-[118px] md:w-[190px] xl:h-[126px] xl:w-[210px]">
       <img
         src={plazaCarLogo2026.src}
         alt="Plaza Car Service"
-        className="absolute left-0 h-[122px] w-auto max-w-none object-contain md:h-[145px] xl:h-[160px]"
+        className="absolute left-0 h-[155px] w-auto max-w-none object-contain md:h-[178px] xl:h-[190px]"
       />
     </div>
   );

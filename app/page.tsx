@@ -1444,7 +1444,7 @@ function Footer() {
         <img
           src={plazaCarLogo2026.src}
           alt="Plaza Car Service"
-          className="h-28 w-auto object-contain md:h-36"
+          className="h-36 w-auto object-contain md:h-44"
         />
         <div className="flex flex-col gap-2 text-sm text-white/60 md:items-end">
           <p>

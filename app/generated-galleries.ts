@@ -46,7 +46,7 @@ export const serviceGalleries = {
     "/site-photos/service-galleries/mantencion-kilometraje/mantencion-kilometraje-chequeo-general.webp"
   ],
   "frenos": [
-    "/site-photos/service-galleries/frenos/frenos-01.webp",
+    "/site-photos/service-galleries/frenos/rectificacion-disco.webp",
     "/site-photos/service-galleries/frenos/frenos-diagnostico-inspeccion.webp",
     "/site-photos/service-galleries/frenos/frenos-pastillas-balatas.webp",
     "/site-photos/service-galleries/frenos/frenos-rectificacion-discos.webp",

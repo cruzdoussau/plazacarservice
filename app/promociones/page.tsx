@@ -158,7 +158,7 @@ export default function PromotionsPage() {
           <div className="mt-10 rounded-lg border border-white/10 bg-[#111318] p-6 md:flex md:items-center md:justify-between">
             <div>
               <p className="text-sm font-black text-red-500">
-                Agenda tu atenci\u00f3n
+                Agenda tu atención
               </p>
               <p className="mt-2 max-w-2xl text-base leading-relaxed text-white/68">
                 Consulta disponibilidad, formas de pago y sucursal mas cercana
