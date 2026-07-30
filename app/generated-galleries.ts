@@ -40,17 +40,17 @@ export const homeGalleryImages = [
 export const serviceGalleries = {
   "mantencion-kilometraje": [
     "/site-photos/service-galleries/mantencion-kilometraje/mantencion-kilometraje-aceite-filtros.webp",
-    "/site-photos/service-galleries/mantencion-kilometraje/mantencion-kilometraje-tren-neumaticos.webp",
     "/site-photos/service-galleries/mantencion-kilometraje/mantencion-kilometraje-scanner.webp",
     "/site-photos/service-galleries/mantencion-kilometraje/mantencion-kilometraje-frenos.webp",
+    "/site-photos/service-galleries/mantencion-kilometraje/mantencion-kilometraje-tren-neumaticos.webp",
     "/site-photos/service-galleries/mantencion-kilometraje/mantencion-kilometraje-chequeo-general.webp"
   ],
   "frenos": [
-    "/site-photos/service-galleries/frenos/rectificacion-disco.webp",
     "/site-photos/service-galleries/frenos/frenos-diagnostico-inspeccion.webp",
     "/site-photos/service-galleries/frenos/frenos-pastillas-balatas.webp",
-    "/site-photos/service-galleries/frenos/frenos-rectificacion-discos.webp",
-    "/site-photos/service-galleries/frenos/frenos-liquido-purga.webp"
+    "/site-photos/service-galleries/frenos/rectificacion-disco.webp",
+    "/site-photos/service-galleries/frenos/frenos-liquido-purga.webp",
+    "/site-photos/service-galleries/frenos/frenos-sistema-abs.webp"
   ],
   "alineacion-balanceo": [
     "/site-photos/service-galleries/alineacion-balanceo/alineacion-precision.webp",
@@ -72,7 +72,8 @@ export const serviceGalleries = {
   "scanner": [
     "/site-photos/service-galleries/scanner/scanner-analisis-motor.webp",
     "/site-photos/service-galleries/scanner/scanner-revision-seguridad.webp",
-    "/site-photos/service-galleries/scanner/scanner-monitoreo-sensores.webp"
+    "/site-photos/service-galleries/scanner/scanner-monitoreo-sensores.webp",
+    "/site-photos/service-galleries/scanner/scanner-optimizacion-general.webp"
   ],
   "limpieza": [
     "/site-photos/service-galleries/limpieza/limpieza-01.webp",
