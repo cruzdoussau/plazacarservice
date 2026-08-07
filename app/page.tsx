@@ -150,7 +150,7 @@ const services = [
   },
   {
     id: "alineacion-balanceo",
-    badge: "Promoción Junio y Julio",
+    badge: "Promoción Agosto",
     title: "Alineación + Balanceo + Rotación",
     subtitle:
       "Servicio combinado para mejorar seguridad, estabilidad y vida útil de tus neumáticos.",    cta: "Agendar servicio",
@@ -447,7 +447,7 @@ function PinIcon({ className = "" }) {
 
 function PromoMarquee() {
   const message =
-    "En este invierno congelamos los precios. Conoce nuestras promociones de julio.";
+    "En este invierno congelamos los precios. Conoce nuestras promociones de agosto.";
   const items = Array.from({ length: 8 }, (_, index) => index);
 
   return (

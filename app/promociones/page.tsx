@@ -88,14 +88,14 @@ const offers = [
 ];
 
 export const metadata = {
-  title: "Promociones de Julio | Plaza Car Service",
+  title: "Promociones de Agosto | Plaza Car Service",
   description:
-    "Conoce las promociones de julio de Plaza Car Service: alineacion, balanceo, rotacion, baterias, neumaticos y frenos.",
+    "Conoce las promociones de agosto de Plaza Car Service: alineacion, balanceo, rotacion, baterias, neumaticos y frenos.",
 };
 
 export default function PromotionsPage() {
   const whatsappUrl = `${whatsappBase}?text=${encodeURIComponent(
-    "Hola, quiero consultar por las promociones de julio de Plaza Car Service."
+    "Hola, quiero consultar por las promociones de agosto de Plaza Car Service."
   )}`;
 
   return (
@@ -106,7 +106,7 @@ export default function PromotionsPage() {
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
               <p className="text-sm font-black uppercase tracking-[0.22em] text-red-500">
-                Promociones de julio
+                Promociones de agosto
               </p>
               <h1 className="mt-4 text-5xl font-black leading-[0.98] md:text-7xl">
                 En este invierno congelamos los precios
