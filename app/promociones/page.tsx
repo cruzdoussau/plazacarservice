@@ -102,14 +102,14 @@ const offers = [
 ];
 
 export const metadata = {
-  title: "Promociones de Septiembre | Plaza Car Service",
+  title: "Promociones de Octubre | Plaza Car Service",
   description:
-    "Conoce las promociones de septiembre de Plaza Car Service durante el Mes de la Patria: alineacion, balanceo, rotacion, baterias, neumaticos, frenos y cambio de aceite.",
+    "Conoce las promociones de octubre de Plaza Car Service: alineacion, balanceo, rotacion, baterias, neumaticos, frenos y cambio de aceite.",
 };
 
 export default function PromotionsPage() {
   const whatsappUrl = `${whatsappBase}?text=${encodeURIComponent(
-    "Hola, quiero consultar por las promociones de septiembre de Plaza Car Service."
+    "Hola, quiero consultar por las promociones de octubre de Plaza Car Service."
   )}`;
 
   return (
@@ -120,14 +120,14 @@ export default function PromotionsPage() {
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
               <p className="text-sm font-black uppercase tracking-[0.22em] text-red-500">
-                Promociones de Septiembre
+                Promociones de Octubre
               </p>
               <h1 className="mt-4 text-5xl font-black leading-[0.98] md:text-7xl">
-                Mes de la Patria en Plaza Car Service
+                Mes del Terror en Plaza Car Service
               </h1>
             </div>
             <p className="max-w-3xl text-lg leading-relaxed text-white/70 md:text-xl">
-              Durante el Mes de la Patria en Plaza Car Service tenemos
+              Durante el Mes de la Halloween en Plaza Car Service tenemos
               promociones especiales para ayudarte a mantener tu vehículo en
               buenas condiciones.
             </p>
