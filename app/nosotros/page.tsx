@@ -41,26 +41,14 @@ const branches = [
     mapsUrl: "https://maps.app.goo.gl/uXNfdNYJbs4u2ZtK6",
   },
   {
-    id: "el-quisco",
-    name: "El Quisco",
-    address: "Próximamente",
-    location: "El Quisco · Litoral Central",
+    id: "minas-gerais",
+    name: "Minas Gerais",
+    address: "Minas Gerais 932",
+    location: "Algarrobo · Litoral Central",
     description:
-      "Muy pronto llegaremos a El Quisco para estar más cerca de ti y tu vehículo.",
-    image: "/Sucursales/el-quisco.png",
-    mapsUrl: "#",
-    comingSoon: true,
-  },
-  {
-    id: "san-antonio",
-    name: "San Antonio",
-    address: "Próximamente",
-    location: "San Antonio · Litoral Central",
-    description:
-      "Muy pronto llegaremos a San Antonio para estar más cerca de ti y tu vehículo.",
-    image: "/Sucursales/san-antonio.png",
-    mapsUrl: "#",
-    comingSoon: true,
+      "Nueva sucursal en Algarrobo para entregar atención cercana, confiable y profesional a tu vehículo.",
+    image: "/Sucursales/luz-divina.png",
+    mapsUrl: "https://share.google/wj2J9STejZyObkA8I",
   },
 ];
 

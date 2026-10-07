@@ -362,26 +362,14 @@ const branches = [
     mapsUrl: "https://maps.app.goo.gl/uXNfdNYJbs4u2ZtK6",
   },
   {
-    id: "el-quisco",
-    name: "El Quisco",
-    address: "Próximamente",
-    location: "El Quisco · Litoral Central",
+    id: "minas-gerais",
+    name: "Minas Gerais",
+    address: "Minas Gerais 932",
+    location: "Algarrobo · Litoral Central",
     description:
-      "Muy pronto llegaremos a El Quisco para estar más cerca de ti y tu vehículo.",
-    image: "/Sucursales/el-quisco.png",
-    mapsUrl: "#",
-    comingSoon: true,
-  },
-  {
-    id: "san-antonio",
-    name: "San Antonio",
-    address: "Próximamente",
-    location: "San Antonio · Litoral Central",
-    description:
-      "Muy pronto llegaremos a San Antonio para estar más cerca de ti y tu vehículo.",
-    image: "/Sucursales/san-antonio.png",
-    mapsUrl: "#",
-    comingSoon: true,
+      "Nueva sucursal en Algarrobo para entregar atención cercana, confiable y profesional a tu vehículo.",
+    image: "/Sucursales/luz-divina.png",
+    mapsUrl: "https://share.google/wj2J9STejZyObkA8I",
   },
 ];
 
@@ -1461,7 +1449,7 @@ function Footer() {
 const tests = [
   slides.length === 4,
   services.length === 10,
-  branches.length === 5,
+  branches.length === 4,
   nosotrosImages.length >= 5,
   services.every((service) => service.title && service.image),
   services.every((service) => Array.isArray(service.includes)),
@@ -1471,7 +1459,7 @@ const tests = [
 if (typeof console !== "undefined") {
   console.assert(
     tests.every(Boolean),
-    "El prototipo debe mantener 4 slides, 10 servicios, 5 sucursales, modal de ficha técnica y WhatsApp correcto."
+    "El prototipo debe mantener 4 slides, 10 servicios, 4 sucursales, modal de ficha técnica y WhatsApp correcto."
   );
 }
 

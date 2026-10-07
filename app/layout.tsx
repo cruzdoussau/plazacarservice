@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://plazacarservice.cl"),
   title: "Plaza Car Service | Red integral de servicios automotriz",
   description:
-    "Plaza Car Service es tu red integral de servicios automotriz en el Litoral Central. Atención en Algarrobo y El Tabo, y próximamente en El Quisco y San Antonio.",
+    "Plaza Car Service es tu red integral de servicios automotriz en el Litoral Central. Atención en Algarrobo y El Tabo, con nueva sucursal en Minas Gerais 932, Algarrobo.",
   keywords: [
     "Plaza Car Service",
     "servicios automotrices",
@@ -16,8 +16,7 @@ export const metadata: Metadata = {
     "lavado de vehículos",
     "Algarrobo",
     "El Tabo",
-    "El Quisco",
-    "San Antonio",
+    "Minas Gerais",
   ],
   icons: {
     icon: "/favicon.ico",
@@ -27,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Plaza Car Service | Red integral de servicios automotriz",
     description:
-      "Atención automotriz en Algarrobo y El Tabo, y próximamente en El Quisco y San Antonio.",
+      "Atención automotriz en Algarrobo y El Tabo, con nueva sucursal en Minas Gerais 932, Algarrobo.",
     url: "https://plazacarservice.cl",
     siteName: "Plaza Car Service",
     images: [
@@ -45,7 +44,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Plaza Car Service | Red integral de servicios automotriz",
     description:
-      "Atención automotriz en Algarrobo y El Tabo, y próximamente en El Quisco y San Antonio.",
+      "Atención automotriz en Algarrobo y El Tabo, con nueva sucursal en Minas Gerais 932, Algarrobo.",
     images: ["/og-plaza-car-service.png"],
   },
 };
